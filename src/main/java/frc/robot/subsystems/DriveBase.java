@@ -1,13 +1,15 @@
-package main.java.frc.robot;
+package main.java.frc.robot.subsystems;
+
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.RobotMap;
+import main.java.frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class DriveBase extends Subsystem {
+
     private WPI_TalonSRX leftMasterMotor;
     private WPI_TalonSRX rightMasterMotor;
     private WPI_VictorSPX leftFollower1;
@@ -18,6 +20,7 @@ public class DriveBase extends Subsystem {
     private SpeedControllerGroup leftSide;
     private SpeedControllerGroup rightSide;
     public DifferentialDrive cheesyDrive; 
+
     public DriveBase() {
         super("DriveBase");
         this.leftMasterMotor = new WPI_TalonSRX(RobotMap.leftMasterMotor); 
@@ -34,24 +37,31 @@ public class DriveBase extends Subsystem {
         leftFollower1.setInverted(true);
         leftFollower2.setInverted(true);
     }
+
     public void initDefaultCommand() {}
+
     public void setMotors(double left, double right) {
         leftSide.set(left);
         rightSide.set(right);
     }
+
     public int getLeftPosition() {
         return leftMasterMotor.getSelectedSensorPosition(0);
     }
+
     public int getRightPosition() {
         return rightMasterMotor.getSelectedSensorPosition(0);
     }
+
     public double getGyroAngle() {
         return gyro.getAngle();       
     }
+
     public void zeroEncoderPosition() {
         leftMasterMotor.setSelectedSensorPosition(0,0,10);
         rightMasterMotor.setSelectedSensorPosition(0,0,10);
     }
+
     public void zeroGyroAngle() {
         gyro.reset();
     }

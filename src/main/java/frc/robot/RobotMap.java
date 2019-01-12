@@ -1,4 +1,4 @@
-package frc.robot;
+package main.java.frc.robot;
 
 public class RobotMap {
 
@@ -44,7 +44,5 @@ public class RobotMap {
     public static final int operatorXboxController = 2;
     public static final int driverXboxController = 1;
     public static final int launchpad  = 0;
-
-
 
 }
