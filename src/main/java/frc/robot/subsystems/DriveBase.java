@@ -24,12 +24,12 @@ public class DriveBase extends Subsystem {
 
     public DriveBase() {
         super("DriveBase");
-        this.leftMasterMotor = new WPI_TalonSRX(RobotMap.leftMasterMotor); 
-        this.rightMasterMotor = new WPI_TalonSRX(RobotMap.rightMasterMotor);
-        this.leftFollower1 = new WPI_VictorSPX(RobotMap.leftFollower1);
-        this.leftFollower2 = new WPI_VictorSPX(RobotMap.leftFollower2);
-        this.rightFollower1 = new WPI_VictorSPX(RobotMap.rightFollower1);
-        this.rightFollower2 = new WPI_VictorSPX(RobotMap.rightFollower2);
+        this.leftMasterMotor = new WPI_TalonSRX(RobotMap.leftMiddleMaster); 
+        this.rightMasterMotor = new WPI_TalonSRX(RobotMap.rightFrontFollower);
+        this.leftFollower1 = new WPI_VictorSPX(RobotMap.leftFrontFollower);
+        this.leftFollower2 = new WPI_VictorSPX(RobotMap.leftRearFollower);
+        this.rightFollower1 = new WPI_VictorSPX(RobotMap.rightFrontFollower);
+        this.rightFollower2 = new WPI_VictorSPX(RobotMap.rightRearFollower);
         this.gyro = new ADXRS450_Gyro();
         this.leftSide = new SpeedControllerGroup(leftMasterMotor, leftFollower1, leftFollower2);
         this.rightSide = new SpeedControllerGroup(rightMasterMotor, rightFollower1, rightFollower2);        
