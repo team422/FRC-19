@@ -44,6 +44,12 @@ public class RobotMap {
 
     public static final int cargoDirectorFlapPush = 8788787; 
     public static final int cargoDirectorFlapPull = 8788788;
+    public static final int punchingOutwards = 846;
+    public static final int punchingInwards = 5766;
+
+    //Servo Ports        
+    public static final int leftHatchGrabber = 123;
+    public static final int rightHatchGrabber = 789;
 
     // Digital IO Ports
     public static final int cargoLimitSwitch = 536871066;
