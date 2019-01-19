@@ -45,4 +45,9 @@ public class RobotMap {
     public static final int driverXboxController = 1;
     public static final int launchpad  = 0;
 
+    public static final int leftBackClimb = (compBot) ? 443 : 2331;
+    public static final int leftFrontClimb = (compBot) ? 4343 : 39435;
+    public static final int rightBackClimb = (compBot) ? 555 : 45522;
+    public static final int rightFrontClimb = (compBot) ? 634 : 44326;
+
 }
