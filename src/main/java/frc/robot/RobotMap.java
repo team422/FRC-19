@@ -50,4 +50,23 @@ public class RobotMap {
     public static final int rightBackClimb = (compBot) ? 555 : 45522;
     public static final int rightFrontClimb = (compBot) ? 634 : 44326;
 
+    public static final int cargoIntakeWheels = 9001;
+    public static final int cargoIntakePivot = 9002; 
+    public static final int cargoEscalator1 = 1234567890; 
+    public static final int cargoEscalator2 = 505005005;
+
+
+    // Double Solenoid Values
+
+    public static final int cargoDirectorFlapPush = 8788787; 
+    public static final int cargoDirectorFlapPull = 8788788;
+
+    // Digital IO Ports
+    public static final int cargoLimitSwitch = 536871066;
+
+//    public static final int BEAM_BRAKE = 6;
+
+    // Analog IO Ports
+    public static final int cargoUltrasonicSensor = 42; 
+    
 }
