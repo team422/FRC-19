@@ -23,7 +23,7 @@ public class FlapDown extends Command {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return isTimedOut();
     }
 
     @Override

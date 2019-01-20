@@ -22,7 +22,7 @@ public class PunchOutwards extends Command {
 
   @Override
   protected boolean isFinished() {
-    return false;
+    return isTimedOut();
   }
 
   @Override

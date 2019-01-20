@@ -21,7 +21,7 @@ public class RollEscalator extends Command {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return isTimedOut();
     }
 
     @Override
