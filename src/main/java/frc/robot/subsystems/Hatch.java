@@ -31,11 +31,11 @@ public class Hatch extends Subsystem {
         rightGrabber.setAngle(90);
     }
 
-    public void punchIn() {
+    public void punchOutwards() {
       puncher.set(DoubleSolenoid.Value.kForward);
     }
 
-    public void punchOut() {
+    public void punchInwards() {
       puncher.set(DoubleSolenoid.Value.kReverse);
     }
 }
