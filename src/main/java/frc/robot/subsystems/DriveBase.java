@@ -1,11 +1,11 @@
-package main.java.frc.robot.subsystems;
+package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import main.java.frc.robot.RobotMap;
-import main.java.frc.robot.commands.TankDrive;
+import frc.robot.RobotMap;
+import frc.robot.commands.TankDrive;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 

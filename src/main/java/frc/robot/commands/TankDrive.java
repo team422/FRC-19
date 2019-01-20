@@ -1,8 +1,8 @@
-package main.java.frc.robot.commands;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import main.java.frc.robot.subsystems.Subsystems;
-import main.java.frc.robot.userinterface.UserInterface;
+import frc.robot.subsystems.Subsystems;
+import frc.robot.userinterface.UserInterface;
 
 public class TankDrive extends Command {
 

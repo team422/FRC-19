@@ -1,6 +1,6 @@
-package main.java.frc.robot.userinterface;
+package frc.robot.userinterface;
 
-import main.java.frc.robot.RobotMap;
+import frc.robot.RobotMap;
 
 public class UserInterface {
 

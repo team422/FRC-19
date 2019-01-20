@@ -1,7 +1,7 @@
-package main.java.frc.robot.commands;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import main.java.frc.robot.subsystems.Subsystems;
+import frc.robot.subsystems.Subsystems;
 
 public class OutakeRocket extends CommandGroup {
 

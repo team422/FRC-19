@@ -1,7 +1,7 @@
-package main.java.frc.robot.commands;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import main.java.frc.robot.subsystems.Subsystems;
+import frc.robot.subsystems.Subsystems;
 
 public class RollEscalator extends Command {
     public RollEscalator() {

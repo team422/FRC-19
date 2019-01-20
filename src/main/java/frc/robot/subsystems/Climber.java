@@ -1,9 +1,9 @@
-package main.java.frc.robot.subsystems;
+package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import main.java.frc.robot.RobotMap;
+import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.AnalogInput;
 
@@ -35,7 +35,7 @@ public class Climber extends Subsystem {
     }
 
     public void setFrontClimbMotors(double front) {
-        backClimb.set(front);
+        frontClimb.set(front);
     }
 
     public double getUltrasonicDistance() {

@@ -1,4 +1,5 @@
 {
   "java.configuration.updateBuildConfiguration": "interactive",
-  "wpilib.online": true
+  "wpilib.online": true,
+  "wpilib.deployOffline": false
 }

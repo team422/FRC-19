@@ -1,4 +1,4 @@
-package main.java.frc.robot.userinterface;
+package frc.robot.userinterface;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;

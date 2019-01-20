@@ -1,4 +1,4 @@
-package main.java.frc.robot.subsystems;
+package frc.robot.subsystems;
 
 public class Subsystems {
 

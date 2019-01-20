@@ -1,9 +1,9 @@
-package main.java.frc.robot.subsystems;
+package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import main.java.frc.robot.RobotMap;
+import frc.robot.RobotMap;
 
 public class Hatch extends Subsystem {
 
