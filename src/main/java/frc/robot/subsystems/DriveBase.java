@@ -11,12 +11,12 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class DriveBase extends Subsystem {
 
-    private WPI_TalonSRX leftMasterMotor;
-    private WPI_TalonSRX rightMasterMotor;
-    private WPI_VictorSPX leftFollower1;
-    private WPI_VictorSPX leftFollower2;
-    private WPI_VictorSPX rightFollower1;
-    private WPI_VictorSPX rightFollower2;        
+    private WPI_TalonSRX leftMiddleMaster;
+    private WPI_TalonSRX rightMiddleMaster;
+    private WPI_VictorSPX leftFrontFollower;
+    private WPI_VictorSPX leftRearFollower;
+    private WPI_VictorSPX rightFrontFollower;
+    private WPI_VictorSPX rightRearFollower;        
     private ADXRS450_Gyro gyro;
     private SpeedControllerGroup leftSide;
     private SpeedControllerGroup rightSide;
@@ -24,19 +24,19 @@ public class DriveBase extends Subsystem {
 
     public DriveBase() {
         super("DriveBase");
-        this.leftMasterMotor = new WPI_TalonSRX(RobotMap.leftMiddleMaster); 
-        this.rightMasterMotor = new WPI_TalonSRX(RobotMap.rightFrontFollower);
-        this.leftFollower1 = new WPI_VictorSPX(RobotMap.leftFrontFollower);
-        this.leftFollower2 = new WPI_VictorSPX(RobotMap.leftRearFollower);
-        this.rightFollower1 = new WPI_VictorSPX(RobotMap.rightFrontFollower);
-        this.rightFollower2 = new WPI_VictorSPX(RobotMap.rightRearFollower);
+        this.leftMiddleMaster = new WPI_TalonSRX(RobotMap.leftMiddleMaster); 
+        this.rightMiddleMaster = new WPI_TalonSRX(RobotMap.rightMiddleMaster);
+        this.leftFrontFollower = new WPI_VictorSPX(RobotMap.leftFrontFollower);
+        this.leftRearFollower = new WPI_VictorSPX(RobotMap.leftRearFollower);
+        this.rightFrontFollower = new WPI_VictorSPX(RobotMap.rightFrontFollower);
+        this.rightRearFollower = new WPI_VictorSPX(RobotMap.rightRearFollower);
         this.gyro = new ADXRS450_Gyro();
-        this.leftSide = new SpeedControllerGroup(leftMasterMotor, leftFollower1, leftFollower2);
-        this.rightSide = new SpeedControllerGroup(rightMasterMotor, rightFollower1, rightFollower2);        
+        this.leftSide = new SpeedControllerGroup(leftMiddleMaster, leftFrontFollower, leftRearFollower);
+        this.rightSide = new SpeedControllerGroup(rightMiddleMaster, rightFrontFollower, rightRearFollower);        
         this.cheesyDrive = new DifferentialDrive(leftSide, rightSide);
-        leftMasterMotor.setInverted(true);
-        leftFollower1.setInverted(true);
-        leftFollower2.setInverted(true);
+        leftMiddleMaster.setInverted(true);
+        leftFrontFollower.setInverted(true);
+        leftRearFollower.setInverted(true);
     }
 
     public void initDefaultCommand() {this.setDefaultCommand(new TankDrive());}
@@ -47,11 +47,11 @@ public class DriveBase extends Subsystem {
     }
 
     public int getLeftPosition() {
-        return leftMasterMotor.getSelectedSensorPosition(0);
+        return leftMiddleMaster.getSelectedSensorPosition(0);
     }
 
     public int getRightPosition() {
-        return rightMasterMotor.getSelectedSensorPosition(0);
+        return rightMiddleMaster.getSelectedSensorPosition(0);
     }
 
     public double getGyroAngle() {
@@ -59,8 +59,8 @@ public class DriveBase extends Subsystem {
     }
 
     public void zeroEncoderPosition() {
-        leftMasterMotor.setSelectedSensorPosition(0,0,10);
-        rightMasterMotor.setSelectedSensorPosition(0,0,10);
+        leftMiddleMaster.setSelectedSensorPosition(0,0,10);
+        rightMiddleMaster.setSelectedSensorPosition(0,0,10);
     }
 
     public void zeroGyroAngle() {
