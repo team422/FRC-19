@@ -15,6 +15,8 @@ public class TrackLine extends Command {
     private NetworkTableEntry lineY0;
     private NetworkTableEntry lineY1;
     private double correction;
+    private boolean isTracking0;
+    private double deadband = 5; 
     
     public TrackLine() {
         super("TrackLine");
@@ -37,12 +39,21 @@ public class TrackLine extends Command {
     public void execute() {
         if (lineY0.getDouble(-404) > lineY1.getDouble(-404)) {
             correction = (39 - lineX0.getDouble(-404)) / 5.0d;
+            isTracking0 = true;
         } else {
             correction = (39 - lineX1.getDouble(-404)) / 5.0d;
+            isTracking0 = false;
         }
         correction *= 0.15d;
-        correction += 1d;
-        Subsystems.driveBase.setMotors(0.2*correction, -0.2*correction);
+        if (correction > 0) {
+            correction += 1d;
+        } else {
+            correction -= 1d;
+        }
+        if ((isTracking0 && lineX0.getDouble(-404) > (39 - deadband) && lineX0.getDouble(-404) < (39 + deadband)) || (!isTracking0 && lineX1.getDouble(-404) > (39 - deadband) && lineX1.getDouble(-404) < (39 + deadband))) {
+            correction = 0;
+        }
+        Subsystems.driveBase.setMotors(0.25*correction, -0.25*correction);
     }
 
     @Override
