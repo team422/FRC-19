@@ -27,7 +27,8 @@ public class Robot extends TimedRobot {
     private NetworkTableEntry lineX1;
     private NetworkTableEntry lineY0;
     private NetworkTableEntry lineY1;
-    private Command TrackObject;
+    //private Command TrackObject;
+    private Command TrackLine;
 
     public void robotInit() {
         NetworkTableInstance inst = NetworkTableInstance.getDefault();
@@ -41,14 +42,16 @@ public class Robot extends TimedRobot {
         lineY0 = pixy.getEntry("lineY0");
         lineY1 = pixy.getEntry("lineY1");
         blockArea = pixy.getEntry("blockArea");
-        TrackObject = new TrackObject();
+        //TrackObject = new TrackObject();
+        TrackLine = new TrackLine();
+
     }
 
     public void disabledInit() {}
 
     public void autonomousInit() {
         Scheduler.getInstance().removeAll();
-        TrackObject.start();
+        TrackLine.start();
     }
 
     public void teleopInit() {}

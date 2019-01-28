@@ -8,12 +8,16 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTable;
 
 
-public class TrackObject extends Command {
+public class TrackLine extends Command {
    
-    private NetworkTableEntry blockX;
-   
-    public TrackObject() {
-        super("TrackObject");
+    private NetworkTableEntry lineX0;
+    private NetworkTableEntry lineX1;
+    private NetworkTableEntry lineY0;
+    private NetworkTableEntry lineY1;
+    private double correction;
+    
+    public TrackLine() {
+        super("TrackLine");
         requires(Subsystems.driveBase);
     }
 
@@ -21,15 +25,22 @@ public class TrackObject extends Command {
     public void initialize() {
         NetworkTableInstance inst = NetworkTableInstance.getDefault();
         NetworkTable pixy = inst.getTable("pixy");
-        blockX = pixy.getEntry("blockX");
+        lineX0 = pixy.getEntry("lineX0");
+        lineX1 = pixy.getEntry("lineX1");
+        lineY0 = pixy.getEntry("lineY0");
+        lineY1 = pixy.getEntry("lineY1");
         Subsystems.driveBase.zeroEncoderPosition();
         Subsystems.driveBase.zeroGyroAngle();
     }
     
     @Override
     public void execute() {
-        double correction = (160.0d - blockX.getDouble(-404)) / 5.0d;
-        correction *= 0.17d;
+        if (lineY0.getDouble(-404) > lineY1.getDouble(-404)) {
+            correction = (39 - lineX0.getDouble(-404)) / 5.0d;
+        } else {
+            correction = (39 - lineX1.getDouble(-404)) / 5.0d;
+        }
+        correction *= 0.15d;
         correction += 1d;
         Subsystems.driveBase.setMotors(0.2*correction, -0.2*correction);
     }
