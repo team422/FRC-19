@@ -8,15 +8,16 @@ import frc.robot.RobotMap;
 import frc.robot.commands.TankDrive;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.MotorSafety;
 
 public class DriveBase extends Subsystem {
 
-    private WPI_TalonSRX leftMiddleMaster;
-    private WPI_TalonSRX rightMiddleMaster;
-    private WPI_VictorSPX leftFrontFollower;
-    private WPI_VictorSPX leftRearFollower;
-    private WPI_VictorSPX rightFrontFollower;
-    private WPI_VictorSPX rightRearFollower;        
+    public WPI_TalonSRX leftMiddleMaster;
+    public WPI_TalonSRX rightMiddleMaster;
+    public WPI_TalonSRX leftFrontFollower;
+    public WPI_TalonSRX leftRearFollower;
+    public WPI_TalonSRX rightFrontFollower;
+    public WPI_TalonSRX rightRearFollower;//last 4 are victors on comp        
     private ADXRS450_Gyro gyro;
     private SpeedControllerGroup leftSide;
     private SpeedControllerGroup rightSide;
@@ -26,17 +27,33 @@ public class DriveBase extends Subsystem {
         super("DriveBase");
         this.leftMiddleMaster = new WPI_TalonSRX(RobotMap.leftMiddleMaster); 
         this.rightMiddleMaster = new WPI_TalonSRX(RobotMap.rightMiddleMaster);
-        this.leftFrontFollower = new WPI_VictorSPX(RobotMap.leftFrontFollower);
-        this.leftRearFollower = new WPI_VictorSPX(RobotMap.leftRearFollower);
-        this.rightFrontFollower = new WPI_VictorSPX(RobotMap.rightFrontFollower);
-        this.rightRearFollower = new WPI_VictorSPX(RobotMap.rightRearFollower);
+        this.leftFrontFollower = new WPI_TalonSRX(RobotMap.leftFrontFollower);
+        this.leftRearFollower = new WPI_TalonSRX(RobotMap.leftRearFollower);
+        this.rightFrontFollower = new WPI_TalonSRX(RobotMap.rightFrontFollower);
+        this.rightRearFollower = new WPI_TalonSRX(RobotMap.rightRearFollower);
+
+        leftMiddleMaster.setInverted(true);
+        leftFrontFollower.setInverted(true);
+        leftRearFollower.setInverted(true);
+
+        // leftMiddleMaster.setExpiration(1);
+        // rightMiddleMaster.setExpiration(1);
+        // leftFrontFollower.setExpiration(1);
+        // leftRearFollower.setExpiration(1);
+        // rightFrontFollower.setExpiration(1);
+        // rightRearFollower.setExpiration(1);
+
+        // leftMiddleMaster.setSafetyEnabled(false);
+        // rightMiddleMaster.setSafetyEnabled(false);
+        // leftFrontFollower.setSafetyEnabled(false);
+        // leftRearFollower.setSafetyEnabled(false);
+        // rightFrontFollower.setSafetyEnabled(false);
+        // rightRearFollower.setSafetyEnabled(false);
+
         this.gyro = new ADXRS450_Gyro();
         this.leftSide = new SpeedControllerGroup(leftMiddleMaster, leftFrontFollower, leftRearFollower);
         this.rightSide = new SpeedControllerGroup(rightMiddleMaster, rightFrontFollower, rightRearFollower);        
         this.cheesyDrive = new DifferentialDrive(leftSide, rightSide);
-        leftMiddleMaster.setInverted(true);
-        leftFrontFollower.setInverted(true);
-        leftRearFollower.setInverted(true);
     }
 
     public void initDefaultCommand() {this.setDefaultCommand(new TankDrive());}

@@ -14,10 +14,14 @@ public class TankDrive extends Command {
     super("TankDrive");
     requires(Subsystems.driveBase);
   }
+
+  protected void initialize() {}
   
   protected void execute() {
     double speed;
     double rotation;
+
+    System.out.println("Running Tankdrive");
 
     if (UserInterface.driverController.getRightJoystickY() < -0.1) {
       speed = -(Math.pow(UserInterface.driverController.getRightJoystickY(), 2));
@@ -28,10 +32,10 @@ public class TankDrive extends Command {
     }
     updatedSpeed = speed;
 
-    if (UserInterface.driverController.getLeftJoystickX() < -0.1) {
-      rotation = -(Math.pow(UserInterface.driverController.getLeftJoystickX(), 3));
-    } else if (UserInterface.driverController.getLeftJoystickX() > 0.1) {
-      rotation = Math.pow(UserInterface.driverController.getLeftJoystickX(), 3);
+    if (UserInterface.driverController.getLeftJoystickX() < -0.05) {
+      rotation = (Math.pow(UserInterface.driverController.getLeftJoystickX(), 5));
+    } else if (UserInterface.driverController.getLeftJoystickX() > 0.05) {
+      rotation = Math.pow(UserInterface.driverController.getLeftJoystickX(), 5);
     } else {
       rotation = 0;
     }
@@ -51,7 +55,7 @@ public class TankDrive extends Command {
       rotation = updatedRotation - maxChange;
     }
 
-    Subsystems.driveBase.cheesyDrive.curvatureDrive(rotation, speed, true);
+    Subsystems.driveBase.cheesyDrive.curvatureDrive(0.5*rotation, 0.5*speed, true);
   }
 
   protected boolean isFinished() {

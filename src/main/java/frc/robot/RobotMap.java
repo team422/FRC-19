@@ -6,7 +6,7 @@ public class RobotMap {
      *  Whether or not this is the competition bot
      *  Changing this variable will change all the ports accordingly.
      */
-    public static final boolean compBot = true;
+    public static final boolean compBot = true;//right now true is pbot, false is Axiom
 
     /**
      * Various Ports
@@ -14,17 +14,17 @@ public class RobotMap {
 
     // Talon/Victor IDS2
     
-    public static final int leftFrontFollower = (compBot) ? 1 : 44;
-    public static final int leftMiddleMaster = (compBot) ? 2 : 40;
-    public static final int leftRearFollower = (compBot) ? 3 : 21;
-    public static final int rightFrontFollower = (compBot) ? 4 : 42;
-    public static final int rightMiddleMaster = (compBot) ? 5 : 39;
-    public static final int rightRearFollower = (compBot) ? 6 : 46;
+    public static final int leftFrontFollower = (compBot) ? 20 : 2;
+    public static final int leftMiddleMaster = (compBot) ? 21 : 1;
+    public static final int leftRearFollower = (compBot) ? 22 : 3;
+    public static final int rightFrontFollower = (compBot) ? 35 : 5;
+    public static final int rightMiddleMaster = (compBot) ? 34 : 4;
+    public static final int rightRearFollower = (compBot) ? 33 : 6;
 
-    public static final int leftBackClimb = (compBot) ? 1 : 1;
-    public static final int leftFrontClimb = (compBot) ? 1 : 1;
-    public static final int rightBackClimb = (compBot) ? 1 : 1;
-    public static final int rightFrontClimb = (compBot) ? 1 : 1;
+    public static final int leftBackClimb = (compBot) ? 40 : 1;
+    public static final int leftFrontClimb = (compBot) ? 12 : 1;
+    public static final int rightBackClimb = (compBot) ? 10 : 1;
+    public static final int rightFrontClimb = (compBot) ? 17 : 1;
 
     public static final int cargoIntakeWheels = 1;
     public static final int cargoIntakePivot = 1; 

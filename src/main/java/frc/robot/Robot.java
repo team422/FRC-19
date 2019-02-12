@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
 import frc.robot.subsystems.Subsystems;
 import frc.robot.userinterface.UserInterface;
+import edu.wpi.first.wpilibj.XboxController;
 
 public class Robot extends TimedRobot {
 
@@ -29,6 +30,13 @@ public class Robot extends TimedRobot {
     private NetworkTableEntry lineY1;
     //private Command TrackObject;
     private Command TrackLine;
+    private Command TankDrive;
+    private Command DriveStraight;
+    private double slope = 0;
+
+    public Robot() {
+        super(0.06);
+    }
 
     public void robotInit() {
         NetworkTableInstance inst = NetworkTableInstance.getDefault();
@@ -44,17 +52,29 @@ public class Robot extends TimedRobot {
         blockArea = pixy.getEntry("blockArea");
         //TrackObject = new TrackObject();
         TrackLine = new TrackLine();
-
+        TankDrive = new TankDrive();
+        DriveStraight = new DriveStraight(10000,-0.1,30);    
+        Subsystems.driveBase.cheesyDrive.setSafetyEnabled(false);
+        // Subsystems.driveBase.leftMiddleMaster.setInverted(true);
+        // Subsystems.driveBase.leftFrontFollower.setInverted(true);
+        // Subsystems.driveBase.leftRearFollower.setInverted(true);
     }
 
-    public void disabledInit() {}
+    public void disabledInit() {
+        Scheduler.getInstance().removeAll();
+    }
 
     public void autonomousInit() {
         Scheduler.getInstance().removeAll();
-        TrackLine.start();
+        //TankDrive.start();
+        //TrackLine.start();
+        DriveStraight.start();
     }
 
-    public void teleopInit() {}
+    public void teleopInit() {
+        System.out.println("This print statement works");
+        Scheduler.getInstance().removeAll();
+    }
 
     public void disabledPeriodic() {
         printDataToSmartDashboard();
@@ -66,7 +86,36 @@ public class Robot extends TimedRobot {
     }
 
     public void teleopPeriodic() {
+        System.out.println("Teleoping periodically");
+        Scheduler.getInstance().run();
         printDataToSmartDashboard();
+        // if (UserInterface.operatorController.getLeftJoystickY() > 0.1) {
+        //     Subsystems.climber.setBackClimbMotors(UserInterface.operatorController.getLeftJoystickY());
+        // } else if (UserInterface.operatorController.getLeftJoystickY() < -0.1) {
+        //     Subsystems.climber.setBackClimbMotors(UserInterface.operatorController.getLeftJoystickY());
+        // } else {
+        //     Subsystems.climber.setBackClimbMotors(0);
+        // }
+        // if (UserInterface.operatorController.getRightJoystickY() > 0.1) {
+        //     Subsystems.climber.setFrontClimbMotors(UserInterface.operatorController.getRightJoystickY());
+        // } else if (UserInterface.operatorController.getRightJoystickY() < -0.1) { 
+        //     Subsystems.climber.setFrontClimbMotors(UserInterface.operatorController.getRightJoystickY());
+        // } else {
+        //     Subsystems.climber.setFrontClimbMotors(0);
+        // }
+
+
+        // if (UserInterface.operatorController.getRightJoystickY() > 0.1) {
+        //     Subsystems.climber.setFrontRightMotors(UserInterface.operatorController.getRightJoystickY());
+        // } else if (UserInterface.operatorController.getRightJoystickY() < -0.1) { 
+        //     Subsystems.climber.setFrontRightMotors(UserInterface.operatorController.getRightJoystickY());
+        // }
+
+        // if (UserInterface.operatorController.getLeftJoystickY() > 0.1) {
+        //     Subsystems.climber.setFrontLeftMotors(UserInterface.operatorController.getLeftJoystickY());
+        // } else if (UserInterface.operatorController.getLeftJoystickY() < -0.1) { 
+        //     Subsystems.climber.setFrontLeftMotors(UserInterface.operatorController.getLeftJoystickY());
+        // }
     }
 
     private void printDataToSmartDashboard() {

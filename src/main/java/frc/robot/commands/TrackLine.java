@@ -6,18 +6,23 @@ import frc.robot.userinterface.UserInterface;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTable;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TrackLine extends Command {
-   
+
     private NetworkTableEntry lineX0;
     private NetworkTableEntry lineX1;
     private NetworkTableEntry lineY0;
     private NetworkTableEntry lineY1;
     private double correction;
-    private boolean isTracking0;
-    private double deadband = 5; 
-    
+    private double deadband = 5;
+    private double out;
+    private double across;
+    private static double cameraOffset = 11.375;
+    private double lineOffset1;
+    private double lineOffset2;
+    private double slope;
+
     public TrackLine() {
         super("TrackLine");
         requires(Subsystems.driveBase);
@@ -38,22 +43,40 @@ public class TrackLine extends Command {
     @Override
     public void execute() {
         if (lineY0.getDouble(-404) > lineY1.getDouble(-404)) {
-            correction = (39 - lineX0.getDouble(-404)) / 5.0d;
-            isTracking0 = true;
+            out = -10.24*Math.log(lineY0.getDouble(-404)) + 48.61;
+            across = 0.8814 * (out) + 8.722;
+            lineOffset1 = (lineX0.getDouble(-404) - (78/2)) * (across / 78);
+            out = -10.24*Math.log(lineY1.getDouble(-404)) + 48.61;
+            across = 0.8814 * (out) + 8.722;
+            lineOffset2 = (lineX1.getDouble(-404) - (78/2)) * (across / 78);            
+            SmartDashboard.putNumber("Distance Out", out);
+            SmartDashboard.putNumber("Distance Across", across);
+            SmartDashboard.putNumber("Distance Offset", lineOffset1);
+            //SmartDashboard.putNumber("Distance", -0.0017*Math.pow((lineY0.getDouble(-404)),3) + 0.1673*Math.pow((lineY0.getDouble(-404)),2)-5.8355*(lineY0.getDouble(-404))+95.281);
+            //SmartDashboard.putNumber("Distance", 0.0135*Math.pow((lineY0.getDouble(-404)),2)-1.6311*(lineY0.getDouble(-404))+62.856);
         } else {
-            correction = (39 - lineX1.getDouble(-404)) / 5.0d;
-            isTracking0 = false;
+            out = -10.24*Math.log(lineY1.getDouble(-404)) + 48.61;
+            across = 0.8814 * (out) + 8.722;
+            lineOffset1 = (lineX1.getDouble(-404) - (78/2)) * (across / 78);
+            out = -10.24*Math.log(lineY0.getDouble(-404)) + 48.61;
+            across = 0.8814 * (out) + 8.722;
+            lineOffset2 = (lineX0.getDouble(-404) - (78/2)) * (across / 78);
+            SmartDashboard.putNumber("Distance Out", out);
+            SmartDashboard.putNumber("Distance Across", across);
+            SmartDashboard.putNumber("Distance Offset", lineOffset1);            
+            //SmartDashboard.putNumber("Distance", -0.0017*Math.pow((lineY1.getDouble(-404)),3) + 0.1673*Math.pow((lineY1.getDouble(-404)),2)-5.8355*(lineY1.getDouble(-404))+95.281);
+            //SmartDashboard.putNumber("Distance", 0.0135*Math.pow((lineY1.getDouble(-404)),2)-1.6311*(lineY1.getDouble(-404))+62.856);
         }
-        correction *= 0.15d;
-        if (correction > 0) {
-            correction += 1d;
-        } else {
-            correction -= 1d;
-        }
-        if ((isTracking0 && lineX0.getDouble(-404) > (39 - deadband) && lineX0.getDouble(-404) < (39 + deadband)) || (!isTracking0 && lineX1.getDouble(-404) > (39 - deadband) && lineX1.getDouble(-404) < (39 + deadband))) {
-            correction = 0;
-        }
-        Subsystems.driveBase.setMotors(0.25*correction, -0.25*correction);
+        correction = lineOffset1 - lineOffset2;
+
+        slope = Math.abs(((lineY1.getDouble(-404)-lineY0.getDouble(-404))/(lineX1.getDouble(-404)-lineX0.getDouble(-404))));
+        SmartDashboard.putNumber("Angle", -Math.atan(slope)*(180/Math.PI)+90);
+        SmartDashboard.putNumber("Slope", slope);
+        SmartDashboard.putNumber("Parallel Angle", (lineOffset1*5.08));
+
+        correction *= 0.3d;
+        correction += 1d;
+        Subsystems.driveBase.setMotors(0.15*correction,-0.15*correction);
     }
 
     @Override
