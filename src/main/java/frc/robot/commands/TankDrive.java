@@ -39,7 +39,7 @@ public class TankDrive extends Command {
     } else {
       rotation = 0;
     }
-    updatedRotation = rotation;    
+    updatedRotation = -rotation;    
 
     double speedDifference = speed - updatedSpeed;
     if (speedDifference > maxChange) {

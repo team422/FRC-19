@@ -28,10 +28,12 @@ public class Robot extends TimedRobot {
     private NetworkTableEntry lineX1;
     private NetworkTableEntry lineY0;
     private NetworkTableEntry lineY1;
-    //private Command TrackObject;
+    private Command TrackObject;
+    private Command ComplicatedTrackLine;
     private Command TrackLine;
     private Command TankDrive;
     private Command DriveStraight;
+    private CommandGroup ParallelTurnBetter;
     private double slope = 0;
 
     public Robot() {
@@ -51,7 +53,9 @@ public class Robot extends TimedRobot {
         lineY1 = pixy.getEntry("lineY1");
         blockArea = pixy.getEntry("blockArea");
         //TrackObject = new TrackObject();
+        ParallelTurnBetter = new ParallelTurnBetter();
         TrackLine = new TrackLine();
+        ComplicatedTrackLine = new ComplicatedTrackLine();
         TankDrive = new TankDrive();
         DriveStraight = new DriveStraight(10000,-0.1,30);    
         Subsystems.driveBase.cheesyDrive.setSafetyEnabled(false);
@@ -68,7 +72,9 @@ public class Robot extends TimedRobot {
         Scheduler.getInstance().removeAll();
         //TankDrive.start();
         //TrackLine.start();
-        DriveStraight.start();
+        //DriveStraight.start();
+        //ComplicatedTrackLine.start();
+        ParallelTurnBetter.start();
     }
 
     public void teleopInit() {
@@ -89,6 +95,9 @@ public class Robot extends TimedRobot {
         System.out.println("Teleoping periodically");
         Scheduler.getInstance().run();
         printDataToSmartDashboard();
+        if(UserInterface.driverController.A.get()) {
+            Subsystems.driveBase.setMotors(0.08,0.08);
+        }
         // if (UserInterface.operatorController.getLeftJoystickY() > 0.1) {
         //     Subsystems.climber.setBackClimbMotors(UserInterface.operatorController.getLeftJoystickY());
         // } else if (UserInterface.operatorController.getLeftJoystickY() < -0.1) {

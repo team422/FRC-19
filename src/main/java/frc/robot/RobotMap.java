@@ -7,6 +7,7 @@ public class RobotMap {
      *  Changing this variable will change all the ports accordingly.
      */
     public static final boolean compBot = true;//right now true is pbot, false is Axiom
+    public static double idealAngle = 0;
 
     /**
      * Various Ports
