@@ -35,6 +35,14 @@ public class Hatch extends Subsystem {
       puncher.set(DoubleSolenoid.Value.kForward);
     }
 
+    public double getLeftPosition() {
+        return leftGrabber.getAngle();
+    }
+
+    public double getRightPosition() {
+        return leftGrabber.getAngle();
+    }
+
     public void punchInwards() {
       puncher.set(DoubleSolenoid.Value.kReverse);
     }

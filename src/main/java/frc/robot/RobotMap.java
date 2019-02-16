@@ -15,22 +15,21 @@ public class RobotMap {
 
     // Talon/Victor IDS2
     
-    public static final int leftFrontFollower = (compBot) ? 20 : 2;
-    public static final int leftMiddleMaster = (compBot) ? 21 : 1;
-    public static final int leftRearFollower = (compBot) ? 22 : 3;
-    public static final int rightFrontFollower = (compBot) ? 35 : 5;
-    public static final int rightMiddleMaster = (compBot) ? 34 : 4;
-    public static final int rightRearFollower = (compBot) ? 33 : 6;
+    public static final int leftFrontFollower = (compBot) ? 2 : 4;
+    public static final int leftMiddleMaster = (compBot) ? 1 : 11;
+    public static final int leftRearFollower = (compBot) ? 3 : 6;
+    public static final int rightFrontFollower = (compBot) ? 5 : 3;
+    public static final int rightMiddleMaster = (compBot) ? 4 : 12;
+    public static final int rightRearFollower = (compBot) ? 6 : 5;
 
     public static final int leftBackClimb = (compBot) ? 40 : 1;
     public static final int leftFrontClimb = (compBot) ? 12 : 1;
     public static final int rightBackClimb = (compBot) ? 10 : 1;
     public static final int rightFrontClimb = (compBot) ? 17 : 1;
 
-    public static final int cargoIntakeWheels = 1;
-    public static final int cargoIntakePivot = 1; 
-    public static final int cargoEscalator1 = 1; 
-    public static final int cargoEscalator2 = 1;
+    public static final int cargoIntakeWheels = 8;
+    public static final int cargoIntakePivot = 13; 
+    public static final int cargoEscalator = 9; 
 
     // Analog IO Ports
     public static final int intakeUltrasonic = 3;
@@ -43,10 +42,10 @@ public class RobotMap {
 
     // Double Solenoid Values
 
-    public static final int cargoDirectorFlapPush = 1; 
-    public static final int cargoDirectorFlapPull = 2;
-    public static final int punchingOutwards = 3;
-    public static final int punchingInwards = 4;
+    public static final int cargoDirectorFlapPush = 0; 
+    public static final int cargoDirectorFlapPull = 1;
+    public static final int punchingOutwards = 6;
+    public static final int punchingInwards = 7;
 
     //Servo Ports        
     public static final int leftHatchGrabber = 1;

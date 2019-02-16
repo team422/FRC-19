@@ -16,7 +16,7 @@ public class ParallelEscalator extends Command {
 
     @Override
     public void execute() {
-        Subsystems.cargo.setEscalatorMotors(0.5);
+        Subsystems.cargo.setEscalatorMotors(0.2);
     }
 
     @Override

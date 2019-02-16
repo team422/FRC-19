@@ -6,8 +6,8 @@ import frc.robot.subsystems.Subsystems;
 public class DriveStraight extends Command {
 
   private double ticks;
-  private boolean forward;
   private double speed;
+  private boolean forward;
   private double timeout;
 
   public DriveStraight(double Inches, double Speed, double TimeOut) {
@@ -32,9 +32,9 @@ public class DriveStraight extends Command {
 
   @Override
   protected void execute() {
-    // double correction = Subsystems.driveBase.getGyroAngle();
-    // correction *= 0.075;
-    double correction = 1.0;//should be +=
+    double correction = Subsystems.driveBase.getGyroAngle();
+    correction *= 0.075;
+    correction += 1.0;
     if (forward) {
         Subsystems.driveBase.setMotors(speed, speed * correction);
     } else {

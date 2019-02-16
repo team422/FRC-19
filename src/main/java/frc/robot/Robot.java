@@ -34,6 +34,24 @@ public class Robot extends TimedRobot {
     private Command TankDrive;
     private Command DriveStraight;
     private CommandGroup ParallelTurnBetter;
+
+    private CommandGroup CargoIntake;
+    private Command CargoPivotDown;
+    private CommandGroup CargoRocketOutake;
+    private CommandGroup CargoShipOutake;
+    private Command FlapDown;
+    private Command FlapUp;
+    private Command HatchClamp;
+    private Command HatchRelease;
+    private CommandGroup IntakeHatch;
+    private CommandGroup OutakeRocket;
+    private CommandGroup OutakeShip;
+    private Command ParallelEscalator;
+    private Command PunchInwards;
+    private Command PunchOutwards;
+    private Command RollBallIntake;
+    private Command RollEscalator;
+
     private double slope = 0;
 
     public Robot() {
@@ -60,9 +78,24 @@ public class Robot extends TimedRobot {
         TankDrive = new TankDrive();
         DriveStraight = new DriveStraight(10000,-0.1,30);    
         Subsystems.driveBase.cheesyDrive.setSafetyEnabled(false);
-        // Subsystems.driveBase.leftMiddleMaster.setInverted(true);
-        // Subsystems.driveBase.leftFrontFollower.setInverted(true);
-        // Subsystems.driveBase.leftRearFollower.setInverted(true);
+
+        CargoIntake = new CargoIntake(); 
+        CargoPivotDown = new CargoPivotDown(0.1,1);
+        CargoRocketOutake = new CargoRocketOutake();
+        CargoShipOutake = new CargoShipOutake();
+        FlapDown = new FlapDown();
+        FlapUp = new FlapUp();
+        HatchClamp = new HatchClamp();
+        HatchRelease = new HatchRelease();
+        IntakeHatch = new IntakeHatch();
+        OutakeRocket = new OutakeRocket();
+        OutakeShip = new OutakeShip();
+        ParallelEscalator = new ParallelEscalator();
+        PunchInwards = new PunchInwards();
+        PunchOutwards = new PunchOutwards();
+        RollBallIntake = new RollBallIntake();
+        RollEscalator = new RollEscalator();
+
         Subsystems.driveBase.gyro.reset();
         Subsystems.driveBase.gyro.calibrate();
     }
@@ -77,7 +110,7 @@ public class Robot extends TimedRobot {
         //TrackLine.start();
         //DriveStraight.start();
         //ComplicatedTrackLine.start();
-        ParallelTurnBetter.start();
+        //ParallelTurnBetter.start();
     }
 
     public void teleopInit() {
@@ -96,11 +129,81 @@ public class Robot extends TimedRobot {
 
     public void teleopPeriodic() {
         //System.out.println("Teleoping periodically");
+        //Scheduler.getInstance().removeAll();//may be necessary
         Scheduler.getInstance().run();
         printDataToSmartDashboard();
-        if(UserInterface.driverController.A.get()) {
-            Subsystems.driveBase.setMotors(0.08,0.08);
+        if(UserInterface.operatorController.BACK.get()) {
+            CargoIntake.start();
         }
+        if(UserInterface.operatorController.getPOVAngle() == 180) {
+            CargoPivotDown.start(); 
+        }
+        if(UserInterface.operatorController.RB.get()) {
+            CargoRocketOutake.start();
+        }
+        if(UserInterface.operatorController.LB.get()) {
+            CargoShipOutake.start();
+        }
+        if(UserInterface.operatorController.A.get()) {
+            FlapDown.start();
+        }
+        if(UserInterface.operatorController.Y.get()) {
+            FlapUp.start();
+        }
+        if(UserInterface.operatorController.B.get()) {
+            HatchClamp.start();
+        }
+        if(UserInterface.operatorController.X.get()) {
+            HatchRelease.start();
+        }
+        if(UserInterface.operatorController.getLeftTrigger() > 0.3) {
+            IntakeHatch.start();
+        }
+        if(UserInterface.operatorController.getRightTrigger() > 0.3) {
+            OutakeShip.start();
+        }
+        if(UserInterface.operatorController.START.get()) {
+            ParallelEscalator.start();
+        }
+        if(UserInterface.operatorController.getPOVAngle() == 270) {
+            PunchInwards.start();
+        }
+        if(UserInterface.operatorController.getPOVAngle() == 90) {
+            PunchOutwards.start();
+        }
+        if(UserInterface.operatorController.getRightJoystickY() > 0.1) {
+            RollBallIntake.start();
+        }
+        if(UserInterface.operatorController.getLeftJoystickY() > 0.1) {
+            RollEscalator.start();
+        }
+        // if (UserInterface.operatorController.getLeftJoystickY() > 0.1) {
+        //     Subsystems.climber.setBackClimbMotors(UserInterface.operatorController.getLeftJoystickY());
+        // } else if (UserInterface.operatorController.getLeftJoystickY() < -0.1) {
+        //     Subsystems.climber.setBackClimbMotors(UserInterface.operatorController.getLeftJoystickY());
+        // } else {
+        //     Subsystems.climber.setBackClimbMotors(0);
+        // }
+        // if (UserInterface.operatorController.getRightJoystickY() > 0.1) {
+        //     Subsystems.climber.setFrontClimbMotors(UserInterface.operatorController.getRightJoystickY());
+        // } else if (UserInterface.operatorController.getRightJoystickY() < -0.1) { 
+        //     Subsystems.climber.setFrontClimbMotors(UserInterface.operatorController.getRightJoystickY());
+        // } else {
+        //     Subsystems.climber.setFrontClimbMotors(0);
+        // }
+
+
+        // if (UserInterface.operatorController.getRightJoystickY() > 0.1) {
+        //     Subsystems.climber.setFrontRightMotors(UserInterface.operatorController.getRightJoystickY());
+        // } else if (UserInterface.operatorController.getRightJoystickY() < -0.1) { 
+        //     Subsystems.climber.setFrontRightMotors(UserInterface.operatorController.getRightJoystickY());
+        // }
+
+        // if (UserInterface.operatorController.getLeftJoystickY() > 0.1) {
+        //     Subsystems.climber.setFrontLeftMotors(UserInterface.operatorController.getLeftJoystickY());
+        // } else if (UserInterface.operatorController.getLeftJoystickY() < -0.1) { 
+        //     Subsystems.climber.setFrontLeftMotors(UserInterface.operatorController.getLeftJoystickY());
+        // }
     }
 
     private void printDataToSmartDashboard() {
@@ -116,5 +219,8 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("RightDrivePosition", Subsystems.driveBase.getRightPosition());
         SmartDashboard.putNumber("LeftDrivePosition", Subsystems.driveBase.getRightPosition());
         SmartDashboard.putNumber("Gyro angle", Subsystems.driveBase.getGyroAngle());
+        SmartDashboard.putNumber("Hatch Left Angle", Subsystems.hatch.getLeftPosition());
+        SmartDashboard.putNumber("Hatch Right Angle", Subsystems.hatch.getRightPosition());
+        SmartDashboard.putNumber("POV Angle", UserInterface.operatorController.getPOVAngle());
     }
 }
