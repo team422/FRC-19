@@ -135,12 +135,12 @@ public class Robot extends TimedRobot {
         if(UserInterface.operatorController.BACK.get()) {
             CargoIntake.start();
         }
-        if(UserInterface.operatorController.RB.get()) {
+        if(UserInterface.operatorController.getPOVAngle() == 90) {
             CargoPivotDown.start(); 
         }
-        // if(UserInterface.operatorController.RB.get()) {
-        //     CargoRocketOutake.start();
-        // }
+        if(UserInterface.operatorController.RB.get()) {
+            CargoRocketOutake.start();
+        }
         if(UserInterface.operatorController.LB.get()) {
             CargoShipOutake.start();
         }
@@ -177,33 +177,6 @@ public class Robot extends TimedRobot {
         if(UserInterface.operatorController.getLeftJoystickY() > 0.1) {
             RollEscalator.start();
         }
-        // if (UserInterface.operatorController.getLeftJoystickY() > 0.1) {
-        //     Subsystems.climber.setBackClimbMotors(UserInterface.operatorController.getLeftJoystickY());
-        // } else if (UserInterface.operatorController.getLeftJoystickY() < -0.1) {
-        //     Subsystems.climber.setBackClimbMotors(UserInterface.operatorController.getLeftJoystickY());
-        // } else {
-        //     Subsystems.climber.setBackClimbMotors(0);
-        // }
-        // if (UserInterface.operatorController.getRightJoystickY() > 0.1) {
-        //     Subsystems.climber.setFrontClimbMotors(UserInterface.operatorController.getRightJoystickY());
-        // } else if (UserInterface.operatorController.getRightJoystickY() < -0.1) { 
-        //     Subsystems.climber.setFrontClimbMotors(UserInterface.operatorController.getRightJoystickY());
-        // } else {
-        //     Subsystems.climber.setFrontClimbMotors(0);
-        // }
-
-
-        // if (UserInterface.operatorController.getRightJoystickY() > 0.1) {
-        //     Subsystems.climber.setFrontRightMotors(UserInterface.operatorController.getRightJoystickY());
-        // } else if (UserInterface.operatorController.getRightJoystickY() < -0.1) { 
-        //     Subsystems.climber.setFrontRightMotors(UserInterface.operatorController.getRightJoystickY());
-        // }
-
-        // if (UserInterface.operatorController.getLeftJoystickY() > 0.1) {
-        //     Subsystems.climber.setFrontLeftMotors(UserInterface.operatorController.getLeftJoystickY());
-        // } else if (UserInterface.operatorController.getLeftJoystickY() < -0.1) { 
-        //     Subsystems.climber.setFrontLeftMotors(UserInterface.operatorController.getLeftJoystickY());
-        // }
     }
 
     private void printDataToSmartDashboard() {
