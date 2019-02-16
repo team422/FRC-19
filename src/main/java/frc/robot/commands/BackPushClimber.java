@@ -6,16 +6,18 @@ import frc.robot.subsystems.Subsystems;
 public class BackPushClimber extends Command {
 
     private double speed;
+    private double timeout;
 
     public BackPushClimber (double Speed, double TimeOut) {
         super("BackPushClimber");
+        timeout = TimeOut;
         requires(Subsystems.climber);
-        setTimeout(TimeOut);
         speed = Speed;
     } 
 
     @Override
     protected void initialize() {
+        setTimeout(timeout);
         Subsystems.climber.zeroBackClimbEncoders();
     }
   

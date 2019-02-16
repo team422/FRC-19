@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
+import frc.robot.commands.commandgroups.*;
 import frc.robot.subsystems.Subsystems;
 import frc.robot.userinterface.UserInterface;
 import edu.wpi.first.wpilibj.XboxController;

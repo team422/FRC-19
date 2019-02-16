@@ -8,16 +8,18 @@ public class DriveToWall extends Command {
   private double ticks;
   private boolean forward;
   private double speed;
+  private double timeout;
 
  public DriveToWall(double Speed, double TimeOut) {
     super("DriveToWall");
     requires(Subsystems.driveBase);
     speed = Speed;
-    setTimeout(TimeOut);                
+    timeout = TimeOut;
   }
 
   @Override
   protected void initialize() {
+    setTimeout(timeout);                
     Subsystems.driveBase.zeroEncoderPosition();
     Subsystems.driveBase.zeroGyroAngle();
   }
