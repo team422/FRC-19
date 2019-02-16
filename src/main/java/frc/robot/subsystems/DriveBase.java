@@ -9,6 +9,7 @@ import frc.robot.commands.TankDrive;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.MotorSafety;
+import edu.wpi.first.wpilibj.SPI;
 
 public class DriveBase extends Subsystem {
 
@@ -18,10 +19,11 @@ public class DriveBase extends Subsystem {
     public WPI_TalonSRX leftRearFollower;
     public WPI_TalonSRX rightFrontFollower;
     public WPI_TalonSRX rightRearFollower;//last 4 are victors on comp        
-    private ADXRS450_Gyro gyro;
+    public ADXRS450_Gyro gyro;
     private SpeedControllerGroup leftSide;
     private SpeedControllerGroup rightSide;
     public DifferentialDrive cheesyDrive; 
+    private static final SPI.Port kGyroPort = SPI.Port.kOnboardCS0;
 
     public DriveBase() {
         super("DriveBase");
@@ -50,7 +52,7 @@ public class DriveBase extends Subsystem {
         // rightFrontFollower.setSafetyEnabled(false);
         // rightRearFollower.setSafetyEnabled(false);
 
-        this.gyro = new ADXRS450_Gyro();
+        this.gyro = new ADXRS450_Gyro(kGyroPort);
         this.leftSide = new SpeedControllerGroup(leftMiddleMaster, leftFrontFollower, leftRearFollower);
         this.rightSide = new SpeedControllerGroup(rightMiddleMaster, rightFrontFollower, rightRearFollower);        
         this.cheesyDrive = new DifferentialDrive(leftSide, rightSide);
@@ -72,6 +74,7 @@ public class DriveBase extends Subsystem {
     }
 
     public double getGyroAngle() {
+        //sSystem.out.println(gyro.getAngle());
         return gyro.getAngle();       
     }
 

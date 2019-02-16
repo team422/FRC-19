@@ -2,14 +2,15 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.ComplicatedTrackLine;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 import frc.robot.RobotMap;
 
-public class ParallelTurnBetter extends CommandGroup {
+public class ParallelTurnBetter extends CommandGroup {  
 
   public ParallelTurnBetter() {
     addSequential(new ComplicatedTrackLine());
-    System.out.println("idealAngle: " + RobotMap.idealAngle);
-    addSequential(new Turn(RobotMap.idealAngle, 0.2, 100000));
+    //addSequential(new WaitCommand(3));
+    addSequential(new Turn(RobotMap.getIdeal(), 0.4, 100000));
   }
 
 }

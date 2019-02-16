@@ -37,10 +37,11 @@ public class Robot extends TimedRobot {
     private double slope = 0;
 
     public Robot() {
-        super(0.06);
+        super(0.08);
     }
 
     public void robotInit() {
+        System.out.println("Initializing Hot Take");
         NetworkTableInstance inst = NetworkTableInstance.getDefault();
         NetworkTable pixy = inst.getTable("pixy");
         blockX = pixy.getEntry("blockX");
@@ -62,6 +63,8 @@ public class Robot extends TimedRobot {
         // Subsystems.driveBase.leftMiddleMaster.setInverted(true);
         // Subsystems.driveBase.leftFrontFollower.setInverted(true);
         // Subsystems.driveBase.leftRearFollower.setInverted(true);
+        Subsystems.driveBase.gyro.reset();
+        Subsystems.driveBase.gyro.calibrate();
     }
 
     public void disabledInit() {
@@ -92,39 +95,12 @@ public class Robot extends TimedRobot {
     }
 
     public void teleopPeriodic() {
-        System.out.println("Teleoping periodically");
+        //System.out.println("Teleoping periodically");
         Scheduler.getInstance().run();
         printDataToSmartDashboard();
         if(UserInterface.driverController.A.get()) {
             Subsystems.driveBase.setMotors(0.08,0.08);
         }
-        // if (UserInterface.operatorController.getLeftJoystickY() > 0.1) {
-        //     Subsystems.climber.setBackClimbMotors(UserInterface.operatorController.getLeftJoystickY());
-        // } else if (UserInterface.operatorController.getLeftJoystickY() < -0.1) {
-        //     Subsystems.climber.setBackClimbMotors(UserInterface.operatorController.getLeftJoystickY());
-        // } else {
-        //     Subsystems.climber.setBackClimbMotors(0);
-        // }
-        // if (UserInterface.operatorController.getRightJoystickY() > 0.1) {
-        //     Subsystems.climber.setFrontClimbMotors(UserInterface.operatorController.getRightJoystickY());
-        // } else if (UserInterface.operatorController.getRightJoystickY() < -0.1) { 
-        //     Subsystems.climber.setFrontClimbMotors(UserInterface.operatorController.getRightJoystickY());
-        // } else {
-        //     Subsystems.climber.setFrontClimbMotors(0);
-        // }
-
-
-        // if (UserInterface.operatorController.getRightJoystickY() > 0.1) {
-        //     Subsystems.climber.setFrontRightMotors(UserInterface.operatorController.getRightJoystickY());
-        // } else if (UserInterface.operatorController.getRightJoystickY() < -0.1) { 
-        //     Subsystems.climber.setFrontRightMotors(UserInterface.operatorController.getRightJoystickY());
-        // }
-
-        // if (UserInterface.operatorController.getLeftJoystickY() > 0.1) {
-        //     Subsystems.climber.setFrontLeftMotors(UserInterface.operatorController.getLeftJoystickY());
-        // } else if (UserInterface.operatorController.getLeftJoystickY() < -0.1) { 
-        //     Subsystems.climber.setFrontLeftMotors(UserInterface.operatorController.getLeftJoystickY());
-        // }
     }
 
     private void printDataToSmartDashboard() {
@@ -137,5 +113,8 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("lineX1", lineX1.getDouble(-404));
         SmartDashboard.putNumber("lineY0", lineY0.getDouble(-404));
         SmartDashboard.putNumber("lineY1", lineY1.getDouble(-404));
+        SmartDashboard.putNumber("RightDrivePosition", Subsystems.driveBase.getRightPosition());
+        SmartDashboard.putNumber("LeftDrivePosition", Subsystems.driveBase.getRightPosition());
+        SmartDashboard.putNumber("Gyro angle", Subsystems.driveBase.getGyroAngle());
     }
 }

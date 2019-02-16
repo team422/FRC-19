@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Subsystems;
+import frc.robot.RobotMap;
 
 public class Turn extends Command {
 
@@ -17,11 +18,12 @@ public class Turn extends Command {
         requires(Subsystems.driveBase);
         degrees = Degrees;
         speed = Speed;
-        timeout = Timeout;
-        setTimeout(timeout);
+        setTimeout(Timeout);
     }
 
     public void initialize() {
+        degrees = RobotMap.getIdeal();
+        System.out.println("idealAngle: " + RobotMap.getIdeal());
         Subsystems.driveBase.zeroGyroAngle();
         Subsystems.driveBase.zeroEncoderPosition();
     }
@@ -40,6 +42,7 @@ public class Turn extends Command {
             // Turned to the left, but correcting to the right
             Subsystems.driveBase.setMotors(-speed / 2, speed / 2);
         }
+        //System.out.println("Gyro angle: " + Subsystems.driveBase.getGyroAngle());
     }
 
     public boolean isFinished() {

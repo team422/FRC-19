@@ -55,4 +55,13 @@ public class RobotMap {
     // Digital IO Ports
     public static final int cargoLimitSwitch = 1;
 
+    public static double getIdeal() {
+        return idealAngle;
+    }
+
+    public static void setIdeal(double angle) {
+        idealAngle = angle;
+        System.out.println("Ideal angle is now " + idealAngle);
+    }
+
 }

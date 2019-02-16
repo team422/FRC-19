@@ -21,7 +21,7 @@ public class TankDrive extends Command {
     double speed;
     double rotation;
 
-    System.out.println("Running Tankdrive");
+    //System.out.println("Running Tankdrive");
 
     if (UserInterface.driverController.getRightJoystickY() < -0.1) {
       speed = -(Math.pow(UserInterface.driverController.getRightJoystickY(), 2));

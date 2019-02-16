@@ -37,6 +37,7 @@ public class ComplicatedTrackLine extends Command {
     private double idealAngle;
     private double xdistance;
     private double ydistance;
+    private double camera_to_y_pixel_distance;
 
     public ComplicatedTrackLine() {
         super("ComplicatedTrackLine");
@@ -54,21 +55,21 @@ public class ComplicatedTrackLine extends Command {
         Subsystems.driveBase.zeroEncoderPosition();
         Subsystems.driveBase.zeroGyroAngle();
         if (lineY0.getDouble(-404) > lineY1.getDouble(-404)) {
-            SmartDashboard.putNumber("Y-distanceClose", compute_y_inches(lineY0.getDouble(-404)));
-            SmartDashboard.putNumber("X-distanceClose", compute_x_inches(lineX0.getDouble(-404), compute_y_inches(lineY0.getDouble(-404))));
-            lineOffset1 = compute_x_inches(lineX0.getDouble(-404), compute_y_inches(lineY0.getDouble(-404)));
-            lineOffset2 = compute_x_inches(lineX1.getDouble(-404), compute_y_inches(lineY1.getDouble(-404)));
-            SmartDashboard.putNumber("Y-distanceFar", compute_y_inches(lineY1.getDouble(-404)));
-            SmartDashboard.putNumber("X-distanceFar", compute_x_inches(lineX1.getDouble(-404), compute_y_inches(lineY1.getDouble(-404))));
-            ydistance = compute_y_inches(lineY1.getDouble(-404)) - compute_y_inches(lineY0.getDouble(-404));
+            SmartDashboard.putNumber("Y-distanceClose", compute_camera_to_y_pixel_distance(compute_y_inches(lineY0.getDouble(-404))));
+            SmartDashboard.putNumber("X-distanceClose", compute_x_inches(lineX0.getDouble(-404), compute_camera_to_y_pixel_distance(compute_y_inches(lineY0.getDouble(-404)))));
+            lineOffset1 = compute_x_inches(lineX0.getDouble(-404), compute_camera_to_y_pixel_distance(compute_y_inches(lineY0.getDouble(-404))));
+            lineOffset2 = compute_x_inches(lineX1.getDouble(-404), compute_camera_to_y_pixel_distance(compute_y_inches(lineY1.getDouble(-404))));
+            SmartDashboard.putNumber("Y-distanceFar", compute_camera_to_y_pixel_distance(compute_y_inches(lineY1.getDouble(-404))));
+            SmartDashboard.putNumber("X-distanceFar", compute_x_inches(lineX1.getDouble(-404), compute_camera_to_y_pixel_distance(compute_y_inches(lineY1.getDouble(-404)))));
+            ydistance = compute_camera_to_y_pixel_distance(compute_y_inches(lineY1.getDouble(-404))) - compute_camera_to_y_pixel_distance(compute_y_inches(lineY0.getDouble(-404)));
         } else {
-            SmartDashboard.putNumber("Y-distanceClose", compute_y_inches(lineY1.getDouble(-404)));
+            SmartDashboard.putNumber("Y-distanceClose", compute_camera_to_y_pixel_distance(compute_y_inches(lineY1.getDouble(-404))));
             SmartDashboard.putNumber("X-distanceClose", compute_x_inches(lineX1.getDouble(-404), compute_y_inches(lineY1.getDouble(-404))));
-            SmartDashboard.putNumber("Y-distanceFar", compute_y_inches(lineY0.getDouble(-404)));
-            SmartDashboard.putNumber("X-distanceFar", compute_x_inches(lineX0.getDouble(-404), compute_y_inches(lineY0.getDouble(-404))));
-            lineOffset1 = compute_x_inches(lineX1.getDouble(-404), compute_y_inches(lineY1.getDouble(-404)));
-            lineOffset2 = compute_x_inches(lineX0.getDouble(-404), compute_y_inches(lineY0.getDouble(-404)));
-            ydistance = compute_y_inches(lineY0.getDouble(-404)) - compute_y_inches(lineY1.getDouble(-404));
+            SmartDashboard.putNumber("Y-distanceFar", compute_camera_to_y_pixel_distance(compute_y_inches(lineY0.getDouble(-404))));
+            SmartDashboard.putNumber("X-distanceFar", compute_x_inches(lineX0.getDouble(-404), compute_camera_to_y_pixel_distance(compute_y_inches(lineY0.getDouble(-404)))));
+            lineOffset1 = compute_x_inches(lineX1.getDouble(-404), compute_camera_to_y_pixel_distance(compute_y_inches(lineY1.getDouble(-404))));
+            lineOffset2 = compute_x_inches(lineX0.getDouble(-404), compute_camera_to_y_pixel_distance(compute_y_inches(lineY0.getDouble(-404))));
+            ydistance = compute_y_inches(lineY0.getDouble(-404)) - compute_camera_to_y_pixel_distance(compute_y_inches(lineY1.getDouble(-404)));
         }
         if(lineOffset1 > lineOffset2) {
             xdistance = lineOffset1 - lineOffset2;
@@ -77,22 +78,38 @@ public class ComplicatedTrackLine extends Command {
         }
         idealAngle = Math.atan2(xdistance,ydistance) * (180 / Math.PI);
         SmartDashboard.putNumber("Ideal Angle", idealAngle);
-        RobotMap.idealAngle = idealAngle;
+        System.out.println("Setting ideal angle to " + idealAngle);
+        RobotMap.setIdeal(idealAngle);
     }
     
     @Override
     public void execute() {
-        // if (lineY0.getDouble(-404) > lineY1.getDouble(-404)) {
-        //     SmartDashboard.putNumber("Y-distance", compute_y_inches(lineY0.getDouble(-404)));
-        //     SmartDashboard.putNumber("X-distance", compute_x_inches(lineX0.getDouble(-404), compute_y_inches(lineY0.getDouble(-404))));
-        //     lineOffset1 = compute_x_inches(lineX0.getDouble(-404), compute_y_inches(lineY0.getDouble(-404)));
-        //     lineOffset2 = compute_x_inches(lineX1.getDouble(-404), compute_y_inches(lineY1.getDouble(-404)));
-        // } else {
-        //     SmartDashboard.putNumber("Y-distance", compute_y_inches(lineY1.getDouble(-404)));
-        //     SmartDashboard.putNumber("X-distance", compute_x_inches(lineX1.getDouble(-404), compute_y_inches(lineY1.getDouble(-404))));
-        //     lineOffset1 = compute_x_inches(lineX1.getDouble(-404), compute_y_inches(lineY1.getDouble(-404)));
-        //     lineOffset2 = compute_x_inches(lineX0.getDouble(-404), compute_y_inches(lineY0.getDouble(-404)));
-        // }
+        if (lineY0.getDouble(-404) > lineY1.getDouble(-404)) {
+            SmartDashboard.putNumber("Y-distanceClose", compute_camera_to_y_pixel_distance(compute_y_inches(lineY0.getDouble(-404))));
+            SmartDashboard.putNumber("X-distanceClose", compute_x_inches(lineX0.getDouble(-404), compute_camera_to_y_pixel_distance(compute_y_inches(lineY0.getDouble(-404)))));
+            lineOffset1 = compute_x_inches(lineX0.getDouble(-404), compute_camera_to_y_pixel_distance(compute_y_inches(lineY0.getDouble(-404))));
+            lineOffset2 = compute_x_inches(lineX1.getDouble(-404), compute_camera_to_y_pixel_distance(compute_y_inches(lineY1.getDouble(-404))));
+            SmartDashboard.putNumber("Y-distanceFar", compute_camera_to_y_pixel_distance(compute_y_inches(lineY1.getDouble(-404))));
+            SmartDashboard.putNumber("X-distanceFar", compute_x_inches(lineX1.getDouble(-404), compute_camera_to_y_pixel_distance(compute_y_inches(lineY1.getDouble(-404)))));
+            ydistance = compute_camera_to_y_pixel_distance(compute_y_inches(lineY1.getDouble(-404))) - compute_camera_to_y_pixel_distance(compute_y_inches(lineY0.getDouble(-404)));
+        } else {
+            SmartDashboard.putNumber("Y-distanceClose", compute_camera_to_y_pixel_distance(compute_y_inches(lineY1.getDouble(-404))));
+            SmartDashboard.putNumber("X-distanceClose", compute_x_inches(lineX1.getDouble(-404), compute_y_inches(lineY1.getDouble(-404))));
+            SmartDashboard.putNumber("Y-distanceFar", compute_camera_to_y_pixel_distance(compute_y_inches(lineY0.getDouble(-404))));
+            SmartDashboard.putNumber("X-distanceFar", compute_x_inches(lineX0.getDouble(-404), compute_camera_to_y_pixel_distance(compute_y_inches(lineY0.getDouble(-404)))));
+            lineOffset1 = compute_x_inches(lineX1.getDouble(-404), compute_camera_to_y_pixel_distance(compute_y_inches(lineY1.getDouble(-404))));
+            lineOffset2 = compute_x_inches(lineX0.getDouble(-404), compute_camera_to_y_pixel_distance(compute_y_inches(lineY0.getDouble(-404))));
+            ydistance = compute_y_inches(lineY0.getDouble(-404)) - compute_camera_to_y_pixel_distance(compute_y_inches(lineY1.getDouble(-404)));
+        }
+        if(lineOffset1 > lineOffset2) {
+            xdistance = lineOffset1 - lineOffset2;
+        } else {
+            xdistance = lineOffset2 - lineOffset1;
+        }
+        idealAngle = Math.atan2(xdistance,ydistance) * (180 / Math.PI);
+        SmartDashboard.putNumber("Ideal Angle", idealAngle);
+        System.out.println("Setting ideal angle to " + idealAngle);
+        RobotMap.setIdeal(idealAngle);
         // correction = lineOffset2 - lineOffset1;
         // correction *= 0.3;
         // //correction += 1;
@@ -102,7 +119,7 @@ public class ComplicatedTrackLine extends Command {
 
     @Override
     public boolean isFinished() {
-        return true;
+        return false;
     }
 
     @Override
@@ -129,5 +146,11 @@ public class ComplicatedTrackLine extends Command {
         double angle_to_pixel = -(fov_h / 2) + degrees_per_pixel * camera_x;
         double x_inches = Math.tan(angle_to_pixel * (Math.PI/180)) * y_dist;
         return x_inches;
+    }
+
+ 
+    private double compute_camera_to_y_pixel_distance(double y_floor_distance) {
+        camera_to_y_pixel_distance = Math.sqrt(Math.pow(camera_height,2)+Math.pow(y_floor_distance,2));
+        return camera_to_y_pixel_distance;
     }
 }

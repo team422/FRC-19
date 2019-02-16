@@ -8,13 +8,11 @@ public class DriveToWall extends Command {
   private double ticks;
   private boolean forward;
   private double speed;
-  private double timeout;
 
  public DriveToWall(double Speed, double TimeOut) {
     super("DriveToWall");
     requires(Subsystems.driveBase);
     speed = Speed;
-    timeout = TimeOut;
     setTimeout(TimeOut);                
   }
 
