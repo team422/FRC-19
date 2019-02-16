@@ -32,7 +32,7 @@ public class CargoPivotDown extends Command {
 
   @Override
   protected void execute() {
-    Subsystems.cargo.pivotIntake(speed);
+    Subsystems.cargo.pivotIntake(-speed);
   }
 
   @Override

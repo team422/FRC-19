@@ -6,7 +6,7 @@ public class RobotMap {
      *  Whether or not this is the competition bot
      *  Changing this variable will change all the ports accordingly.
      */
-    public static final boolean compBot = true;//right now true is pbot, false is Axiom
+    public static final boolean compBot = false;//right now true is pbot, false is Axiom
     public static double idealAngle = 0;
 
     /**

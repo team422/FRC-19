@@ -135,12 +135,12 @@ public class Robot extends TimedRobot {
         if(UserInterface.operatorController.BACK.get()) {
             CargoIntake.start();
         }
-        if(UserInterface.operatorController.getPOVAngle() == 180) {
+        if(UserInterface.operatorController.RB.get()) {
             CargoPivotDown.start(); 
         }
-        if(UserInterface.operatorController.RB.get()) {
-            CargoRocketOutake.start();
-        }
+        // if(UserInterface.operatorController.RB.get()) {
+        //     CargoRocketOutake.start();
+        // }
         if(UserInterface.operatorController.LB.get()) {
             CargoShipOutake.start();
         }
