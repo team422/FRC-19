@@ -48,8 +48,8 @@ public class RobotMap {
     public static final int punchingInwards = 7;
 
     //Servo Ports        
-    public static final int leftHatchGrabber = 1;
-    public static final int rightHatchGrabber = 2;
+    public static final int leftHatchGrabber = 8;
+    public static final int rightHatchGrabber = 9;
 
     // Digital IO Ports
     public static final int cargoLimitSwitch = 1;

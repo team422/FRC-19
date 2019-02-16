@@ -95,7 +95,7 @@ public class Robot extends TimedRobot {
         PunchOutwards = new PunchOutwards();
         RollBallIntake = new RollBallIntake();
         RollEscalator = new RollEscalator();
-
+        UserInterface.operatorController.B.whenPressed(new HatchClamp());
         Subsystems.driveBase.gyro.reset();
         Subsystems.driveBase.gyro.calibrate();
     }
@@ -129,7 +129,7 @@ public class Robot extends TimedRobot {
 
     public void teleopPeriodic() {
         //System.out.println("Teleoping periodically");
-        //Scheduler.getInstance().removeAll();//may be necessary
+        Scheduler.getInstance().removeAll();//may be necessary
         Scheduler.getInstance().run();
         printDataToSmartDashboard();
         if(UserInterface.operatorController.BACK.get()) {
