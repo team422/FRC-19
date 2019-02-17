@@ -60,6 +60,7 @@ public class Robot extends TimedRobot {
     }
 
     public void robotInit() {
+        SmartDashboard.setDefaultString("Throttle Side", "Right");
         System.out.println("Initializing Hot Take");
         camera = CameraServer.getInstance().startAutomaticCapture();
         NetworkTableInstance inst = NetworkTableInstance.getDefault();
@@ -214,5 +215,6 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Hatch Left Angle", Subsystems.hatch.getLeftPosition());
         SmartDashboard.putNumber("Hatch Right Angle", Subsystems.hatch.getRightPosition());
         SmartDashboard.putNumber("POV Angle", UserInterface.operatorController.getPOVAngle());
+        SmartDashboard.putBoolean("isLeftThrottle", RobotMap.isLeftThrottle);
     }
 }

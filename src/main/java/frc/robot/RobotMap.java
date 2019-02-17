@@ -7,6 +7,12 @@ public class RobotMap {
      *  Changing this variable will change all the ports accordingly.
      */
     public static final boolean compBot = true;
+    /**
+     *  Sets which joystick of the driverXboxController that
+     *  the throttle for the drivebase is controlled by.
+     *  DEFAULT IS RIGHT. 
+     */
+    public static final boolean isLeftThrottle = false;
     public static double idealAngle = 0;
 
     /**
