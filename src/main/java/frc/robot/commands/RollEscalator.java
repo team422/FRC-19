@@ -15,7 +15,7 @@ public class RollEscalator extends Command {
 
     @Override
     public void execute() {
-        Subsystems.cargo.setEscalatorMotors(1.0);
+        Subsystems.cargo.setEscalatorMotors(-1.0);
     }
 
     @Override

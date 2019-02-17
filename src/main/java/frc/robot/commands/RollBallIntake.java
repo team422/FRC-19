@@ -16,7 +16,7 @@ public class RollBallIntake extends Command {
 
     @Override
     public void execute() {
-        Subsystems.cargo.setIntakeMotors(.5);
+        Subsystems.cargo.setIntakeMotors(0.75);
     }
     
     @Override

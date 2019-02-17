@@ -9,6 +9,7 @@ public class TankDrive extends Command {
   private double updatedSpeed = 0;
   private double updatedRotation = 0;
   private static final double maxChange = 0.06;
+  // private static final controlScheme = true;
   
   public TankDrive() {
     super("TankDrive");
@@ -23,19 +24,19 @@ public class TankDrive extends Command {
 
     //System.out.println("Running Tankdrive");
 
-    if (UserInterface.driverController.getRightJoystickY() < -0.1) {
-      speed = -(Math.pow(UserInterface.driverController.getRightJoystickY(), 2));
-    } else if (UserInterface.driverController.getRightJoystickY() > 0.1) {
-      speed = Math.pow(UserInterface.driverController.getRightJoystickY(), 2);
+    if (UserInterface.driverController.getLeftJoystickY() < -0.1) {
+      speed = -(Math.pow(UserInterface.driverController.getLeftJoystickY(), 2));
+    } else if (UserInterface.driverController.getLeftJoystickY() > 0.1) {
+      speed = (Math.pow(UserInterface.driverController.getLeftJoystickY(), 2));
     } else {
       speed = 0;
     }
     updatedSpeed = speed;
 
-    if (UserInterface.driverController.getLeftJoystickX() < -0.05) {
-      rotation = (Math.pow(UserInterface.driverController.getLeftJoystickX(), 5));
-    } else if (UserInterface.driverController.getLeftJoystickX() > 0.05) {
-      rotation = Math.pow(UserInterface.driverController.getLeftJoystickX(), 5);
+    if (UserInterface.driverController.getRightJoystickX() < -0.05) {
+      rotation = (Math.pow(UserInterface.driverController.getRightJoystickX(), 5));
+    } else if (UserInterface.driverController.getRightJoystickX() > 0.05) {
+      rotation = (Math.pow(UserInterface.driverController.getRightJoystickX(), 5));
     } else {
       rotation = 0;
     }

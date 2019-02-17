@@ -48,7 +48,7 @@ public class Robot extends TimedRobot {
     // private CommandGroup OutakeRocket;
     // private CommandGroup OutakeShip;
     // private Command ParallelEscalator;
-    // private Command PunchInwards;
+    // private Command PunchInwards;  x  
     // private Command PunchOutwards;
     // private Command RollBallIntake;
     // private Command RollEscalator;
@@ -112,7 +112,7 @@ public class Robot extends TimedRobot {
 
     public void autonomousInit() {
         Scheduler.getInstance().removeAll();
-        // TankDrive.start();
+        //TankDrive.start();
         //TrackLine.start();
         //DriveStraight.start();
         //ComplicatedTrackLine.start();
@@ -188,10 +188,10 @@ public class Robot extends TimedRobot {
         } else {
             Subsystems.cargo.setIntakeMotors(0);
         }
-        if(UserInterface.operatorController.getLeftJoystickY() > 0.1) {
-            Subsystems.cargo.pivotIntake(UserInterface.operatorController.getLeftJoystickY() * 0.75);
-        } else if (UserInterface.operatorController.getLeftJoystickY() < -0.1) {
-            Subsystems.cargo.pivotIntake(UserInterface.operatorController.getLeftJoystickY() * 0.75);
+        if(UserInterface.operatorController.getLeftJoystickY() < -0.1) {
+            Subsystems.cargo.pivotIntake(UserInterface.operatorController.getLeftJoystickY() * 0.25);
+        } else if (UserInterface.operatorController.getLeftJoystickY() > 0.1) {
+            Subsystems.cargo.pivotIntake(UserInterface.operatorController.getLeftJoystickY() * 0.25);
         } else {
             Subsystems.cargo.pivotIntake(0);    
         }
