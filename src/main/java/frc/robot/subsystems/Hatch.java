@@ -13,9 +13,9 @@ public class Hatch extends Subsystem {
 
     public Hatch() {
         super("Hatch");
-        this.leftGrabber = new Servo(RobotMap.leftHatchGrabber);
-        this.rightGrabber = new Servo (RobotMap.rightHatchGrabber);
-        this.puncher = new DoubleSolenoid(RobotMap.punchingOutwards, RobotMap.punchingInwards);
+        this.leftGrabber = new Servo(RobotMap.hatchLeftGrabber);
+        this.rightGrabber = new Servo (RobotMap.hatchRightGrabber);
+        this.puncher = new DoubleSolenoid(RobotMap.hatchArmOut, RobotMap.hatchArmIn);
     }
 
     @Override
@@ -35,15 +35,15 @@ public class Hatch extends Subsystem {
       puncher.set(DoubleSolenoid.Value.kForward);
     }
 
+    public void punchInwards() {
+        puncher.set(DoubleSolenoid.Value.kReverse);
+      }
+    
     public double getLeftPosition() {
         return leftGrabber.getAngle();
     }
 
     public double getRightPosition() {
         return leftGrabber.getAngle();
-    }
-
-    public void punchInwards() {
-      puncher.set(DoubleSolenoid.Value.kReverse);
     }
 }

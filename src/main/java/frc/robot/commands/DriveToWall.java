@@ -31,7 +31,7 @@ public class DriveToWall extends Command {
 
   @Override
   protected boolean isFinished() {
-    return Subsystems.climber.ultrasonic.get() || isTimedOut();
+    return Subsystems.climber.climberUltrasonic.get() || isTimedOut();
   }
 
   @Override

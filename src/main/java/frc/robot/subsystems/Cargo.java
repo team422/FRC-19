@@ -15,28 +15,28 @@ public class Cargo extends Subsystem {
     private WPI_VictorSPX intakeWheels;
     private WPI_TalonSRX intakePivot; 
     private WPI_VictorSPX escalator; 
-    private DigitalInput limitSwitch;
-    private DigitalInput ultrasonicSensor; 
-    private DoubleSolenoid directorFlap; 
+    private DigitalInput cargoPivotLimitSwitch;
+    private DigitalInput cargoEscalatorUltrasonic; 
+    private DoubleSolenoid flap; 
 
     public Cargo(){
         super("Cargo");
         this.intakeWheels = new WPI_VictorSPX(RobotMap.cargoIntakeWheels); 
         this.intakePivot = new WPI_TalonSRX(RobotMap.cargoIntakePivot);
-        this.escalator = new WPI_VictorSPX(RobotMap.cargoEscalator);
-        this.limitSwitch = new DigitalInput(RobotMap.cargoLimitSwitch);
-        this.ultrasonicSensor = new DigitalInput(RobotMap.cargoUltrasonicSensor);
-        this.directorFlap = new DoubleSolenoid(RobotMap.cargoDirectorFlapPush, RobotMap.cargoDirectorFlapPull);
+        this.escalator = new WPI_VictorSPX(RobotMap.cargoEscalatorWheels);
+        this.cargoPivotLimitSwitch = new DigitalInput(RobotMap.cargoPivotLimitSwitch);
+        this.cargoEscalatorUltrasonic = new DigitalInput(RobotMap.cargoEscalatorUltrasonic);
+        this.flap = new DoubleSolenoid(RobotMap.cargoFlapUp, RobotMap.cargoFlapDown);
     }
 
     protected void initDefaultCommand() {} 
 
     public boolean getLimitSwitchValue() {
-        return !limitSwitch.get();
+        return !cargoPivotLimitSwitch.get();
     }
 
     public boolean getBeamBrakeValue() {
-        return ultrasonicSensor.get();      
+        return cargoEscalatorUltrasonic.get();      
     }
     
     public void setEscalatorMotors(double power) {
@@ -57,11 +57,11 @@ public class Cargo extends Subsystem {
     // }
         
     public void setFlapUp() {
-        directorFlap.set(DoubleSolenoid.Value.kForward);
+        flap.set(DoubleSolenoid.Value.kForward);
     }
 
     public void setFlapDown() {
-        directorFlap.set(DoubleSolenoid.Value.kReverse);
+        flap.set(DoubleSolenoid.Value.kReverse);
     }
     
 }

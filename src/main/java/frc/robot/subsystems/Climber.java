@@ -16,7 +16,7 @@ public class Climber extends Subsystem {
     private WPI_TalonSRX leftBackClimb;
     private WPI_TalonSRX rightFrontClimb;
     private WPI_TalonSRX rightBackClimb;
-    public DigitalInput ultrasonic;
+    public DigitalInput climberUltrasonic;
 
     public Climber() {
         super("Climber"); 
@@ -28,7 +28,7 @@ public class Climber extends Subsystem {
         // this.frontClimb = new SpeedControllerGroup(leftFrontClimb, rightFrontClimb);
         this.frontClimb = new SpeedControllerGroup(rightFrontClimb);
         this.backClimb = new SpeedControllerGroup(leftFrontClimb);
-        this.ultrasonic = new DigitalInput(RobotMap.intakeUltrasonic);
+        this.climberUltrasonic = new DigitalInput(RobotMap.climberUltrasonic);
     }
 
     public void initDefaultCommand() {}
@@ -50,7 +50,7 @@ public class Climber extends Subsystem {
     }
 
     public boolean getUltrasonic() {
-        return ultrasonic.get();
+        return climberUltrasonic.get();
     }
 
     public void zeroFrontClimbEncoders() {

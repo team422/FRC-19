@@ -6,53 +6,52 @@ public class RobotMap {
      *  Whether or not this is the competition bot
      *  Changing this variable will change all the ports accordingly.
      */
-    public static final boolean compBot = false;//right now true is pbot, false is Axiom
+    public static final boolean compBot = true;
     public static double idealAngle = 0;
 
     /**
      * Various Ports
      */
 
-    // Talon/Victor IDS2
+    // Talon/Victor IDs
     
-    public static final int leftFrontFollower = (compBot) ? 2 : 4;
-    public static final int leftMiddleMaster = (compBot) ? 1 : 11;
-    public static final int leftRearFollower = (compBot) ? 3 : 6;
-    public static final int rightFrontFollower = (compBot) ? 5 : 3;
-    public static final int rightMiddleMaster = (compBot) ? 4 : 12;
-    public static final int rightRearFollower = (compBot) ? 6 : 5;
+    public static final int leftFrontFollower = (compBot) ? 4 : 35;
+    public static final int leftMiddleMaster = (compBot) ? 11 : 32;
+    public static final int leftRearFollower = (compBot) ? 6 : 33;
+    public static final int rightFrontFollower = (compBot) ? 3 : 20;
+    public static final int rightMiddleMaster = (compBot) ? 12 : 23;
+    public static final int rightRearFollower = (compBot) ? 5 : 22;
 
-    public static final int leftBackClimb = (compBot) ? 40 : 1;
-    public static final int leftFrontClimb = (compBot) ? 12 : 1;
-    public static final int rightBackClimb = (compBot) ? 10 : 1;
-    public static final int rightFrontClimb = (compBot) ? 17 : 1;
+    public static final int leftFrontClimb = (compBot) ? 1 : 21;
+    public static final int leftBackClimb = (compBot) ? 7 : 26;
+    public static final int rightFrontClimb = (compBot) ? 2 : 34;
+    public static final int rightBackClimb = (compBot) ? 14 : 24;
 
-    public static final int cargoIntakeWheels = 8;
-    public static final int cargoIntakePivot = 13; 
-    public static final int cargoEscalator = 9; 
+    public static final int cargoEscalatorWheels = (compBot) ? 9 : 30;
+    public static final int cargoIntakeWheels = (compBot) ? 8 : 29;
+    public static final int cargoIntakePivot = (compBot) ? 13 : 31;
 
-    // Analog IO Ports
-    public static final int intakeUltrasonic = 3;
-    public static final int cargoUltrasonicSensor = 4; 
+    public static final int extraMotorController = (compBot) ? 10 : 25;
 
-    // UI Ports
-    public static final int operatorXboxController = 2;
-    public static final int driverXboxController = 1;
-    public static final int launchpad  = 0;
+    // Servo Ports        
+    public static final int hatchLeftGrabber = 8;
+    public static final int hatchRightGrabber = 9;
 
     // Double Solenoid Values
-
-    public static final int cargoDirectorFlapPush = 0; 
-    public static final int cargoDirectorFlapPull = 1;
-    public static final int punchingOutwards = 6;
-    public static final int punchingInwards = 7;
-
-    //Servo Ports        
-    public static final int leftHatchGrabber = 8;
-    public static final int rightHatchGrabber = 9;
+    public static final int cargoFlapUp = 0; 
+    public static final int cargoFlapDown = 1;
+    public static final int hatchArmOut = 6;
+    public static final int hatchArmIn = 7;
 
     // Digital IO Ports
-    public static final int cargoLimitSwitch = 1;
+    public static final int cargoPivotLimitSwitch = 1; // check with Nathan/Mason for type used
+    public static final int cargoEscalatorUltrasonic = 4; 
+    public static final int climberUltrasonic = 3;
+
+    // UI Ports
+    public static final int launchpad = 0;
+    public static final int driverXboxController = 1;
+    public static final int operatorXboxController = 2;
 
     public static double getIdeal() {
         return idealAngle;

@@ -29,29 +29,29 @@ public class Robot extends TimedRobot {
     private NetworkTableEntry lineX1;
     private NetworkTableEntry lineY0;
     private NetworkTableEntry lineY1;
-    private Command TrackObject;
-    private Command ComplicatedTrackLine;
-    private Command TrackLine;
-    private Command TankDrive;
-    private Command DriveStraight;
-    private CommandGroup ParallelTurnBetter;
+    // private Command TrackObject;
+    // private Command ComplicatedTrackLine;
+    // private Command TrackLine;
+    // private Command TankDrive;
+    // private Command DriveStraight;
+    // private CommandGroup ParallelTurnBetter;
 
-    private CommandGroup CargoIntake;
-    private Command CargoPivotDown;
-    private CommandGroup CargoRocketOutake;
-    private CommandGroup CargoShipOutake;
-    private Command FlapDown;
-    private Command FlapUp;
-    private Command HatchClamp;
-    private Command HatchRelease;
-    private CommandGroup IntakeHatch;
-    private CommandGroup OutakeRocket;
-    private CommandGroup OutakeShip;
-    private Command ParallelEscalator;
-    private Command PunchInwards;
-    private Command PunchOutwards;
-    private Command RollBallIntake;
-    private Command RollEscalator;
+    // private CommandGroup CargoIntake;
+    // private Command CargoPivotDown;
+    // private CommandGroup CargoRocketOutake;
+    // private CommandGroup CargoShipOutake;
+    // private Command FlapDown;
+    // private Command FlapUp;
+    // private Command HatchClamp;
+    // private Command HatchRelease;
+    // private CommandGroup IntakeHatch;
+    // private CommandGroup OutakeRocket;
+    // private CommandGroup OutakeShip;
+    // private Command ParallelEscalator;
+    // private Command PunchInwards;
+    // private Command PunchOutwards;
+    // private Command RollBallIntake;
+    // private Command RollEscalator;
 
     private double slope = 0;
 
@@ -61,6 +61,7 @@ public class Robot extends TimedRobot {
 
     public void robotInit() {
         System.out.println("Initializing Hot Take");
+        camera = CameraServer.getInstance().startAutomaticCapture();
         NetworkTableInstance inst = NetworkTableInstance.getDefault();
         NetworkTable pixy = inst.getTable("pixy");
         blockX = pixy.getEntry("blockX");
@@ -72,42 +73,46 @@ public class Robot extends TimedRobot {
         lineY0 = pixy.getEntry("lineY0");
         lineY1 = pixy.getEntry("lineY1");
         blockArea = pixy.getEntry("blockArea");
-        //TrackObject = new TrackObject();
-        ParallelTurnBetter = new ParallelTurnBetter();
-        TrackLine = new TrackLine();
-        ComplicatedTrackLine = new ComplicatedTrackLine();
-        TankDrive = new TankDrive();
-        DriveStraight = new DriveStraight(10000,-0.1,30);    
         Subsystems.driveBase.cheesyDrive.setSafetyEnabled(false);
 
-        CargoIntake = new CargoIntake(); 
-        CargoPivotDown = new CargoPivotDown(0.1,1);
-        CargoRocketOutake = new CargoRocketOutake();
-        CargoShipOutake = new CargoShipOutake();
-        FlapDown = new FlapDown();
-        FlapUp = new FlapUp();
-        HatchClamp = new HatchClamp();
-        HatchRelease = new HatchRelease();
-        IntakeHatch = new IntakeHatch();
-        OutakeRocket = new OutakeRocket();
-        OutakeShip = new OutakeShip();
-        ParallelEscalator = new ParallelEscalator();
-        PunchInwards = new PunchInwards();
-        PunchOutwards = new PunchOutwards();
-        RollBallIntake = new RollBallIntake();
-        RollEscalator = new RollEscalator();
-        UserInterface.operatorController.B.whenPressed(new HatchClamp());
-        Subsystems.driveBase.gyro.reset();
-        Subsystems.driveBase.gyro.calibrate();
+        //TrackObject = new TrackObject();
+        // ParallelTurnBetter = new ParallelTurnBetter();
+        // TrackLine = new TrackLine();
+        // ComplicatedTrackLine = new ComplicatedTrackLine();
+        // TankDrive = new TankDrive();
+        // DriveStraight = new DriveStraight(10000,-0.1,30);    
+
+        // CargoIntake = new CargoIntake(); 
+        // CargoPivotDown = new CargoPivotDown(0.1,1);
+        // CargoRocketOutake = new CargoRocketOutake();
+        // CargoShipOutake = new CargoShipOutake();
+        // FlapDown = new FlapDown();
+        // FlapUp = new FlapUp();
+        // HatchClamp = new HatchClamp();
+        // HatchRelease = new HatchRelease();
+        // IntakeHatch = new IntakeHatch();
+        // OutakeRocket = new OutakeRocket();
+        // OutakeShip = new OutakeShip();
+        // ParallelEscalator = new ParallelEscalator();
+        // PunchInwards = new PunchInwards();
+        // PunchOutwards = new PunchOutwards();
+        // RollBallIntake = new RollBallIntake();
+        // RollEscalator = new RollEscalator();
+        // UserInterface.operatorController.B.whenPressed(new HatchClamp());
+        // Subsystems.driveBase.gyro.reset();
+        // Subsystems.driveBase.gyro.calibrate();
     }
 
     public void disabledInit() {
         Scheduler.getInstance().removeAll();
+        Subsystems.cargo.pivotIntake(0);
+        Subsystems.cargo.setIntakeMotors(0);
+        Subsystems.cargo.setEscalatorMotors(0);
     }
 
     public void autonomousInit() {
         Scheduler.getInstance().removeAll();
-        //TankDrive.start();
+        // TankDrive.start();
         //TrackLine.start();
         //DriveStraight.start();
         //ComplicatedTrackLine.start();
@@ -130,54 +135,67 @@ public class Robot extends TimedRobot {
 
     public void teleopPeriodic() {
         //System.out.println("Teleoping periodically");
-        Scheduler.getInstance().removeAll();//may be necessary
+        // Scheduler.getInstance().removeAll();//may be necessary
         Scheduler.getInstance().run();
         printDataToSmartDashboard();
-        if(UserInterface.operatorController.BACK.get()) {
-            CargoIntake.start();
+        if(UserInterface.operatorController.START.get()) {
+
         }
-        if(UserInterface.operatorController.getPOVAngle() == 90) {
-            CargoPivotDown.start(); 
+        if(UserInterface.operatorController.BACK.get()) {
+
         }
         if(UserInterface.operatorController.RB.get()) {
-            CargoRocketOutake.start();
+            Subsystems.hatch.hatchClamp();
         }
         if(UserInterface.operatorController.LB.get()) {
-            CargoShipOutake.start();
+            Subsystems.hatch.hatchRelease();
         }
         if(UserInterface.operatorController.A.get()) {
-            FlapDown.start();
-        }
-        if(UserInterface.operatorController.Y.get()) {
-            FlapUp.start();
+            Subsystems.hatch.punchOutwards();
         }
         if(UserInterface.operatorController.B.get()) {
-            HatchClamp.start();
+            Subsystems.hatch.punchInwards();
         }
         if(UserInterface.operatorController.X.get()) {
-            HatchRelease.start();
+            Subsystems.cargo.setFlapDown();
         }
-        if(UserInterface.operatorController.getLeftTrigger() > 0.3) {
-            IntakeHatch.start();
+        if(UserInterface.operatorController.Y.get()) {
+            Subsystems.cargo.setFlapUp();
         }
-        if(UserInterface.operatorController.getRightTrigger() > 0.3) {
-            OutakeShip.start();
-        }
-        if(UserInterface.operatorController.START.get()) {
-            ParallelEscalator.start();
-        }
-        if(UserInterface.operatorController.getPOVAngle() == 270) {
-            PunchInwards.start();
+        if(UserInterface.operatorController.getPOVAngle() == 0) {
+
         }
         if(UserInterface.operatorController.getPOVAngle() == 90) {
-            PunchOutwards.start();
+
+        }
+        if(UserInterface.operatorController.getPOVAngle() == 180) {
+
+        }
+        if(UserInterface.operatorController.getPOVAngle() == 270) {
+
+        }
+        if(UserInterface.operatorController.getLeftTrigger() > 0.1) {
+            Subsystems.cargo.setEscalatorMotors(-UserInterface.operatorController.getLeftTrigger());
+        } else if(UserInterface.operatorController.getRightTrigger() > 0.1) {
+            Subsystems.cargo.setEscalatorMotors(UserInterface.operatorController.getRightTrigger());
+        } else {
+            Subsystems.cargo.setEscalatorMotors(0);
         }
         if(UserInterface.operatorController.getRightJoystickY() > 0.1) {
-            RollBallIntake.start();
+            Subsystems.cargo.setIntakeMotors(UserInterface.operatorController.getRightJoystickY() * 0.75);
+        } else if (UserInterface.operatorController.getRightJoystickY() < -0.1) {
+            Subsystems.cargo.setIntakeMotors(UserInterface.operatorController.getRightJoystickY() * 0.75);
+        } else {
+            Subsystems.cargo.setIntakeMotors(0);
         }
         if(UserInterface.operatorController.getLeftJoystickY() > 0.1) {
-            RollEscalator.start();
+            Subsystems.cargo.pivotIntake(UserInterface.operatorController.getLeftJoystickY() * 0.75);
+        } else if (UserInterface.operatorController.getLeftJoystickY() < -0.1) {
+            Subsystems.cargo.pivotIntake(UserInterface.operatorController.getLeftJoystickY() * 0.75);
+        } else {
+            Subsystems.cargo.pivotIntake(0);    
         }
+
     }
 
     private void printDataToSmartDashboard() {

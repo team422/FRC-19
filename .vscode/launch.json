@@ -1,4 +1,13 @@
 {
   "currentLanguage": "java",
-  "teamNumber": 422
+  "teamNumber": 422,
+  "configurations": [
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - Main",
+      "request": "launch",
+      "mainClass": "frc.robot.Main",
+      "projectName": "Current_Code 2-16-19"
+    }
+  ]
 }

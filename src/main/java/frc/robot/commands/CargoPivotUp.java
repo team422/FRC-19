@@ -27,7 +27,6 @@ public class CargoPivotUp extends Command {
   protected void initialize() {
     setTimeout(timeout);
     //Subsystems.driveBase.zeroEncoderPosition();
-    Subsystems.driveBase.zeroGyroAngle();
   }
 
   @Override
