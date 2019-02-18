@@ -15,7 +15,7 @@ public class ToggleSpeed extends Command {
             RobotMap.setSpeedAndRotationCaps(0.2, 0.1);
             RobotMap.isToggledFast = false;
         } else {
-            RobotMap.setSpeedAndRotationCaps(0.5, 0.3);
+            RobotMap.setSpeedAndRotationCaps(1, 0.4);
             RobotMap.isToggledFast = true;
         }
     }

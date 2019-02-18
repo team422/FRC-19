@@ -82,7 +82,7 @@ public class Robot extends TimedRobot {
         Subsystems.driveBase.cheesyDrive.setSafetyEnabled(false);
 
         RobotMap.isToggledFast = true;
-        RobotMap.setSpeedAndRotationCaps(0.5, 0.3);
+        RobotMap.setSpeedAndRotationCaps(1, 0.4);
         UserInterface.driverController.RB.whenPressed(new ToggleSpeed());
 
         // TrackObject = new TrackObject();
