@@ -22,9 +22,7 @@ public class TankDrive extends Command {
   protected void execute() {
     double speed;
     double rotation;
-
-    //System.out.println("Running Tankdrive");
-
+    
     /** Sets throttle for driveBase to the left stick Y-axis and sets the rotation
      *  for driveBase to the right stick X-axis on on the driverXboxController*/ 
     if (RobotMap.isLeftThrottle) {
@@ -83,7 +81,7 @@ public class TankDrive extends Command {
     /** Because of a weird glitch with how curvatureDrive is set up,
      *  the rotation actually goes in as the first input, followed by the speed,
      *  rather than speed then rotation */
-    Subsystems.driveBase.cheesyDrive.curvatureDrive(RobotMap.getRot() * rotation, RobotMap.getCap() * speed, true);
+    Subsystems.driveBase.cheesyDrive.curvatureDrive(RobotMap.getRotationCap() * rotation, RobotMap.getSpeedCap() * speed, true);
   }
 
   protected boolean isFinished() {

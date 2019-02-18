@@ -79,7 +79,7 @@ public class ComplicatedTrackLine extends Command {
         idealAngle = Math.atan2(xdistance,ydistance) * (180 / Math.PI);
         SmartDashboard.putNumber("Ideal Angle", idealAngle);
         System.out.println("Setting ideal angle to " + idealAngle);
-        RobotMap.setIdeal(idealAngle);
+        RobotMap.setIdealAnlge(idealAngle);
     }
     
     @Override
@@ -109,7 +109,7 @@ public class ComplicatedTrackLine extends Command {
         idealAngle = Math.atan2(xdistance,ydistance) * (180 / Math.PI);
         SmartDashboard.putNumber("Ideal Angle", idealAngle);
         System.out.println("Setting ideal angle to " + idealAngle);
-        RobotMap.setIdeal(idealAngle);
+        RobotMap.setIdealAnlge(idealAngle);
         // correction = lineOffset2 - lineOffset1;
         // correction *= 0.3;
         // //correction += 1;

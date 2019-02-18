@@ -11,7 +11,7 @@ public class ParallelTurnBetter extends CommandGroup {
   public ParallelTurnBetter() {
     addSequential(new ComplicatedTrackLine());
     //addSequential(new WaitCommand(3));
-    addSequential(new Turn(RobotMap.getIdeal(), 0.4, 100000));
+    addSequential(new Turn(RobotMap.getIdealAngle(), 0.4, 100000));
   }
 
 }

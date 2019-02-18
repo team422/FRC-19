@@ -1,25 +1,24 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.commands.*;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.commands.commandgroups.*;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.*;
-import frc.robot.commands.commandgroups.*;
 import frc.robot.subsystems.Subsystems;
 import frc.robot.userinterface.UserInterface;
-import edu.wpi.first.wpilibj.XboxController;
 
 public class Robot extends TimedRobot {
 
     private UsbCamera camera;
+    
     private NetworkTableEntry blockX;
     private NetworkTableEntry blockY;
     private NetworkTableEntry blockW;
@@ -29,6 +28,8 @@ public class Robot extends TimedRobot {
     private NetworkTableEntry lineX1;
     private NetworkTableEntry lineY0;
     private NetworkTableEntry lineY1;
+
+    private String botName;
     // private Command TrackObject;
     // private Command ComplicatedTrackLine;
     // private Command TrackLine;
@@ -60,9 +61,12 @@ public class Robot extends TimedRobot {
     }
 
     public void robotInit() {
-        SmartDashboard.setDefaultString("Throttle Side", "Right");
-        System.out.println("Initializing Hot Take");
+
+        botName = (RobotMap.isCompBot) ? "Meridian" : "Hot Take";
+        System.out.println("Initializing " + botName + "\n");
+
         camera = CameraServer.getInstance().startAutomaticCapture();
+
         NetworkTableInstance inst = NetworkTableInstance.getDefault();
         NetworkTable pixy = inst.getTable("pixy");
         blockX = pixy.getEntry("blockX");
@@ -74,18 +78,21 @@ public class Robot extends TimedRobot {
         lineY0 = pixy.getEntry("lineY0");
         lineY1 = pixy.getEntry("lineY1");
         blockArea = pixy.getEntry("blockArea");
+
         Subsystems.driveBase.cheesyDrive.setSafetyEnabled(false);
-        RobotMap.setCap(0.5, 0.3);
+
+        RobotMap.isToggledFast = true;
+        RobotMap.setSpeedAndRotationCaps(0.5, 0.3);
         UserInterface.driverController.RB.whenPressed(new ToggleSpeed());
 
-        //TrackObject = new TrackObject();
+        // TrackObject = new TrackObject();
         // ParallelTurnBetter = new ParallelTurnBetter();
         // TrackLine = new TrackLine();
         // ComplicatedTrackLine = new ComplicatedTrackLine();
         // TankDrive = new TankDrive();
         // DriveStraight = new DriveStraight(10000,-0.1,30);    
 
-        //CargoIntake = new CargoIntake(); 
+        // CargoIntake = new CargoIntake(); 
         // CargoPivotDown = new CargoPivotDown(0.1,1);
         // CargoRocketOutake = new CargoRocketOutake();
         // CargoShipOutake = new CargoShipOutake();
@@ -107,14 +114,32 @@ public class Robot extends TimedRobot {
     }
 
     public void disabledInit() {
+        System.out.println("Disabled Initialized");
         Scheduler.getInstance().removeAll();
+        
+        /**
+         * This makes sure that all of the motors are set to 0% following disable
+         */
         Subsystems.cargo.pivotIntake(0);
         Subsystems.cargo.setIntakeMotors(0);
         Subsystems.cargo.setEscalatorMotors(0);
     }
 
+    public void disabledPeriodic() {
+        System.out.println("Bot Disabled");
+        
+        printDataToSmartDashboard();
+    }
+    
+
     public void autonomousInit() {
+        System.out.println("Autonomous Initalized");
+        
+        /**
+         * This makes sure that any old commands/command groups are stopped upon Autonomous Initialization.
+         */
         Scheduler.getInstance().removeAll();
+
         //TankDrive.start();
         //TrackLine.start();
         //DriveStraight.start();
@@ -122,24 +147,41 @@ public class Robot extends TimedRobot {
         //ParallelTurnBetter.start();
     }
 
+    public void autonomousPeriodic() {
+        System.out.println("Bot in Autonomous");
+        Scheduler.getInstance().run();
+        printDataToSmartDashboard();
+    }
+
+
     public void teleopInit() {
-        System.out.println("This print statement works");
+        System.out.println("TeleOp Initalized");
+        /**
+         * This makes sure that all of the motors are set to 0% upon TeleOp Initialization.
+         */
+        Subsystems.cargo.pivotIntake(0);
+        Subsystems.cargo.setIntakeMotors(0);
+        Subsystems.cargo.setEscalatorMotors(0);
+
+        /**
+         * This makes sure that the bot is set to normal speed and rotation caps upon TeleOp Initialization.
+         */
+        RobotMap.isToggledFast = true;
+
+        /**
+         * This makes sure that any old commands/command groups are stopped upon TeleOp Initialization.
+         */
         Scheduler.getInstance().removeAll();
     }
 
-    public void disabledPeriodic() {
-        printDataToSmartDashboard();
-    }
-    
-    public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
-        printDataToSmartDashboard();
-    }
-
     public void teleopPeriodic() {
-        //System.out.println("Teleoping periodically");
-        // Scheduler.getInstance().removeAll();//may be necessary
+        System.out.println("Bot in TeleOp");
+
+        /**
+         * This makes sure that TankDrive and other Commands used during TeleOp are run.
+         */
         Scheduler.getInstance().run();
+
         printDataToSmartDashboard();
         // if(Subsystems.cargo.getBeamBrakeValue()) {
         //     System.out.println("TRIGGERED");
@@ -238,5 +280,6 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Hatch Right Angle", Subsystems.hatch.getRightPosition());
         SmartDashboard.putNumber("POV Angle", UserInterface.operatorController.getPOVAngle());
         SmartDashboard.putBoolean("isLeftThrottle", RobotMap.isLeftThrottle);
+        SmartDashboard.putBoolean("isToggledFast", RobotMap.isToggledFast);
     }
 }

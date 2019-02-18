@@ -1,7 +1,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.subsystems.Subsystems;
 import frc.robot.RobotMap;
 
 public class ToggleSpeed extends Command {
@@ -12,10 +11,12 @@ public class ToggleSpeed extends Command {
 
     @Override
     public void initialize() {
-        if(RobotMap.getCap() == 0.5) {
-            RobotMap.setCap(0.2, 0.1);
+        if(RobotMap.isToggledFast) {
+            RobotMap.setSpeedAndRotationCaps(0.2, 0.1);
+            RobotMap.isToggledFast = false;
         } else {
-            RobotMap.setCap(0.5, 0.3);
+            RobotMap.setSpeedAndRotationCaps(0.5, 0.3);
+            RobotMap.isToggledFast = true;
         }
     }
 

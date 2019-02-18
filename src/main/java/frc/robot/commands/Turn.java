@@ -22,8 +22,8 @@ public class Turn extends Command {
     }
 
     public void initialize() {
-        degrees = RobotMap.getIdeal();
-        System.out.println("idealAngle: " + RobotMap.getIdeal());
+        degrees = RobotMap.getIdealAngle();
+        System.out.println("idealAngle: " + RobotMap.getIdealAngle());
         Subsystems.driveBase.zeroGyroAngle();
         Subsystems.driveBase.zeroEncoderPosition();
     }
