@@ -4,12 +4,10 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
 public class Cargo extends Subsystem {   
 
@@ -38,6 +36,8 @@ public class Cargo extends Subsystem {
         this.cargoPivotLimitSwitch = new DigitalInput(RobotMap.cargoPivotLimitSwitch);
         this.cargoEscalatorUltrasonic = new DigitalInput(RobotMap.cargoEscalatorUltrasonic);
         this.flap = new DoubleSolenoid(RobotMap.cargoFlapUp, RobotMap.cargoFlapDown);
+
+        this.intakePivot.setInverted(true);
     }
 
     protected void initDefaultCommand() {} 
@@ -62,6 +62,10 @@ public class Cargo extends Subsystem {
         intakePivot.set(ControlMode.PercentOutput, power);
     }
 
+    public void holdPivotIntakeUp() {
+        intakePivot.set(ControlMode.PercentOutput, 0.1);
+    }
+    
     //if we get encoders on the cargo pivot
     // public double getIntakePivot() {
     //     return intakePivot.getSelectedSensorPosition(0);

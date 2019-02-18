@@ -2,8 +2,7 @@ package frc.robot.subsystems;
 
 import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.commands.TankDrive;
-import edu.wpi.first.wpilibj.SpeedController;
+import frc.robot.commands.other.TankDrive;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;

@@ -4,7 +4,8 @@ public class RobotMap {
 
     /**
      * Whether or not this is the competition bot. Changing this variable
-     * will change all ports & motor controller types accordingly.
+     * will change all ports accordingly. MAKE SURE YOU GO THROUGH DRIVEBASE
+     * AND CARGO SUBSYSTEMS AND CHANGE VICTOR/TALON CLASSES ACCORDINGLY.
      */
     public static final boolean isCompBot = true;
 
@@ -19,7 +20,7 @@ public class RobotMap {
 
     public static boolean isToggledFast = true;
     public static double speedCap = 1;
-    public static double rotationCap = 0.4;
+    public static double rotationCap = 0.35;
 
     /**
      * Various Ports
@@ -63,6 +64,10 @@ public class RobotMap {
     public static final int launchpad = 0;
     public static final int driverXboxController = 1;
     public static final int operatorXboxController = 2;
+
+    /**
+     * End Port Setting
+     */
 
     public static double getIdealAngle() {
         return idealAngle;
