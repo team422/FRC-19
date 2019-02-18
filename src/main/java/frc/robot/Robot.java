@@ -2,6 +2,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoSink;
+import edu.wpi.cscore.VideoSource;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -17,7 +19,8 @@ import frc.robot.userinterface.UserInterface;
 
 public class Robot extends TimedRobot {
 
-    private UsbCamera camera;
+    private UsbCamera camera1;
+    private UsbCamera camera2;
     
     private NetworkTableEntry blockX;
     private NetworkTableEntry blockY;
@@ -37,6 +40,10 @@ public class Robot extends TimedRobot {
     // private Command DriveStraight;
     // private CommandGroup ParallelTurnBetter;
 
+    NetworkTableInstance inst2;
+    NetworkTableInstance inst3;
+    NetworkTable camera;
+
      private CommandGroup CargoIntake;
     // private Command CargoPivotDown;
     // private CommandGroup CargoRocketOutake;
@@ -55,6 +62,7 @@ public class Robot extends TimedRobot {
     // private Command RollEscalator;
 
     private double slope = 0;
+    public VideoSink server;
 
     public Robot() {
         super(0.08);
@@ -65,10 +73,16 @@ public class Robot extends TimedRobot {
         botName = (RobotMap.isCompBot) ? "Meridian" : "Hot Take";
         System.out.println("Initializing " + botName + "\n");
 
-        camera = CameraServer.getInstance().startAutomaticCapture();
-
+        camera1 = CameraServer.getInstance().startAutomaticCapture(1);
+        camera2 = CameraServer.getInstance().startAutomaticCapture(2);
+        server = CameraServer.getInstance().getServer();
+        camera1.setConnectionStrategy(VideoSource.ConnectionStrategy.kForceClose);
+        camera2.setConnectionStrategy(VideoSource.ConnectionStrategy.kForceClose);
         NetworkTableInstance inst = NetworkTableInstance.getDefault();
+        inst2 = NetworkTableInstance.getDefault();
+        inst3 = NetworkTableInstance.getDefault();
         NetworkTable pixy = inst.getTable("pixy");
+        NetworkTable camera = inst2.getTable("");
         blockX = pixy.getEntry("blockX");
         blockY = pixy.getEntry("blockY");
         blockW = pixy.getEntry("blockW");
@@ -173,10 +187,9 @@ public class Robot extends TimedRobot {
          */
         Scheduler.getInstance().removeAll();
     }
-
+    
     public void teleopPeriodic() {
         System.out.println("Bot in TeleOp");
-
         /**
          * This makes sure that TankDrive and other Commands used during TeleOp are run.
          */
@@ -186,6 +199,11 @@ public class Robot extends TimedRobot {
         // if(Subsystems.cargo.getBeamBrakeValue()) {
         //     System.out.println("TRIGGERED");
         // }
+        if (UserInterface.driverController.LB.get()) {
+            server.setSource(camera1);
+        } else if (UserInterface.driverController.A.get()) {
+            server.setSource(camera2);
+        }
         if(UserInterface.operatorController.START.get()) {
             //Subsystems.cargo.setEscalatorMotors(-1);
             Subsystems.cargo.setIntakeMotors(0.75);
