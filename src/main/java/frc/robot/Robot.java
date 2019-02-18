@@ -40,9 +40,11 @@ public class Robot extends TimedRobot {
     // private Command DriveStraight;
     // private CommandGroup ParallelTurnBetter;
 
-    NetworkTableInstance inst2;
-    NetworkTableInstance inst3;
-    NetworkTable camera;
+    public NetworkTableInstance inst2;
+    public NetworkTableInstance inst3;
+    public NetworkTable camera;
+    public VideoSink server;
+    public boolean isCamera1;
 
      private CommandGroup CargoIntake;
     // private Command CargoPivotDown;
@@ -62,7 +64,6 @@ public class Robot extends TimedRobot {
     // private Command RollEscalator;
 
     private double slope = 0;
-    public VideoSink server;
 
     public Robot() {
         super(0.08);
@@ -73,6 +74,7 @@ public class Robot extends TimedRobot {
         botName = (RobotMap.isCompBot) ? "Meridian" : "Hot Take";
         System.out.println("Initializing " + botName + "\n");
 
+        isCamera1 = true;
         camera1 = CameraServer.getInstance().startAutomaticCapture(1);
         camera2 = CameraServer.getInstance().startAutomaticCapture(2);
         server = CameraServer.getInstance().getServer();
@@ -81,8 +83,9 @@ public class Robot extends TimedRobot {
         NetworkTableInstance inst = NetworkTableInstance.getDefault();
         inst2 = NetworkTableInstance.getDefault();
         inst3 = NetworkTableInstance.getDefault();
-        NetworkTable pixy = inst.getTable("pixy");
         NetworkTable camera = inst2.getTable("");
+
+        NetworkTable pixy = inst.getTable("pixy");
         blockX = pixy.getEntry("blockX");
         blockY = pixy.getEntry("blockY");
         blockW = pixy.getEntry("blockW");
@@ -98,6 +101,7 @@ public class Robot extends TimedRobot {
         RobotMap.isToggledFast = true;
         RobotMap.setSpeedAndRotationCaps(1, 0.4);
         UserInterface.driverController.RB.whenPressed(new ToggleSpeed());
+
 
         // TrackObject = new TrackObject();
         // ParallelTurnBetter = new ParallelTurnBetter();
@@ -190,20 +194,31 @@ public class Robot extends TimedRobot {
     
     public void teleopPeriodic() {
         System.out.println("Bot in TeleOp");
+
         /**
          * This makes sure that TankDrive and other Commands used during TeleOp are run.
          */
         Scheduler.getInstance().run();
 
         printDataToSmartDashboard();
+
         // if(Subsystems.cargo.getBeamBrakeValue()) {
         //     System.out.println("TRIGGERED");
         // }
+
+        /**
+         * Toggle for camera feeds.
+         */
         if (UserInterface.driverController.LB.get()) {
-            server.setSource(camera1);
-        } else if (UserInterface.driverController.A.get()) {
-            server.setSource(camera2);
+            if (isCamera1) {
+                server.setSource(camera2);
+                isCamera1 = false;
+            } else {
+                server.setSource(camera1);
+                isCamera1 = true;
+            }
         }
+
         if(UserInterface.operatorController.START.get()) {
             //Subsystems.cargo.setEscalatorMotors(-1);
             Subsystems.cargo.setIntakeMotors(0.75);

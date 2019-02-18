@@ -18,8 +18,8 @@ public class RobotMap {
     public static double idealAngle = 0;
 
     public static boolean isToggledFast = true;
-    public static double speedCap = 0.5;
-    public static double rotationCap = 0.3;
+    public static double speedCap = 1;
+    public static double rotationCap = 0.4;
 
     /**
      * Various Ports

@@ -14,8 +14,13 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 public class Cargo extends Subsystem {   
 
     private WPI_TalonSRX intakePivot;
-    private SpeedController intakeWheels;
-    private SpeedController escalator; 
+
+    private WPI_VictorSPX intakeWheels;
+    private WPI_VictorSPX escalator; 
+    
+    // private WPI_TalonSRX intakeWheels;
+    // private WPI_TalonSRX escalator; 
+
     private DigitalInput cargoPivotLimitSwitch;
     private DigitalInput cargoEscalatorUltrasonic; 
     private DoubleSolenoid flap; 
@@ -23,13 +28,13 @@ public class Cargo extends Subsystem {
     public Cargo(){
         super("Cargo");
         this.intakePivot = new WPI_TalonSRX(RobotMap.cargoIntakePivot);
-        if(RobotMap.isCompBot) {
-            this.intakeWheels = new WPI_VictorSPX(RobotMap.cargoIntakeWheels);
-            this.escalator = new WPI_VictorSPX(RobotMap.cargoEscalatorWheels);
-        } else {
-            this.intakeWheels = new WPI_TalonSRX(RobotMap.cargoIntakeWheels);
-            this.escalator = new WPI_TalonSRX(RobotMap.cargoEscalatorWheels);
-        }
+        
+        this.intakeWheels = new WPI_VictorSPX(RobotMap.cargoIntakeWheels);
+        this.escalator = new WPI_VictorSPX(RobotMap.cargoEscalatorWheels);
+        
+        // this.intakeWheels = new WPI_TalonSRX(RobotMap.cargoIntakeWheels);
+        // this.escalator = new WPI_TalonSRX(RobotMap.cargoEscalatorWheels);
+        
         this.cargoPivotLimitSwitch = new DigitalInput(RobotMap.cargoPivotLimitSwitch);
         this.cargoEscalatorUltrasonic = new DigitalInput(RobotMap.cargoEscalatorUltrasonic);
         this.flap = new DoubleSolenoid(RobotMap.cargoFlapUp, RobotMap.cargoFlapDown);
@@ -46,11 +51,11 @@ public class Cargo extends Subsystem {
     }
     
     public void setEscalatorMotors(double power) {
-        escalator.set(power);
+        escalator.set(ControlMode.PercentOutput, power);
     }
     
     public void setIntakeMotors(double power) {
-        intakeWheels.set(power);
+        intakeWheels.set(ControlMode.PercentOutput, power);
     }
 
     public void pivotIntake(double power) {
