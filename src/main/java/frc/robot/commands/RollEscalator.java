@@ -7,7 +7,7 @@ public class RollEscalator extends Command {
     public RollEscalator() {
         super("RollEscalator");
         requires(Subsystems.cargo);
-        setTimeout(5);
+        setTimeout(3);
     }
 
     @Override

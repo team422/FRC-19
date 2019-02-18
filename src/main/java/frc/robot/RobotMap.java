@@ -14,6 +14,8 @@ public class RobotMap {
      */
     public static final boolean isLeftThrottle = false;
     public static double idealAngle = 0;
+    public static double speedCap = 0.5;
+    public static double angleCap = 0.5;
 
     /**
      * Various Ports
@@ -51,7 +53,7 @@ public class RobotMap {
 
     // Digital IO Ports
     public static final int cargoPivotLimitSwitch = 1; // check with Nathan/Mason for type used
-    public static final int cargoEscalatorUltrasonic = 4; 
+    public static final int cargoEscalatorUltrasonic = 7; 
     public static final int climberUltrasonic = 3;
 
     // UI Ports
@@ -66,6 +68,19 @@ public class RobotMap {
     public static void setIdeal(double angle) {
         idealAngle = angle;
         System.out.println("Ideal angle is now " + idealAngle);
+    }
+
+    public static double getCap() {
+        return speedCap;
+    }
+
+    public static double getRot() {
+        return angleCap;
+    }
+
+    public static void setCap(double speed, double angle) {
+        speedCap = speed;
+        angleCap = angle;
     }
 
 }

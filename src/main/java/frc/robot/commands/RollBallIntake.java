@@ -7,6 +7,7 @@ public class RollBallIntake extends Command {
     public RollBallIntake() {
         super("RollBallIntake");
         requires(Subsystems.cargo);
+        setTimeout(3);
     }
 
     @Override
@@ -21,7 +22,8 @@ public class RollBallIntake extends Command {
     
     @Override
     public boolean isFinished() {
-        return Subsystems.cargo.getBeamBrakeValue();
+        //return Subsystems.cargo.getBeamBrakeValue();
+        return isTimedOut();
     }
 
     @Override

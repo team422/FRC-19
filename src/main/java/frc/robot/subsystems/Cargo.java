@@ -36,7 +36,7 @@ public class Cargo extends Subsystem {
     }
 
     public boolean getBeamBrakeValue() {
-        return cargoEscalatorUltrasonic.get();      
+        return !cargoEscalatorUltrasonic.get();      
     }
     
     public void setEscalatorMotors(double power) {

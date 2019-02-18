@@ -83,7 +83,7 @@ public class TankDrive extends Command {
     /** Because of a weird glitch with how curvatureDrive is set up,
      *  the rotation actually goes in as the first input, followed by the speed,
      *  rather than speed then rotation */
-    Subsystems.driveBase.cheesyDrive.curvatureDrive(0.5*rotation, 0.5*speed, true);
+    Subsystems.driveBase.cheesyDrive.curvatureDrive(RobotMap.getRot() * rotation, RobotMap.getCap() * speed, true);
   }
 
   protected boolean isFinished() {
