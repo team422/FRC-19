@@ -260,7 +260,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("lineY0", lineY0.getDouble(-404));
         SmartDashboard.putNumber("lineY1", lineY1.getDouble(-404));
         SmartDashboard.putNumber("RightDrivePosition", Subsystems.driveBase.getRightPosition());
-        SmartDashboard.putNumber("LeftDrivePosition", Subsystems.driveBase.getRightPosition());
+        SmartDashboard.putNumber("LeftDrivePosition", Subsystems.driveBase.getLeftPosition());
         SmartDashboard.putNumber("Gyro angle", Subsystems.driveBase.getGyroAngle());
         SmartDashboard.putNumber("Hatch Left Angle", Subsystems.hatch.getLeftPosition());
         SmartDashboard.putNumber("Hatch Right Angle", Subsystems.hatch.getRightPosition());

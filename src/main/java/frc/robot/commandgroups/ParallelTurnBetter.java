@@ -19,5 +19,4 @@ public class ParallelTurnBetter extends CommandGroup {
     }
     addSequential(new DriveStraight(5, 0.2, 20));
   }
-  
 }
