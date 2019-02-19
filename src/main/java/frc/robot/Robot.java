@@ -89,7 +89,7 @@ public class Robot extends TimedRobot {
          * Sets Drivebase speed to fast as default and sets RB on driverController 
          * to toggle the speed when pressed 
          */
-        RobotMap.isToggledFast = true;
+        RobotMap.isFastMode = true;
         RobotMap.setSpeedAndRotationCaps(1, 0.35);
         UserInterface.driverController.RB.whenPressed(new ToggleSpeed());
     }
@@ -138,7 +138,8 @@ public class Robot extends TimedRobot {
         /**
          * This makes sure that the bot is set to normal speed and rotation caps upon TeleOp Initialization.
          */
-        RobotMap.isToggledFast = true;
+        RobotMap.isFastMode = true;
+        RobotMap.setSpeedAndRotationCaps(1, 0.35);
 
         /**
          * This makes sure that any old commands/command groups are stopped upon TeleOp Initialization.
@@ -250,7 +251,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Hatch Right Angle", Subsystems.hatch.getRightPosition());
         SmartDashboard.putNumber("POV Angle", UserInterface.operatorController.getPOVAngle());
         SmartDashboard.putBoolean("isLeftThrottle", RobotMap.isLeftThrottle);
-        SmartDashboard.putBoolean("isToggledFast", RobotMap.isToggledFast);
+        SmartDashboard.putBoolean("isFastMode", RobotMap.isFastMode);
         SmartDashboard.putNumber("SpeedCap", RobotMap.speedCap);
         SmartDashboard.putNumber("RotationCap", RobotMap.rotationCap);
     }

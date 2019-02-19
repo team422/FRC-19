@@ -11,12 +11,12 @@ public class ToggleSpeed extends Command {
 
     @Override
     public void initialize() {
-        if(RobotMap.isToggledFast) {
-            RobotMap.setSpeedAndRotationCaps(0.2, 0.1);
-            RobotMap.isToggledFast = false;
+        if(RobotMap.isFastMode) {
+            RobotMap.setSpeedAndRotationCaps(0.2, 0.2);
+            RobotMap.isFastMode = false;
         } else {
             RobotMap.setSpeedAndRotationCaps(1, 0.35);
-            RobotMap.isToggledFast = true;
+            RobotMap.isFastMode = true;
         }
     }
 
