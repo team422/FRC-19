@@ -8,25 +8,36 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
 public class Cargo extends Subsystem {   
 
+    private WPI_TalonSRX intakePivot;
+
     private WPI_VictorSPX intakeWheels;
-    private WPI_TalonSRX intakePivot; 
     private WPI_VictorSPX escalator; 
+    
+    // private WPI_TalonSRX intakeWheels;
+    // private WPI_TalonSRX escalator; 
+
     private DigitalInput cargoPivotLimitSwitch;
     private DigitalInput cargoEscalatorUltrasonic; 
     private DoubleSolenoid flap; 
 
     public Cargo(){
         super("Cargo");
-        this.intakeWheels = new WPI_VictorSPX(RobotMap.cargoIntakeWheels); 
         this.intakePivot = new WPI_TalonSRX(RobotMap.cargoIntakePivot);
+        
+        this.intakeWheels = new WPI_VictorSPX(RobotMap.cargoIntakeWheels);
         this.escalator = new WPI_VictorSPX(RobotMap.cargoEscalatorWheels);
+        
+        // this.intakeWheels = new WPI_TalonSRX(RobotMap.cargoIntakeWheels);
+        // this.escalator = new WPI_TalonSRX(RobotMap.cargoEscalatorWheels);
+        
         this.cargoPivotLimitSwitch = new DigitalInput(RobotMap.cargoPivotLimitSwitch);
         this.cargoEscalatorUltrasonic = new DigitalInput(RobotMap.cargoEscalatorUltrasonic);
         this.flap = new DoubleSolenoid(RobotMap.cargoFlapUp, RobotMap.cargoFlapDown);
+
+        this.intakePivot.setInverted(true);
     }
 
     protected void initDefaultCommand() {} 
@@ -51,6 +62,10 @@ public class Cargo extends Subsystem {
         intakePivot.set(ControlMode.PercentOutput, power);
     }
 
+    public void holdPivotIntakeUp() {
+        intakePivot.set(ControlMode.PercentOutput, 0.1);
+    }
+    
     //if we get encoders on the cargo pivot
     // public double getIntakePivot() {
     //     return intakePivot.getSelectedSensorPosition(0);
