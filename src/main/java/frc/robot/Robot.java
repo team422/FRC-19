@@ -244,11 +244,11 @@ public class Robot extends TimedRobot {
         }
         if(UserInterface.operatorController.getLeftJoystickY() > 0.1) {
             // pivots down
-            Subsystems.cargo.pivotIntake(UserInterface.operatorController.getLeftJoystickY() * 0.2, Direction.Down);
+            Subsystems.cargo.pivotIntake(Math.abs(UserInterface.operatorController.getLeftJoystickY()) * 0.2, Direction.Down);
             RobotMap.holdPivot = false;
         } else if(UserInterface.operatorController.getLeftJoystickY() < -0.1) {
             // pivots up
-            Subsystems.cargo.pivotIntake(UserInterface.operatorController.getLeftJoystickY() * 0.3, Direction.Up);
+            Subsystems.cargo.pivotIntake(Math.abs(UserInterface.operatorController.getLeftJoystickY()) * 0.3, Direction.Up);
             RobotMap.holdPivot = false;
         }
         
