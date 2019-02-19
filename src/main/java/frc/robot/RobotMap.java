@@ -50,10 +50,10 @@ public class RobotMap {
     public static final int hatchRightGrabber = 9;
 
     // Double Solenoid Values
-    public static final int cargoFlapUp = 0; 
-    public static final int cargoFlapDown = 1;
+    public static final int cargoFlapUp = 7; 
+    public static final int cargoFlapDown = 0;
     public static final int hatchArmOut = 6;
-    public static final int hatchArmIn = 7;
+    public static final int hatchArmIn = 1;
 
     // Digital IO Ports
     public static final int cargoPivotLimitSwitch = 1; // check with Nathan/Mason for type used

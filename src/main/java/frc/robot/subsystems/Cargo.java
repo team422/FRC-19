@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import edu.wpi.first.wpilibj.AnalogInput;
+// import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -63,7 +63,7 @@ public class Cargo extends Subsystem {
     }
 
     public void holdPivotIntakeUp() {
-        intakePivot.set(ControlMode.PercentOutput, 0.1);
+        intakePivot.set(ControlMode.PercentOutput, -0.1);
     }
     
     //if we get encoders on the cargo pivot

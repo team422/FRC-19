@@ -6,18 +6,16 @@ import frc.robot.subsystems.Subsystems;
 public class ClimberFrontLegsUp extends Command {
 
     private double speed;
-    private double timeout;
 
-    public ClimberFrontLegsUp (double Speed, double TimeOut) {
+    public ClimberFrontLegsUp (double Speed, double Timeout) {
         super("ClimberFrontLegsUp");
         requires(Subsystems.climber);
-        timeout = TimeOut;
         speed = Speed;
+        setTimeout(Timeout);
     } 
 
     @Override
     protected void initialize() {
-        setTimeout(timeout);
         Subsystems.climber.zeroFrontClimbEncoders();
     }
   

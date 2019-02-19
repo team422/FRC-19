@@ -5,8 +5,8 @@ import frc.robot.subsystems.Subsystems;
 
 public class ClimberDriveToWall extends Command {
 
-  private double ticks;
-  private boolean forward;
+  // private double ticks;
+  // private boolean forward;
   private double speed;
 
   public ClimberDriveToWall(double Speed, double Timeout) {

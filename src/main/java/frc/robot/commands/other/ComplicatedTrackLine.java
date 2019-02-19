@@ -14,8 +14,8 @@ public class ComplicatedTrackLine extends Command {
     private NetworkTableEntry lineX1;
     private NetworkTableEntry lineY0;
     private NetworkTableEntry lineY1;
-    private double correction;
-    private double deadband = 5;
+    // private double correction;
+    // private double deadband = 5;
     private double lineOffset1;
     private double lineOffset2;
     
@@ -27,8 +27,8 @@ public class ComplicatedTrackLine extends Command {
     private static double camera_far = 0; //y coordinate of the far sige of the camera field of view
     private static double camera_near = 51; //y coordinate of the near side of the camera field of view
     private static double camera_height = 11.375;
-    private static double centroid_x = 11.375;
-    private static double centroid_y = 14.5;
+    // private static double centroid_x = 11.375;
+    // private static double centroid_y = 14.5;
     private double idealAngle;
     private double xdistance;
     private double ydistance;
