@@ -25,12 +25,12 @@ public class CargoIntake extends Command {
 
     @Override
     public void interrupted() {
-        Subsystems.cargo.setIntakeMotors(0);
+        Subsystems.cargo.stopIntakeMotors();
     }
     
     @Override
     public void end() {
-        Subsystems.cargo.setIntakeMotors(0);
+        Subsystems.cargo.stopIntakeMotors();
     }
     
 }

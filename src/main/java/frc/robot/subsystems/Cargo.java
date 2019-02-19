@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import frc.robot.Direction;
 
 public class Cargo extends Subsystem {   
 
@@ -37,7 +38,6 @@ public class Cargo extends Subsystem {
         this.cargoEscalatorUltrasonic = new DigitalInput(RobotMap.cargoEscalatorUltrasonic);
         this.flap = new DoubleSolenoid(RobotMap.cargoFlapUp, RobotMap.cargoFlapDown);
 
-        this.intakePivot.setInverted(true);
     }
 
     protected void initDefaultCommand() {} 
@@ -53,17 +53,36 @@ public class Cargo extends Subsystem {
     public void setEscalatorMotors(double power) {
         escalator.set(ControlMode.PercentOutput, power);
     }
+
+    public void stopEscalatorMotors() {
+        escalator.set(ControlMode.PercentOutput, 0.0);
+    }
     
     public void setIntakeMotors(double power) {
         intakeWheels.set(ControlMode.PercentOutput, power);
     }
 
-    public void pivotIntake(double power) {
-        intakePivot.set(ControlMode.PercentOutput, power);
+
+    public void stopIntakeMotors() {
+        intakeWheels.set(ControlMode.PercentOutput, 0.0);
+    }
+
+    public void pivotIntake(double power, Direction direction) {
+        if (direction == Direction.Up) {
+            intakePivot.set(ControlMode.PercentOutput, power);
+        } else if (direction == Direction.Down) {
+            intakePivot.set(ControlMode.PercentOutput, -power);
+        } else {
+            intakePivot.set(ControlMode.PercentOutput, 0.0);
+        }
+    }
+
+    public void stopPivot() {
+        intakePivot.set(ControlMode.PercentOutput, 0.0);
     }
 
     public void holdPivotIntakeUp() {
-        intakePivot.set(ControlMode.PercentOutput, -0.1);
+        intakePivot.set(ControlMode.PercentOutput, 0.15);
     }
     
     //if we get encoders on the cargo pivot
