@@ -17,6 +17,9 @@ public class RobotMap {
     public static final boolean isLeftThrottle = false;
 
     public static double idealAngle = 0;
+    public static double driveOffset = 0;
+    public static double turnDirection = 0;
+
 
     public static boolean isFastMode = true;
     public static double speedCap = 1;
@@ -94,6 +97,23 @@ public class RobotMap {
     public static void setSpeedAndRotationCaps(double newSpeedCap, double newRotationCap) {
         speedCap = newSpeedCap;
         rotationCap = newRotationCap;
+    }
+
+    public static void setDriveOffset(double offset) {
+        driveOffset = offset;
+        System.out.println("Drive offset is now " + driveOffset);
+    }
+
+    public static double getDriveOffset() {
+        return driveOffset;                
+    }
+    
+    public static double getTurnDirection() {
+        return turnDirection;
+    }
+    
+    public static void setTurnDirection(double direction) {
+        turnDirection = direction;
     }
 
 }

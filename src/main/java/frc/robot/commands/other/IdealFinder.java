@@ -22,6 +22,7 @@ public class IdealFinder extends Command {
     private static double camera_far = 0; //y coordinate of the far sige of the camera field of view
     private static double camera_near = 51; //y coordinate of the near side of the camera field of view
     private static double camera_height = 12;
+
     // private double correction;
     // private double deadband = 5;
     private double lineOffset1;
@@ -31,6 +32,8 @@ public class IdealFinder extends Command {
     private double xdistance;
     private double ydistance;
     private double camera_to_y_pixel_distance;
+    private static final double camera_to_robot_center = 14;
+    private double distance_to_align;
 
     public IdealFinder() {
         super("IdealFinder");
@@ -47,7 +50,6 @@ public class IdealFinder extends Command {
         lineY1 = pixy.getEntry("lineY1");
         Subsystems.driveBase.zeroEncoderPosition();
         Subsystems.driveBase.zeroGyroAngle();
-
         if (lineY0.getDouble(-404) > lineY1.getDouble(-404)) {
             lineOffset1 = compute_x_inches(lineX0.getDouble(-404), computeYExpiremental(lineY0.getDouble(-404)));
             lineOffset2 = compute_x_inches(lineX1.getDouble(-404), computeYExpiremental(lineY1.getDouble(-404)));
@@ -67,14 +69,27 @@ public class IdealFinder extends Command {
         }
         //xdistance = lineOffset1 - lineOffset2;
         if(lineOffset1 > lineOffset2) {
-            xdistance = lineOffset1 - lineOffset2;
+            xdistance = lineOffset1 - lineOffset2;                        
         } else {
             xdistance = lineOffset2 - lineOffset1;
         }
-        idealAngle = Math.atan2(xdistance,ydistance) * (180 / Math.PI);
+        
+        RobotMap.setTurnDirection((compute_x_inches(lineX1.getDouble(-404), computeYExpiremental(lineY1.getDouble(-404))) + compute_x_inches(lineX0.getDouble(-404), computeYExpiremental(lineY0.getDouble(-404)))) / 2);
+        
+        
+        //phi = 90 - theta gives names to the angles so can we please use them?
+        idealAngle =  Math.atan2(xdistance,ydistance) * (180 / Math.PI);
         SmartDashboard.putNumber("Ideal Angle", idealAngle);
         System.out.println("Setting ideal angle to " + idealAngle);
-        RobotMap.setIdealAngle(idealAngle);
+        RobotMap.setIdealAngle(90 - idealAngle); 
+        
+        if (lineY0.getDouble(-404) > lineY1.getDouble(-404)) {
+            distance_to_align = Math.sin(Math.toRadians(idealAngle)) * (camera_to_robot_center + computeYExpiremental(lineY0.getDouble(-404)));
+        } else {
+            distance_to_align = Math.sin(Math.toRadians(idealAngle)) * (camera_to_robot_center + computeYExpiremental(lineY1.getDouble(-404)));
+        }
+
+        RobotMap.setDriveOffset(distance_to_align);
     }
     
     @Override
@@ -100,13 +115,13 @@ public class IdealFinder extends Command {
         Subsystems.driveBase.setMotors(0, 0);
     } 
 
-    double compute_y_inches(double camera_y) {
-        double camera_y_pixels = camera_near - camera_far;
-        double degrees_per_pixel = fov_v / (camera_y_pixels);
-        double angle_to_pixel = (camera_pitch - (fov_v / 2)) + degrees_per_pixel * (camera_near-camera_y);
-        double y_inches = Math.tan(angle_to_pixel * (Math.PI / 180)) * camera_height;
-        return y_inches;
-    }
+    // double compute_y_inches(double camera_y) {
+    //     double camera_y_pixels = camera_near - camera_far;
+    //     double degrees_per_pixel = fov_v / (camera_y_pixels);
+    //     double angle_to_pixel = (camera_pitch - (fov_v / 2)) + degrees_per_pixel * (camera_near-camera_y);
+    //     double y_inches = Math.tan(angle_to_pixel * (Math.PI / 180)) * camera_height;
+    //     return y_inches;
+    // }
 
     double compute_x_inches(double camera_x, double y_dist) {
         double camera_x_pixels = camera_right - camera_left;
@@ -114,15 +129,15 @@ public class IdealFinder extends Command {
         double angle_to_pixel = -(fov_h / 2) + degrees_per_pixel * camera_x;
         double x_inches = Math.tan(angle_to_pixel * (Math.PI/180)) * y_dist;
         return x_inches;
-    }
+    }   
 
- 
-    private double compute_camera_to_y_pixel_distance(double y_floor_distance) {
-        camera_to_y_pixel_distance = Math.sqrt(Math.pow(camera_height,2)+Math.pow(y_floor_distance,2));
-        return camera_to_y_pixel_distance;
-    }
+    // private double compute_camera_to_y_pixel_distance(double y_floor_distance) {
+    //     camera_to_y_pixel_distance = Math.sqrt(Math.pow(camera_height,2)+Math.pow(y_floor_distance,2));
+    //     return camera_to_y_pixel_distance;
+    // }
 
     private double computeYExpiremental(double yValue) {
         return (38.453*Math.pow(Math.E,-0.033*yValue));
     }
+
 }
