@@ -32,9 +32,6 @@ public class Robot extends TimedRobot {
     private NetworkTableEntry lineY0;
     private NetworkTableEntry lineY1;
 
-    private String botName;
-    private boolean holdPivot;
-
     private UsbCamera camera;
     /**
      * Camera Toggling Variables (Dont work yet)
@@ -52,8 +49,7 @@ public class Robot extends TimedRobot {
     }
 
     public void robotInit() {
-        botName = (RobotMap.isCompBot) ? "Meridian" : "Hot Take";
-        System.out.println("Initializing " + botName + "\n");
+        System.out.println("Initializing " + RobotMap.botName + "\n");
 
         camera = CameraServer.getInstance().startAutomaticCapture();
         /**
@@ -83,8 +79,6 @@ public class Robot extends TimedRobot {
 
         Subsystems.driveBase.cheesyDrive.setSafetyEnabled(false);
 
-        holdPivot = false;
-
         /**
          * Sets Drivebase speed to fast as default and sets RB on driverController 
          * to toggle the speed when pressed 
@@ -94,9 +88,10 @@ public class Robot extends TimedRobot {
         UserInterface.driverController.RB.whenPressed(new ToggleSpeed());
 
         /**
-         * Turns off holdPivot boolean at the initialization of the bot.
+         * Makes sure  holdPivot & cargoIn booleans are false at the initialization of the bot.
          */
-        holdPivot = false;
+        RobotMap.holdPivot = false;
+        RobotMap.cargoIn = false;
     }
 
     public void disabledInit() {
@@ -107,8 +102,8 @@ public class Robot extends TimedRobot {
          * This makes sure that all of the motors are set to 0% following disable
          */
         Subsystems.cargo.stopPivot();
-        Subsystems.cargo.setIntakeMotors(0);
-        Subsystems.cargo.setEscalatorMotors(0);
+        Subsystems.cargo.stopIntakeMotors();
+        Subsystems.cargo.stopEscalatorMotors();
     }
 
     public void disabledPeriodic() {        
@@ -137,8 +132,8 @@ public class Robot extends TimedRobot {
          * This makes sure that all of the motors are set to 0% upon TeleOp Initialization.
          */
         Subsystems.cargo.stopPivot();
-        Subsystems.cargo.setIntakeMotors(0);
-        Subsystems.cargo.setEscalatorMotors(0);
+        Subsystems.cargo.stopIntakeMotors();
+        Subsystems.cargo.stopEscalatorMotors();
 
         /**
          * This makes sure that the bot is set to normal speed and rotation caps upon TeleOp Initialization.
@@ -147,9 +142,10 @@ public class Robot extends TimedRobot {
         RobotMap.setSpeedAndRotationCaps(1, 0.35);
 
         /**
-         * Turns off holdPivot boolean at TeleOp Initialization.
+         * Turns holdPivot & cargoIn booleans to false at TeleOp Initialization.
          */
-        holdPivot = false;
+        RobotMap.holdPivot = false;
+        RobotMap.cargoIn = false;
 
         /**
          * This makes sure that any old commands/command groups are stopped upon TeleOp Initialization.
@@ -217,37 +213,43 @@ public class Robot extends TimedRobot {
             Subsystems.cargo.setFlapUp();
         }
         if(UserInterface.operatorController.getPOVAngle() == 0) {
-            holdPivot = true;
+            RobotMap.holdPivot = true;
         }
-        if(holdPivot) {
+        if(RobotMap.holdPivot) {
             Subsystems.cargo.holdPivotIntakeUp();
         } else {
             Subsystems.cargo.stopPivot();
         }
+        RobotMap.cargoIn = Subsystems.cargo.getIntakeBeamBroken();
         if(UserInterface.operatorController.getLeftTrigger() > 0.1) {
             Subsystems.cargo.setEscalatorMotors(-1);
+            RobotMap.cargoIn = false;
         }
         if(UserInterface.operatorController.getRightTrigger() > 0.1) {
-            if(!Subsystems.cargo.getBeamBrakeValue()) {
-                Subsystems.cargo.setIntakeMotors(-0.75);
-                Subsystems.cargo.setEscalatorMotors(-1);
+            if(!Subsystems.cargo.getEscalatorBeamBroken()) {
+                Subsystems.cargo.setEscalatorMotors(-1);    
+                if (RobotMap.cargoIn) {
+                    Subsystems.cargo.stopIntakeMotors();
+                } else {
+                    Subsystems.cargo.setIntakeMotors(-0.75);
+                }
             } else {
-                Subsystems.cargo.setIntakeMotors(0);
-                Subsystems.cargo.setEscalatorMotors(0);
+                Subsystems.cargo.stopIntakeMotors();
+                Subsystems.cargo.stopEscalatorMotors();
             }
         } 
         if(!(UserInterface.operatorController.getLeftTrigger() > 0.1) && !(UserInterface.operatorController.getRightTrigger() > 0.1)) {
-            Subsystems.cargo.setIntakeMotors(0);
-            Subsystems.cargo.setEscalatorMotors(0);
+            Subsystems.cargo.stopIntakeMotors();
+            Subsystems.cargo.stopEscalatorMotors();
         }
         if(UserInterface.operatorController.getLeftJoystickY() > 0.1) {
             // pivots down
             Subsystems.cargo.pivotIntake(UserInterface.operatorController.getLeftJoystickY() * 0.2, Direction.Down);
-            holdPivot = false;
+            RobotMap.holdPivot = false;
         } else if(UserInterface.operatorController.getLeftJoystickY() < -0.1) {
             // pivots up
             Subsystems.cargo.pivotIntake(UserInterface.operatorController.getLeftJoystickY() * 0.3, Direction.Up);
-            holdPivot = false;
+            RobotMap.holdPivot = false;
         }
         
     }
@@ -265,7 +267,8 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("POV Angle", UserInterface.operatorController.getPOVAngle());
         SmartDashboard.putBoolean("isLeftThrottle", RobotMap.isLeftThrottle);
         SmartDashboard.putBoolean("isFastMode", RobotMap.isFastMode);
-        SmartDashboard.putBoolean("holdPivot", holdPivot);
+        SmartDashboard.putBoolean("holdPivot", RobotMap.holdPivot);
+        SmartDashboard.putBoolean("cargoIn", RobotMap.cargoIn);
         SmartDashboard.putNumber("SpeedCap", RobotMap.speedCap);
         SmartDashboard.putNumber("RotationCap", RobotMap.rotationCap);
     }

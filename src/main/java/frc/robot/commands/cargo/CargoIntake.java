@@ -20,7 +20,7 @@ public class CargoIntake extends Command {
     
     @Override
     public boolean isFinished() {
-        return (Subsystems.cargo.getBeamBrakeValue() || isTimedOut());
+        return (Subsystems.cargo.getEscalatorBeamBroken() || isTimedOut());
     }
 
     @Override

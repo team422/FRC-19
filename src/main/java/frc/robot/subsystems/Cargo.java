@@ -21,7 +21,8 @@ public class Cargo extends Subsystem {
     // private WPI_TalonSRX escalator; 
 
     private DigitalInput cargoPivotLimitSwitch;
-    private DigitalInput cargoEscalatorUltrasonic; 
+    private DigitalInput cargoEscalatorUltrasonic;
+    private DigitalInput cargoIntakeUltrasonic;  
     private DoubleSolenoid flap; 
 
     public Cargo(){
@@ -36,6 +37,7 @@ public class Cargo extends Subsystem {
         
         this.cargoPivotLimitSwitch = new DigitalInput(RobotMap.cargoPivotLimitSwitch);
         this.cargoEscalatorUltrasonic = new DigitalInput(RobotMap.cargoEscalatorUltrasonic);
+        this.cargoIntakeUltrasonic = new DigitalInput(RobotMap.cargoIntakeUltrasonic);
         this.flap = new DoubleSolenoid(RobotMap.cargoFlapUp, RobotMap.cargoFlapDown);
 
     }
@@ -46,7 +48,11 @@ public class Cargo extends Subsystem {
         return !cargoPivotLimitSwitch.get();
     }
 
-    public boolean getBeamBrakeValue() {
+    public boolean getIntakeBeamBroken() {
+        return !cargoIntakeUltrasonic.get();      
+    }
+
+    public boolean getEscalatorBeamBroken() {
         return !cargoEscalatorUltrasonic.get();      
     }
     

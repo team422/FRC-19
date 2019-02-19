@@ -21,6 +21,10 @@ public class RobotMap {
     public static boolean isFastMode = true;
     public static double speedCap = 1;
     public static double rotationCap = 0.35;
+    public static String botName = (isCompBot) ? "Meridian" : "Hot Take";
+    public static boolean holdPivot = false;
+    public static boolean cargoIn = false;
+
 
     /**
      * Various Ports
@@ -57,7 +61,8 @@ public class RobotMap {
 
     // Digital IO Ports
     public static final int cargoPivotLimitSwitch = 1; // check with Nathan/Mason for type used
-    public static final int cargoEscalatorUltrasonic = 7; 
+    public static final int cargoEscalatorUltrasonic = 7;
+    public static final int cargoIntakeUltrasonic = 9;
     public static final int climberUltrasonic = 3;
 
     // UI Ports

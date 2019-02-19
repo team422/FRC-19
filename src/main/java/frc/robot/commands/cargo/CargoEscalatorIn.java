@@ -19,7 +19,7 @@ public class CargoEscalatorIn extends Command {
 
     @Override
     public boolean isFinished() {
-        return Subsystems.cargo.getBeamBrakeValue();
+        return Subsystems.cargo.getEscalatorBeamBroken();
     }
 
     @Override
