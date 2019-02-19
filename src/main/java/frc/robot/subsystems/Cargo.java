@@ -63,7 +63,7 @@ public class Cargo extends Subsystem {
     }
 
     public void holdPivotIntakeUp() {
-        intakePivot.set(ControlMode.PercentOutput, 0.1);
+        intakePivot.set(ControlMode.PercentOutput, -0.1);
     }
     
     //if we get encoders on the cargo pivot
