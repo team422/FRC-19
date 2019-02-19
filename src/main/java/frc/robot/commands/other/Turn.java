@@ -68,11 +68,11 @@ public class Turn extends Command {
     }
 
     public void interrupted() {
-        Subsystems.driveBase.setMotors(0,0);
+        Subsystems.driveBase.stopMotors();
     }
 
     public void end() {
-        Subsystems.driveBase.setMotors(0,0);
+        Subsystems.driveBase.stopMotors();
     }
 
 }

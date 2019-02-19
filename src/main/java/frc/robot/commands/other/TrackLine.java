@@ -85,11 +85,11 @@ public class TrackLine extends Command {
 
     @Override
     public void interrupted() {
-        Subsystems.driveBase.setMotors(0, 0);
+        Subsystems.driveBase.stopMotors();
     }
 
     @Override
     public void end() {
-        Subsystems.driveBase.setMotors(0, 0);
+        Subsystems.driveBase.stopMotors();
     } 
 }

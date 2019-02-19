@@ -25,12 +25,12 @@ public class CargoEscalatorOut extends Command {
 
     @Override
     public void interrupted() {
-        Subsystems.cargo.setEscalatorMotors(0);
+        Subsystems.cargo.stopEscalatorMotors();
     }
 
     @Override
     public void end() {
-        Subsystems.cargo.setEscalatorMotors(0);
+        Subsystems.cargo.stopEscalatorMotors();
     }
 
 }

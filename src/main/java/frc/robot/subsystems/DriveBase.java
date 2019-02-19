@@ -64,6 +64,11 @@ public class DriveBase extends Subsystem {
         rightSide.set(right);
     }
 
+    public void stopMotors() {
+        leftSide.set(0);
+        rightSide.set(0);
+    }
+
     public int getLeftPosition() {
         return leftMiddleMaster.getSelectedSensorPosition(0);
     }

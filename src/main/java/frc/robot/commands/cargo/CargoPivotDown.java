@@ -1,6 +1,7 @@
 package frc.robot.commands.cargo;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Direction;
 import frc.robot.subsystems.Subsystems;
 
 public class CargoPivotDown extends Command {
@@ -29,7 +30,7 @@ public class CargoPivotDown extends Command {
 
   @Override
   protected void execute() {
-    Subsystems.cargo.pivotIntake(-speed);
+    Subsystems.cargo.pivotIntake(speed, Direction.Down);
   }
 
   @Override
@@ -43,7 +44,7 @@ public class CargoPivotDown extends Command {
   
   @Override
   protected void end() {
-    Subsystems.cargo.pivotIntake(0);
+    Subsystems.cargo.stopPivot();
   }
 
   // public double convertAngleToTicks(double angle) {

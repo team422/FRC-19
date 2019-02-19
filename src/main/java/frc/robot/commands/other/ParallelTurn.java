@@ -58,9 +58,13 @@ public class ParallelTurn extends Command {
   }
 
   @Override
-  protected void interrupted() {}
+  protected void interrupted() {
+    Subsystems.driveBase.stopMotors();
+  }
   
   @Override
-  protected void end() {}
+  protected void end() {
+    Subsystems.driveBase.stopMotors();
+  }
 
 }

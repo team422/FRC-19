@@ -18,7 +18,7 @@ public class RobotMap {
 
     public static double idealAngle = 0;
 
-    public static boolean isToggledFast = true;
+    public static boolean isFastMode = true;
     public static double speedCap = 1;
     public static double rotationCap = 0.35;
 

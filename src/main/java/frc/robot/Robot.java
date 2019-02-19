@@ -89,9 +89,14 @@ public class Robot extends TimedRobot {
          * Sets Drivebase speed to fast as default and sets RB on driverController 
          * to toggle the speed when pressed 
          */
-        RobotMap.isToggledFast = true;
+        RobotMap.isFastMode = true;
         RobotMap.setSpeedAndRotationCaps(1, 0.35);
         UserInterface.driverController.RB.whenPressed(new ToggleSpeed());
+
+        /**
+         * Turns off holdPivot boolean at the initialization of the bot.
+         */
+        holdPivot = false;
     }
 
     public void disabledInit() {
@@ -101,7 +106,7 @@ public class Robot extends TimedRobot {
         /**
          * This makes sure that all of the motors are set to 0% following disable
          */
-        Subsystems.cargo.pivotIntake(0);
+        Subsystems.cargo.stopPivot();
         Subsystems.cargo.setIntakeMotors(0);
         Subsystems.cargo.setEscalatorMotors(0);
     }
@@ -131,14 +136,20 @@ public class Robot extends TimedRobot {
         /**
          * This makes sure that all of the motors are set to 0% upon TeleOp Initialization.
          */
-        Subsystems.cargo.pivotIntake(0);
+        Subsystems.cargo.stopPivot();
         Subsystems.cargo.setIntakeMotors(0);
         Subsystems.cargo.setEscalatorMotors(0);
 
         /**
          * This makes sure that the bot is set to normal speed and rotation caps upon TeleOp Initialization.
          */
-        RobotMap.isToggledFast = true;
+        RobotMap.isFastMode = true;
+        RobotMap.setSpeedAndRotationCaps(1, 0.35);
+
+        /**
+         * Turns off holdPivot boolean at TeleOp Initialization.
+         */
+        holdPivot = false;
 
         /**
          * This makes sure that any old commands/command groups are stopped upon TeleOp Initialization.
@@ -211,7 +222,7 @@ public class Robot extends TimedRobot {
         if(holdPivot) {
             Subsystems.cargo.holdPivotIntakeUp();
         } else {
-            Subsystems.cargo.pivotIntake(0);
+            Subsystems.cargo.stopPivot();
         }
         if(UserInterface.operatorController.getLeftTrigger() > 0.1) {
             Subsystems.cargo.setEscalatorMotors(-1);
@@ -229,10 +240,13 @@ public class Robot extends TimedRobot {
             Subsystems.cargo.setIntakeMotors(0);
             Subsystems.cargo.setEscalatorMotors(0);
         }
-        if (UserInterface.operatorController.getLeftJoystickY() > 0.1) {
-            Subsystems.cargo.pivotIntake(UserInterface.operatorController.getLeftJoystickY() * 0.5);
+        if(UserInterface.operatorController.getLeftJoystickY() > 0.1) {
+            // pivots down
+            Subsystems.cargo.pivotIntake(UserInterface.operatorController.getLeftJoystickY() * 0.2, Direction.Down);
+            holdPivot = false;
         } else if(UserInterface.operatorController.getLeftJoystickY() < -0.1) {
-            Subsystems.cargo.pivotIntake(UserInterface.operatorController.getLeftJoystickY() * 0.25);
+            // pivots up
+            Subsystems.cargo.pivotIntake(UserInterface.operatorController.getLeftJoystickY() * 0.3, Direction.Up);
             holdPivot = false;
         }
         
@@ -250,7 +264,8 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Hatch Right Angle", Subsystems.hatch.getRightPosition());
         SmartDashboard.putNumber("POV Angle", UserInterface.operatorController.getPOVAngle());
         SmartDashboard.putBoolean("isLeftThrottle", RobotMap.isLeftThrottle);
-        SmartDashboard.putBoolean("isToggledFast", RobotMap.isToggledFast);
+        SmartDashboard.putBoolean("isFastMode", RobotMap.isFastMode);
+        SmartDashboard.putBoolean("holdPivot", holdPivot);
         SmartDashboard.putNumber("SpeedCap", RobotMap.speedCap);
         SmartDashboard.putNumber("RotationCap", RobotMap.rotationCap);
     }

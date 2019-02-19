@@ -48,11 +48,13 @@ public class DriveStraight extends Command {
   }
 
   @Override
-  protected void interrupted() {}
+  protected void interrupted() {
+    Subsystems.driveBase.stopMotors();
+  }
   
   @Override
   protected void end() {
-    Subsystems.driveBase.setMotors(0,0);
+    Subsystems.driveBase.stopMotors();
   }
 
   public double convertToTicks(double inches) {
