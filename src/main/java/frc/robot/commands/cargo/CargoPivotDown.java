@@ -5,7 +5,7 @@ import frc.robot.subsystems.Subsystems;
 
 public class CargoPivotDown extends Command {
 
-  private double ticks;
+  // private double ticks;
   private double speed;
 
   public CargoPivotDown(/*double Angle, */double Speed, double Timeout) {

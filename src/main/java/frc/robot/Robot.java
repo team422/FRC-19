@@ -2,19 +2,19 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.cscore.UsbCamera;
-import edu.wpi.cscore.VideoSink;
-import edu.wpi.cscore.VideoSource;
+// import edu.wpi.cscore.VideoSink;
+// import edu.wpi.cscore.VideoSource;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.cargo.*;
-import frc.robot.commands.climber.*;
-import frc.robot.commands.hatch.*;
+// import edu.wpi.first.wpilibj.command.Command;
+// import edu.wpi.first.wpilibj.command.CommandGroup;
+// import frc.robot.commands.cargo.*;
+// import frc.robot.commands.climber.*;
+// import frc.robot.commands.hatch.*;
 import frc.robot.commands.other.*;
-import frc.robot.commandgroups.*;
+// import frc.robot.commandgroups.*;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Subsystems;
@@ -22,11 +22,11 @@ import frc.robot.userinterface.UserInterface;
 
 public class Robot extends TimedRobot {
 
-    private NetworkTableEntry blockX;
-    private NetworkTableEntry blockY;
-    private NetworkTableEntry blockW;
-    private NetworkTableEntry blockH;
-    private NetworkTableEntry blockArea;
+    // private NetworkTableEntry blockX;
+    // private NetworkTableEntry blockY;
+    // private NetworkTableEntry blockW;
+    // private NetworkTableEntry blockH;
+    // private NetworkTableEntry blockArea;
     private NetworkTableEntry lineX0;
     private NetworkTableEntry lineX1;
     private NetworkTableEntry lineY0;
@@ -34,12 +34,6 @@ public class Robot extends TimedRobot {
 
     private String botName;
     private boolean holdPivot;
-    // private Command TrackObject;
-    // private Command ComplicatedTrackLine;
-    // private Command TrackLine;
-    // private Command TankDrive;
-    // private Command DriveStraight;
-    // private CommandGroup ParallelTurnBetter;
 
     private UsbCamera camera;
     /**
@@ -52,23 +46,6 @@ public class Robot extends TimedRobot {
     // public NetworkTable camera;
     // public VideoSink server;
     // public boolean isCamera1;
-
-    // private CommandGroup CargoIntake;
-    // private Command CargoPivotDown;
-    // private CommandGroup CargoRocketOutake;
-    // private CommandGroup CargoShipOutake;
-    // private Command FlapDown;
-    // private Command FlapUp;
-    // private Command HatchClamp;
-    // private Command HatchRelease;
-    // private CommandGroup IntakeHatch;
-    // private CommandGroup OutakeRocket;
-    // private CommandGroup OutakeShip;
-    // private Command ParallelEscalator;
-    // private Command PunchInwards; 
-    // private Command PunchOutwards;
-    // private Command RollBallIntake;
-    // private Command RollEscalator;
 
     public Robot() {
         super(0.08);
@@ -94,15 +71,15 @@ public class Robot extends TimedRobot {
         
         NetworkTableInstance inst = NetworkTableInstance.getDefault();
         NetworkTable pixy = inst.getTable("pixy");
-        blockX = pixy.getEntry("blockX");
-        blockY = pixy.getEntry("blockY");
-        blockW = pixy.getEntry("blockW");
-        blockH = pixy.getEntry("blockH");
+        // blockX = pixy.getEntry("blockX");
+        // blockY = pixy.getEntry("blockY");
+        // blockW = pixy.getEntry("blockW");
+        // blockH = pixy.getEntry("blockH");
+        // blockArea = pixy.getEntry("blockArea");
         lineX0 = pixy.getEntry("lineX0");
         lineX1 = pixy.getEntry("lineX1");
         lineY0 = pixy.getEntry("lineY0");
         lineY1 = pixy.getEntry("lineY1");
-        blockArea = pixy.getEntry("blockArea");
 
         Subsystems.driveBase.cheesyDrive.setSafetyEnabled(false);
 
@@ -262,11 +239,6 @@ public class Robot extends TimedRobot {
     }
 
     private void printDataToSmartDashboard() {
-        // SmartDashboard.putNumber("blockX", blockX.getDouble(-404));
-        // SmartDashboard.putNumber("blockY", blockY.getDouble(-404));
-        // SmartDashboard.putNumber("blockW", blockW.getDouble(-404));
-        // SmartDashboard.putNumber("blockH", blockH.getDouble(-404));
-        // SmartDashboard.putNumber("blockArea", blockArea.getDouble(-404));
         SmartDashboard.putNumber("lineX0", lineX0.getDouble(-404));
         SmartDashboard.putNumber("lineX1", lineX1.getDouble(-404));
         SmartDashboard.putNumber("lineY0", lineY0.getDouble(-404));
