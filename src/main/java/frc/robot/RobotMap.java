@@ -78,7 +78,7 @@ public class RobotMap {
         return idealAngle;
     }
 
-    public static void setIdealAnlge(double angle) {
+    public static void setIdealAngle(double angle) {
         idealAngle = angle;
         System.out.println("Ideal angle is now " + idealAngle);
     }
