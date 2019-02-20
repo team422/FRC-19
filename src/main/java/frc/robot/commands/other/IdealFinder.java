@@ -124,10 +124,13 @@ public class IdealFinder extends Command {
     // }
 
     double compute_x_inches(double camera_x, double y_dist) {
-        double camera_x_pixels = camera_right - camera_left;
-        double degrees_per_pixel = fov_h / (camera_x_pixels);
-        double angle_to_pixel = -(fov_h / 2) + degrees_per_pixel * camera_x;
-        double x_inches = Math.tan(angle_to_pixel * (Math.PI/180)) * y_dist;
+        // double camera_x_pixels = camera_right - camera_left;
+        // double degrees_per_pixel = fov_h / (camera_x_pixels);
+        // double angle_to_pixel = -(fov_h / 2) + degrees_per_pixel * camera_x;
+        // double x_inches = Math.tan(angle_to_pixel * (Math.PI/180)) * y_dist;
+        double width = 0.8604*y_dist + 9.131;
+        double prop = camera_x / 39;
+        double x_inches = width * prop;
         return x_inches;
     }   
 
