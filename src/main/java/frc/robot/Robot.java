@@ -178,34 +178,35 @@ public class Robot extends TimedRobot {
         /**
          * Unused Buttons
          */
-        if (UserInterface.operatorController.START.get()) {
-        }
-        if (UserInterface.operatorController.BACK.get()) {
-        }
-        if (UserInterface.operatorController.getPOVAngle() == 90) {
 
-        } else if (UserInterface.operatorController.getPOVAngle() == 180) {
+        // if (UserInterface.operatorController.START.get()) {
+        // }
+        // if (UserInterface.operatorController.BACK.get()) {
+        // }
+        // if (UserInterface.operatorController.getPOVAngle() == 90) {
 
-        } else if (UserInterface.operatorController.getPOVAngle() == 270) {
-        }
-        if (UserInterface.operatorController.getRightJoystickY() > 0.1) {
+        // } else if (UserInterface.operatorController.getPOVAngle() == 180) {
 
-        } else if (UserInterface.operatorController.getRightJoystickY() < -0.1) {
+        // } else if (UserInterface.operatorController.getPOVAngle() == 270) {
+        // }
+        // if (UserInterface.operatorController.getRightJoystickY() > 0.1) {
 
-        } else {
-        }
-        if (UserInterface.operatorController.getRightJoystickX() > 0.1) {
+        // } else if (UserInterface.operatorController.getRightJoystickY() < -0.1) {
 
-        } else if (UserInterface.operatorController.getRightJoystickX() < -0.1) {
+        // } else {
+        // }
+        // if (UserInterface.operatorController.getRightJoystickX() > 0.1) {
 
-        } else {
-        }
-        if (UserInterface.operatorController.getLeftJoystickX() > 0.1) {
+        // } else if (UserInterface.operatorController.getRightJoystickX() < -0.1) {
 
-        } else if (UserInterface.operatorController.getLeftJoystickX() < -0.1) {
+        // } else {
+        // }
+        // if (UserInterface.operatorController.getLeftJoystickX() > 0.1) {
 
-        } else {
-        }
+        // } else if (UserInterface.operatorController.getLeftJoystickX() < -0.1) {
+
+        // } else {
+        // }
 
         /**
          * Hatch Buttons
