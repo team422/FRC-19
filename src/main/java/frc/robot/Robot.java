@@ -42,8 +42,6 @@ public class Robot extends TimedRobot {
      */
     private UsbCamera camera1;
     private UsbCamera camera2;
-    public NetworkTableInstance inst2;
-    public NetworkTableInstance inst3;
     //public NetworkTable camera;
     public VideoSink server;
     public boolean isCamera1;
@@ -63,8 +61,9 @@ public class Robot extends TimedRobot {
         camera1 = CameraServer.getInstance().startAutomaticCapture(0);//may be 1,2
         camera2 = CameraServer.getInstance().startAutomaticCapture(1);
         server = CameraServer.getInstance().getServer();
-        camera1.setConnectionStrategy(VideoSource.ConnectionStrategy.kForceClose);
-        camera2.setConnectionStrategy(VideoSource.ConnectionStrategy.kForceClose);
+        server.setSource(camera1);
+        camera1.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen);
+        camera2.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen);
 
         NetworkTableInstance inst = NetworkTableInstance.getDefault();
         NetworkTable pixy = inst.getTable("pixy");
@@ -329,5 +328,6 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Pivot Current", Subsystems.cargo.pivotCurrent());
         SmartDashboard.putNumber("Speed Cap", RobotMap.speedCap);
         SmartDashboard.putNumber("Rotation Cap", RobotMap.rotationCap);
+        SmartDashboard.putBoolean("isCamera1", isCamera1);
     }
 }
