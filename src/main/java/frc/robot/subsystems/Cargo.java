@@ -20,7 +20,7 @@ public class Cargo extends Subsystem {
     // private WPI_TalonSRX intakeWheels;
     // private WPI_TalonSRX escalator; 
 
-    private DigitalInput cargoPivotLimitSwitch;
+    private DigitalInput cargoPivotUltrasonic;
     private DigitalInput cargoEscalatorUltrasonic;
     private DigitalInput cargoIntakeUltrasonic;  
     private DoubleSolenoid flap; 
@@ -35,7 +35,7 @@ public class Cargo extends Subsystem {
         // this.intakeWheels = new WPI_TalonSRX(RobotMap.cargoIntakeWheels);
         // this.escalator = new WPI_TalonSRX(RobotMap.cargoEscalatorWheels);
         
-        this.cargoPivotLimitSwitch = new DigitalInput(RobotMap.cargoPivotLimitSwitch);
+        this.cargoPivotUltrasonic = new DigitalInput(RobotMap.cargoPivotUltrasonic);
         this.cargoEscalatorUltrasonic = new DigitalInput(RobotMap.cargoEscalatorUltrasonic);
         this.cargoIntakeUltrasonic = new DigitalInput(RobotMap.cargoIntakeUltrasonic);
         this.flap = new DoubleSolenoid(RobotMap.cargoFlapUp, RobotMap.cargoFlapDown);
@@ -44,8 +44,8 @@ public class Cargo extends Subsystem {
 
     protected void initDefaultCommand() {} 
 
-    public boolean getLimitSwitchValue() {
-        return !cargoPivotLimitSwitch.get();
+    public boolean getPivotBeamBroken() {
+        return !cargoPivotUltrasonic.get();
     }
 
     public boolean getIntakeBeamBroken() {
@@ -68,7 +68,6 @@ public class Cargo extends Subsystem {
         intakeWheels.set(ControlMode.PercentOutput, power);
     }
 
-
     public void stopIntakeMotors() {
         intakeWheels.set(ControlMode.PercentOutput, 0.0);
     }
@@ -90,11 +89,15 @@ public class Cargo extends Subsystem {
     public void holdPivotIntakeUp() {
         intakePivot.set(ControlMode.PercentOutput, 0.15);
     }
-    
-    //if we get encoders on the cargo pivot
-    // public double getIntakePivot() {
-    //     return intakePivot.getSelectedSensorPosition(0);
-    // }
+
+    public double pivotCurrent() {
+        return intakePivot.getOutputCurrent();
+    }
+
+
+    public boolean isPivotCurrentTooHigh() {
+        return (intakePivot.getOutputCurrent() > 19);
+    }
         
     public void setFlapUp() {
         flap.set(DoubleSolenoid.Value.kForward);
