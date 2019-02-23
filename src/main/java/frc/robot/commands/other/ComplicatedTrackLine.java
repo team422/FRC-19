@@ -19,14 +19,14 @@ public class ComplicatedTrackLine extends Command {
     private double lineOffset1;
     private double lineOffset2;
     
-    private static double camera_pitch = 54.0;
-    private static double fov_h = 60;
-    private static double fov_v = 40;
-    private static double camera_left = 0; //x coordinate of the left side of the camera field of view
-    private static double camera_right = 78; //x coodinate of the rightside of the camera field of view
-    private static double camera_far = 0; //y coordinate of the far sige of the camera field of view
-    private static double camera_near = 51; //y coordinate of the near side of the camera field of view
-    private static double camera_height = 12;
+    // private static double camera_pitch = 54.0;
+    // private static double fov_h = 60;
+    // private static double fov_v = 40;
+    // private static double camera_left = 0; //x coordinate of the left side of the camera field of view
+    // private static double camera_right = 78; //x coodinate of the rightside of the camera field of view
+    // private static double camera_far = 0; //y coordinate of the far sige of the camera field of view
+    // private static double camera_near = 51; //y coordinate of the near side of the camera field of view
+    // private static double camera_height = 12;
     // private static double centroid_x = 11.375;
     // private static double centroid_y = 14.5;
     private double idealAngle;
@@ -108,27 +108,31 @@ public class ComplicatedTrackLine extends Command {
         Subsystems.driveBase.setMotors(0, 0);
     } 
 
-    double compute_y_inches(double camera_y) {
-        double camera_y_pixels = camera_near - camera_far;
-        double degrees_per_pixel = fov_v / (camera_y_pixels);
-        double angle_to_pixel = (camera_pitch - (fov_v / 2)) + degrees_per_pixel * (camera_near-camera_y);
-        double y_inches = Math.tan(angle_to_pixel * (Math.PI / 180)) * camera_height;
-        return y_inches;
-    }
+    // double compute_y_inches(double camera_y) {
+    //     double camera_y_pixels = camera_near - camera_far;
+    //     double degrees_per_pixel = fov_v / (camera_y_pixels);
+    //     double angle_to_pixel = (camera_pitch - (fov_v / 2)) + degrees_per_pixel * (camera_near-camera_y);
+    //     double y_inches = Math.tan(angle_to_pixel * (Math.PI / 180)) * camera_height;
+    //     return y_inches;
+    // }
 
     double compute_x_inches(double camera_x, double y_dist) {
-        double camera_x_pixels = camera_right - camera_left;
-        double degrees_per_pixel = fov_h / (camera_x_pixels);
-        double angle_to_pixel = -(fov_h / 2) + degrees_per_pixel * camera_x;
-        double x_inches = Math.tan(angle_to_pixel * (Math.PI/180)) * y_dist;
+        // double camera_x_pixels = camera_right - camera_left;
+        // double degrees_per_pixel = fov_h / (camera_x_pixels);
+        // double angle_to_pixel = -(fov_h / 2) + degrees_per_pixel * camera_x;
+        // double x_inches = Math.tan(angle_to_pixel * (Math.PI/180)) * y_dist;
+        // return x_inches;
+        double width = 0.8604*y_dist + 9.131;
+        double prop = camera_x / 39;
+        double x_inches = width * prop;
         return x_inches;
     }
 
  
-    private double compute_camera_to_y_pixel_distance(double y_floor_distance) {
-        camera_to_y_pixel_distance = Math.sqrt(Math.pow(camera_height,2)+Math.pow(y_floor_distance,2));
-        return camera_to_y_pixel_distance;
-    }
+    // private double compute_camera_to_y_pixel_distance(double y_floor_distance) {
+    //     camera_to_y_pixel_distance = Math.sqrt(Math.pow(camera_height,2)+Math.pow(y_floor_distance,2));
+    //     return camera_to_y_pixel_distance;
+    // }
 
     private double computeYExpiremental(double yValue) {
         return (38.453*Math.pow(Math.E,-0.033*yValue));

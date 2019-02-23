@@ -14,14 +14,14 @@ public class IdealFinder extends Command {
     private NetworkTableEntry lineX1;
     private NetworkTableEntry lineY0;
     private NetworkTableEntry lineY1;
-    private static double camera_pitch = 54.0;
-    private static double fov_h = 60;
-    private static double fov_v = 40;
-    private static double camera_left = 0; //x coordinate of the left side of the camera field of view
-    private static double camera_right = 78; //x coodinate of the rightside of the camera field of view
-    private static double camera_far = 0; //y coordinate of the far sige of the camera field of view
-    private static double camera_near = 51; //y coordinate of the near side of the camera field of view
-    private static double camera_height = 12;
+    // private static double camera_pitch = 54.0;
+    // private static double fov_h = 60;
+    // private static double fov_v = 40;
+    // private static double camera_left = 0; //x coordinate of the left side of the camera field of view
+    // private static double camera_right = 78; //x coodinate of the rightside of the camera field of view
+    // private static double camera_far = 0; //y coordinate of the far sige of the camera field of view
+    // private static double camera_near = 51; //y coordinate of the near side of the camera field of view
+    // private static double camera_height = 12;
 
     // private double correction;
     // private double deadband = 5;
@@ -31,8 +31,8 @@ public class IdealFinder extends Command {
     private double idealAngle;
     private double xdistance;
     private double ydistance;
-    private double camera_to_y_pixel_distance;
-    private static final double camera_to_robot_center = 14;
+    //private double camera_to_y_pixel_distance;
+    private static final double camera_to_robot_center = 14.5; //inches
     private double distance_to_align;
 
     public IdealFinder() {
@@ -77,7 +77,6 @@ public class IdealFinder extends Command {
         RobotMap.setTurnDirection((compute_x_inches(lineX1.getDouble(-404), computeYExpiremental(lineY1.getDouble(-404))) + compute_x_inches(lineX0.getDouble(-404), computeYExpiremental(lineY0.getDouble(-404)))) / 2);
         
         
-        //phi = 90 - theta gives names to the angles so can we please use them?
         idealAngle =  Math.atan2(xdistance,ydistance) * (180 / Math.PI);
         SmartDashboard.putNumber("Ideal Angle", idealAngle);
         System.out.println("Setting ideal angle to " + idealAngle);
