@@ -2,8 +2,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.cscore.UsbCamera;
-// import edu.wpi.cscore.VideoSink;
-// import edu.wpi.cscore.VideoSource;
+import edu.wpi.cscore.VideoSink;
+import edu.wpi.cscore.VideoSource;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -40,13 +40,13 @@ public class Robot extends TimedRobot {
     /**
      * Camera Toggling Variables (Dont work yet)
      */
-    // private UsbCamera camera1;
-    // private UsbCamera camera2;
-    // public NetworkTableInstance inst2;
-    // public NetworkTableInstance inst3;
-    // public NetworkTable camera;
-    // public VideoSink server;
-    // public boolean isCamera1;
+    private UsbCamera camera1;
+    private UsbCamera camera2;
+    public NetworkTableInstance inst2;
+    public NetworkTableInstance inst3;
+    //public NetworkTable camera;
+    public VideoSink server;
+    public boolean isCamera1;
 
     public Robot() {
         super(0.08);
@@ -55,19 +55,16 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         System.out.println("Initializing " + RobotMap.botName + "\n");
 
-        camera = CameraServer.getInstance().startAutomaticCapture();
+        //camera = CameraServer.getInstance().startAutomaticCapture();
         /**
          * Camera Toggling initialization
          */
-        // isCamera1 = true;
-        // camera1 = CameraServer.getInstance().startAutomaticCapture(1);
-        // camera2 = CameraServer.getInstance().startAutomaticCapture(2);
-        // server = CameraServer.getInstance().getServer();
-        // camera1.setConnectionStrategy(VideoSource.ConnectionStrategy.kForceClose);
-        // camera2.setConnectionStrategy(VideoSource.ConnectionStrategy.kForceClose);
-        // inst2 = NetworkTableInstance.getDefault();
-        // inst3 = NetworkTableInstance.getDefault();
-        // NetworkTable camera = inst2.getTable("");
+        isCamera1 = true;
+        camera1 = CameraServer.getInstance().startAutomaticCapture(0);//may be 1,2
+        camera2 = CameraServer.getInstance().startAutomaticCapture(1);
+        server = CameraServer.getInstance().getServer();
+        camera1.setConnectionStrategy(VideoSource.ConnectionStrategy.kForceClose);
+        camera2.setConnectionStrategy(VideoSource.ConnectionStrategy.kForceClose);
 
         NetworkTableInstance inst = NetworkTableInstance.getDefault();
         NetworkTable pixy = inst.getTable("pixy");
@@ -207,6 +204,19 @@ public class Robot extends TimedRobot {
 
         // } else {
         // }
+
+        //Camera switch
+
+        if (UserInterface.driverController.LB.get()) {
+            if(isCamera1) {
+                isCamera1 = false;
+                server.setSource(camera2);
+            } else {
+                isCamera1 = true;
+                server.setSource(camera1);
+            }
+        }
+
 
         /**
          * Hatch Buttons
