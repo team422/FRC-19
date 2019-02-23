@@ -40,11 +40,10 @@ public class Robot extends TimedRobot {
     /**
      * Camera Toggling Variables (Dont work yet)
      */
-    private UsbCamera camera1;
-    private UsbCamera camera2;
+    public static UsbCamera camera1;
+    public static UsbCamera camera2;
     //public NetworkTable camera;
-    public VideoSink server;
-    public boolean isCamera1;
+    public static VideoSink server;
 
     public Robot() {
         super(0.08);
@@ -57,7 +56,7 @@ public class Robot extends TimedRobot {
         /**
          * Camera Toggling initialization
          */
-        isCamera1 = true;
+        RobotMap.setCamera(true);
         camera1 = CameraServer.getInstance().startAutomaticCapture(0);//may be 1,2
         camera2 = CameraServer.getInstance().startAutomaticCapture(1);
         server = CameraServer.getInstance().getServer();
@@ -86,6 +85,7 @@ public class Robot extends TimedRobot {
         RobotMap.isFastMode = true;
         RobotMap.setSpeedAndRotationCaps(1, 0.35);
         UserInterface.driverController.RB.whenPressed(new ToggleSpeed());
+        UserInterface.driverController.LB.whenPressed(new ToggleCamera());
 
         /**
          * Turns isHoldingPivotUp, cargoIsIn, & armIsOut booleans to false and flapIsUp
@@ -207,13 +207,7 @@ public class Robot extends TimedRobot {
         //Camera switch
 
         if (UserInterface.driverController.LB.get()) {
-            if(isCamera1) {
-                isCamera1 = false;
-                server.setSource(camera2);
-            } else {
-                isCamera1 = true;
-                server.setSource(camera1);
-            }
+
         }
 
 
@@ -274,8 +268,9 @@ public class Robot extends TimedRobot {
             RobotMap.cargoIsIn = false;
         }
         if (UserInterface.operatorController.getRightTrigger() > 0.1) {
-            if (Subsystems.cargo.getEscalatorBeamBroken()) {
+            if (!Subsystems.cargo.getEscalatorBeamBroken()) {
                 Subsystems.cargo.setEscalatorMotors(-1);
+                Subsystems.cargo.setIntakeMotors(-0.75);
                 if (RobotMap.cargoIsIn) {
                     Subsystems.cargo.stopIntakeMotors();
                 } else {
@@ -328,6 +323,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Pivot Current", Subsystems.cargo.pivotCurrent());
         SmartDashboard.putNumber("Speed Cap", RobotMap.speedCap);
         SmartDashboard.putNumber("Rotation Cap", RobotMap.rotationCap);
-        SmartDashboard.putBoolean("isCamera1", isCamera1);
+        SmartDashboard.putBoolean("isCamera1", RobotMap.isCamera1);
+        SmartDashboard.putBoolean("Escalator Occupied", Subsystems.cargo.getEscalatorBeamBroken());
     }
 }

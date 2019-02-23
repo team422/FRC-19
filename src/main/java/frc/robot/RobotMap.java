@@ -7,7 +7,7 @@ public class RobotMap {
      * will change all ports accordingly. MAKE SURE YOU GO THROUGH DRIVEBASE
      * AND CARGO SUBSYSTEMS AND CHANGE VICTOR/TALON CLASSES ACCORDINGLY.
      */
-    public static final boolean isCompBot = true;
+    public static final boolean isCompBot = false;
 
     /**
      * Sets which joystick of the driverXboxController that
@@ -19,6 +19,8 @@ public class RobotMap {
     public static double idealAngle = 0;
     public static double driveOffset = 0;
     public static double turnDirection = 0;
+    public static boolean isCamera1 = true;
+
 
     public static boolean isFastMode = true;
     public static double speedCap = 1;
@@ -40,17 +42,17 @@ public class RobotMap {
     public static final int leftMiddleMaster = (isCompBot) ? 11 : 32;
     public static final int leftRearFollower = (isCompBot) ? 6 : 33;
     public static final int rightFrontFollower = (isCompBot) ? 3 : 20;
-    public static final int rightMiddleMaster = (isCompBot) ? 12 : 23;
+    public static final int rightMiddleMaster = (isCompBot) ? 12 : 22;
     public static final int rightRearFollower = (isCompBot) ? 5 : 22;
 
     public static final int leftFrontClimb = (isCompBot) ? 1 : 21;
     public static final int leftBackClimb = (isCompBot) ? 7 : 26;
     public static final int rightFrontClimb = (isCompBot) ? 2 : 34;
-    public static final int rightBackClimb = (isCompBot) ? 14 : 24;
+    public static final int rightBackClimb = (isCompBot) ? 14 : 39;
 
-    public static final int cargoEscalatorWheels = (isCompBot) ? 9 : 30;
-    public static final int cargoIntakeWheels = (isCompBot) ? 8 : 29;
-    public static final int cargoIntakePivot = (isCompBot) ? 13 : 31;
+    public static final int cargoEscalatorWheels = (isCompBot) ? 9 : 24;
+    public static final int cargoIntakeWheels = (isCompBot) ? 8 : 25;
+    public static final int cargoIntakePivot = (isCompBot) ? 13 : 23;
 
     public static final int extraMotorController = (isCompBot) ? 10 : 25;
 
@@ -118,4 +120,11 @@ public class RobotMap {
         turnDirection = direction;
     }
 
+    public static void setCamera(boolean camera) {
+        isCamera1 = camera;
+    }
+
+    public static boolean getCamera() {
+        return isCamera1;
+    }
 }
