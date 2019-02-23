@@ -2,28 +2,29 @@ package frc.robot.commands.other;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.subsystems.Subsystems;
+import frc.robot.RobotMap;
 
-public class DriveStraight extends Command {
+public class DriveStraightIdeal extends Command {
 
   private double ticks;
   private double speed;
   private boolean forward;
 
-  public DriveStraight(double Inches, double Speed, double Timeout) {
-    super("DriveStraight");
+  public DriveStraightIdeal(double Speed, double Timeout) {
+    super("DriveStraightIdeal");
     requires(Subsystems.driveBase);
-    ticks = convertToTicks(Inches);
     speed = Speed;
-    setTimeout(Timeout);
-    if (Inches >= 0) {
-      forward = false;//CHANGE BC THIS IS BACKWARD BUT I NEED STUFF TO WORK NOW
-    } else {
-      forward = true;
-    }                    
+    setTimeout(Timeout);                 
   }
 
   @Override
   protected void initialize() {
+    ticks = convertToTicks(RobotMap.getDriveOffset());
+    if (RobotMap.getDriveOffset() >= 0) {
+      forward = false;//BACKWARDS FIX AT SOME POINT
+    } else {
+      forward = true;
+    }   
     Subsystems.driveBase.zeroEncoderPosition();
     Subsystems.driveBase.zeroGyroAngle();
   }

@@ -74,9 +74,9 @@ public class Cargo extends Subsystem {
 
     public void pivotIntake(double power, Direction direction) {
         if (direction == Direction.Up) {
-            intakePivot.set(ControlMode.PercentOutput, power);
-        } else if (direction == Direction.Down) {
             intakePivot.set(ControlMode.PercentOutput, -power);
+        } else if (direction == Direction.Down) {
+            intakePivot.set(ControlMode.PercentOutput, power);
         } else {
             intakePivot.set(ControlMode.PercentOutput, 0.0);
         }

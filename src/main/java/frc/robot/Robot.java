@@ -9,12 +9,12 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.command.Command;
-// import edu.wpi.first.wpilibj.command.CommandGroup;
-// import frc.robot.commands.cargo.*;
-// import frc.robot.commands.climber.*;
-// import frc.robot.commands.hatch.*;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.commands.cargo.*;
+import frc.robot.commands.climber.*;
+import frc.robot.commands.hatch.*;
 import frc.robot.commands.other.*;
-// import frc.robot.commandgroups.*;
+import frc.robot.commandgroups.*;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,6 +28,7 @@ public class Robot extends TimedRobot {
     // private NetworkTableEntry blockW;
     // private NetworkTableEntry blockH;
     // private NetworkTableEntry blockArea;
+    private CommandGroup ParallelTurnBetter;
     private NetworkTableEntry lineX0;
     private NetworkTableEntry lineX1;
     private NetworkTableEntry lineY0;
@@ -36,6 +37,8 @@ public class Robot extends TimedRobot {
     private Command wait = new WaitCommand(2);
 
     private UsbCamera camera;
+
+    private Command DriveStraight;
 
     /**
      * Camera Toggling Variables (Dont work yet)
@@ -96,6 +99,9 @@ public class Robot extends TimedRobot {
         RobotMap.flapIsUp = true;
         RobotMap.armIsOut = false;
         RobotMap.highPivotCurrent = false;
+
+        ParallelTurnBetter = new ParallelTurnBetter();
+        //DriveStraight = new DriveStraight(10,0.3,10000);
     }
 
     public void disabledInit() {
@@ -116,6 +122,8 @@ public class Robot extends TimedRobot {
 
     public void autonomousInit() {
         System.out.println("Autonomous Initalized");
+        ParallelTurnBetter.start();
+        //DriveStraight.start();
 
         /**
          * This makes sure that any old commands/command groups are stopped upon
@@ -287,16 +295,18 @@ public class Robot extends TimedRobot {
             Subsystems.cargo.stopIntakeMotors();
             Subsystems.cargo.stopEscalatorMotors();
         }
-        if (UserInterface.operatorController.getLeftJoystickY() > 0.1) {
+        if (UserInterface.operatorController.getLeftJoystickY() < -0.1) {
             // pivots down
             Subsystems.cargo.pivotIntake(Math.abs(UserInterface.operatorController.getLeftJoystickY()) * 0.2, Direction.Down);
             RobotMap.isHoldingPivotUp = false;
             RobotMap.highPivotCurrent = false;
-        } else if (UserInterface.operatorController.getLeftJoystickY() < -0.1) {
+        } else if (UserInterface.operatorController.getLeftJoystickY() > 0.1) {
             // pivots up
-            Subsystems.cargo.pivotIntake(Math.abs(UserInterface.operatorController.getLeftJoystickY()) * 0.3, Direction.Up);
+            Subsystems.cargo.pivotIntake(Math.abs(UserInterface.operatorController.getLeftJoystickY()) * 0.4, Direction.Up);
             RobotMap.isHoldingPivotUp = false;
             RobotMap.highPivotCurrent = false;
+        } else {
+            Subsystems.cargo.stopPivot();
         }
 
     }
@@ -323,6 +333,8 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Pivot Current", Subsystems.cargo.pivotCurrent());
         SmartDashboard.putNumber("Speed Cap", RobotMap.speedCap);
         SmartDashboard.putNumber("Rotation Cap", RobotMap.rotationCap);
+        SmartDashboard.putNumber("Turn Direction", RobotMap.turnDirection);
+        SmartDashboard.putNumber("Drive Offset", RobotMap.driveOffset);
         SmartDashboard.putBoolean("isCamera1", RobotMap.isCamera1);
         SmartDashboard.putBoolean("Escalator Occupied", Subsystems.cargo.getEscalatorBeamBroken());
     }

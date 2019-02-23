@@ -38,14 +38,14 @@ public class RobotMap {
      */
 
     // Talon/Victor IDs
-    public static final int leftFrontFollower = (isCompBot) ? 4 : 35;
-    public static final int leftMiddleMaster = (isCompBot) ? 11 : 32;
-    public static final int leftRearFollower = (isCompBot) ? 6 : 33;
-    public static final int rightFrontFollower = (isCompBot) ? 3 : 20;
-    public static final int rightMiddleMaster = (isCompBot) ? 12 : 22;
-    public static final int rightRearFollower = (isCompBot) ? 5 : 22;
+    public static final int leftFrontFollower = (isCompBot) ? 4 : 20;
+    public static final int leftMiddleMaster = (isCompBot) ? 11 : 21;
+    public static final int leftRearFollower = (isCompBot) ? 6 : 22;
+    public static final int rightFrontFollower = (isCompBot) ? 3 : 35;
+    public static final int rightMiddleMaster = (isCompBot) ? 12 : 34;
+    public static final int rightRearFollower = (isCompBot) ? 5 : 33;
 
-    public static final int leftFrontClimb = (isCompBot) ? 1 : 21;
+    public static final int leftFrontClimb = (isCompBot) ? 1 : 29;
     public static final int leftBackClimb = (isCompBot) ? 7 : 26;
     public static final int rightFrontClimb = (isCompBot) ? 2 : 34;
     public static final int rightBackClimb = (isCompBot) ? 14 : 39;
