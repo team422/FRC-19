@@ -13,10 +13,12 @@ public class ParallelTurnBetter extends CommandGroup {
     addSequential(new TurnIdeal(0.5, 100000));
     addSequential(new DriveStraightIdeal(0.2, 100000000));
     //addSequential(new TurnUntilLine(0.6,1000000));
-    if(RobotMap.getTurnDirection() >= 0) {
+    if(RobotMap.getIdealAngle() <= 0) {
       addSequential(new Turn(90, 0.4, 100000));
+      addSequential(new TurnUntilLine());
     } else {
       addSequential(new Turn(-90, 0.4, 100000));
+      addSequential(new TurnUntilLine());
     }
     //addSequential(new DriveStraight(5, 0.2, 20));
   }
