@@ -107,7 +107,6 @@ public class Robot extends TimedRobot {
     public void disabledInit() {
         System.out.println("Disabled Initialized");
         Scheduler.getInstance().removeAll();
-
         /**
          * This makes sure that all of the motors are set to 0% following disable
          */
@@ -118,6 +117,7 @@ public class Robot extends TimedRobot {
 
     public void disabledPeriodic() {
         printDataToSmartDashboard();
+        Scheduler.getInstance().run();
     }
 
     public void autonomousInit() {
@@ -169,6 +169,7 @@ public class Robot extends TimedRobot {
          * Initialization.
          */
         Scheduler.getInstance().removeAll();
+        Subsystems.hatch.hatchClamp();
     }
 
     public void teleopPeriodic() {

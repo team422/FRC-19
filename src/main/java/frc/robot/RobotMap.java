@@ -6,7 +6,7 @@ public class RobotMap {
      * will change all ports accordingly. MAKE SURE YOU GO THROUGH DRIVEBASE
      * AND CARGO SUBSYSTEMS AND CHANGE VICTOR/TALON CLASSES ACCORDINGLY.
      */
-    public static final boolean isCompBot = false;
+    public static final boolean isCompBot = true;
     
     /**
      * Sets which joystick of the driverXboxController that
