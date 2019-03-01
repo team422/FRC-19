@@ -16,9 +16,9 @@ public class DriveStraight extends Command {
     speed = Speed;
     setTimeout(Timeout);
     if (Inches >= 0) {
-      forward = false;//CHANGE BC THIS IS BACKWARD BUT I NEED STUFF TO WORK NOW
+      forward = true;//CHANGE BC THIS IS BACKWARD BUT I NEED STUFF TO WORK NOW
     } else {
-      forward = true;
+      forward = false;
     }                    
   }
 

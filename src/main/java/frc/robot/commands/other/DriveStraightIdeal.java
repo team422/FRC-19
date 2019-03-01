@@ -21,9 +21,9 @@ public class DriveStraightIdeal extends Command {
   protected void initialize() {
     ticks = convertToTicks(RobotMap.getDriveOffset());
     if (RobotMap.getDriveOffset() >= 0) {
-      forward = false;//BACKWARDS FIX AT SOME POINT
+      forward = true;//BACKWARDS FIX AT SOME POINT
     } else {
-      forward = true;
+      forward = false;
     }   
     Subsystems.driveBase.zeroEncoderPosition();
     Subsystems.driveBase.zeroGyroAngle();
@@ -35,9 +35,9 @@ public class DriveStraightIdeal extends Command {
     correction *= 0.075;
     correction += 1.0;
     if (forward) {
-        Subsystems.driveBase.setMotors(speed, speed * correction);
+        Subsystems.driveBase.setMotors(speed * correction, speed);
     } else {
-        Subsystems.driveBase.setMotors(-speed * correction, -speed);
+        Subsystems.driveBase.setMotors(-speed, -speed * correction);
     }
   }
 

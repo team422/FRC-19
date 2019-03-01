@@ -48,20 +48,20 @@ public class TurnUntilLine extends Command {
             lineOffset1 = compute_x_inches(lineX1.getDouble(-404), computeYExpiremental(lineY1.getDouble(-404)));
             lineOffset2 = compute_x_inches(lineX0.getDouble(-404), computeYExpiremental(lineY0.getDouble(-404)));
         }
-        //xdistance = lineOffset1 - lineOffset2;//may need to replace below w this if it only turns one way
-        if(lineOffset1 > lineOffset2) {
-            xdistance = lineOffset1 - lineOffset2;                        
-        } else {
-            xdistance = lineOffset2 - lineOffset1;
-        }
+        xdistance = lineOffset1 - lineOffset2;//may need to replace below w this if it only turns one way
+        // if(lineOffset1 > lineOffset2) {
+        //     xdistance = lineOffset1 - lineOffset2;                        
+        // } else {
+        //     xdistance = lineOffset2 - lineOffset1;
+        // }
         correction = xdistance;
-        correction *= 0.3;
+        correction *= 0.1;
         if(correction > 0) {//thinkk this is right, may need to cahnge
             correction += 1;
         } else {
             correction -= 1;
         }
-        Subsystems.driveBase.setMotors(-0.15*correction,0.15*correction);
+        Subsystems.driveBase.setMotors(0.1*correction,-0.1*correction);
     }
 
     @Override
