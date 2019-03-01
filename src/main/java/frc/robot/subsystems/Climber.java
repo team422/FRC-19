@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
@@ -33,21 +32,29 @@ public class Climber extends Subsystem {
 
     public void initDefaultCommand() {}
 
-    public void setBackClimbMotors(double speed) {
-        backClimb.set(speed);
-    }
-
     public void setFrontClimbMotors(double speed) {
         frontClimb.set(speed);
     }
 
-    public void setFrontRightMotors(double speed) {
-        rightFrontClimb.set(ControlMode.PercentOutput, speed);
+    public void stopFrontClimbMotors() {
+        frontClimb.set(0);   
     }
 
-    public void setFrontLeftMotors(double speed) {
-        leftFrontClimb.set(ControlMode.PercentOutput, speed);
+    public void setBackClimbMotors(double speed) {
+        backClimb.set(speed);
     }
+
+    public void stopBackClimbMotors() {
+        backClimb.set(0);
+    }
+
+    // public void setFrontRightMotors(double speed) {
+    //     rightFrontClimb.set(ControlMode.PercentOutput, speed);
+    // }
+
+    // public void setFrontLeftMotors(double speed) {
+    //     leftFrontClimb.set(ControlMode.PercentOutput, speed);
+    // }
 
     public boolean getUltrasonic() {
         return climberUltrasonic.get();

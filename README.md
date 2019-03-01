@@ -1,2 +1,2 @@
 # 422-Code-2019
-This is an unofficial repository of team 422 for code in progress.
+This is the official repository of FRC Team 422: The Mech Tech Dragons for the 2019 FRC game.

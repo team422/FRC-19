@@ -9,41 +9,45 @@ public class Hatch extends Subsystem {
 
     private Servo leftGrabber;
     private Servo rightGrabber;
-    private DoubleSolenoid puncher;
+    private DoubleSolenoid arm;
 
     public Hatch() {
         super("Hatch");
         this.leftGrabber = new Servo(RobotMap.hatchLeftGrabber);
         this.rightGrabber = new Servo (RobotMap.hatchRightGrabber);
-        this.puncher = new DoubleSolenoid(RobotMap.hatchArmOut, RobotMap.hatchArmIn);
+        this.arm = new DoubleSolenoid(RobotMap.hatchArmOut, RobotMap.hatchArmIn);
     }
 
     @Override
     public void initDefaultCommand() {}
 
     public void hatchRelease() {
-        leftGrabber.setAngle(70);
-        rightGrabber.setAngle(70);
+        // leftGrabber.setAngle(30);
+        // rightGrabber.setAngle(145);
+        leftGrabber.setAngle(50);
+        rightGrabber.setAngle(135);
     }
 
     public void hatchClamp() {
-        leftGrabber.setAngle(40);
-        rightGrabber.setAngle(130);
+        // leftGrabber.setAngle(150);
+        // rightGrabber.setAngle(15);
+        leftGrabber.setAngle(155);
+        rightGrabber.setAngle(20);
     }
 
-    public void punchOutwards() {
-      puncher.set(DoubleSolenoid.Value.kForward);
+    public void armOut() {
+      arm.set(DoubleSolenoid.Value.kForward);
     }
 
-    public void punchInwards() {
-        puncher.set(DoubleSolenoid.Value.kReverse);
+    public void armIn() {
+        arm.set(DoubleSolenoid.Value.kReverse);
       }
     
     public double getLeftPosition() {
-        return leftGrabber.getAngle();
+        return leftGrabber.get();
     }
 
     public double getRightPosition() {
-        return leftGrabber.getAngle();
+        return rightGrabber.get();
     }
 }
