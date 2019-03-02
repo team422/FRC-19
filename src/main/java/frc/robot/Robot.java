@@ -86,7 +86,7 @@ public class Robot extends TimedRobot {
          * toggle the speed when pressed
          */
         RobotMap.isFastMode = false;
-        RobotMap.setSpeedAndRotationCaps(1, 0.35);
+        RobotMap.setSpeedAndRotationCaps(0.2, 0.2);
         UserInterface.driverController.RB.whenPressed(new ToggleSpeed());
         // UserInterface.driverController.LB.whenPressed(new ToggleCamera());
 
@@ -145,8 +145,10 @@ public class Robot extends TimedRobot {
          * This makes sure that the bot is set to normal speed and rotation caps upon
          * TeleOp Initialization.
          */
+        
         RobotMap.isFastMode = false;
-        RobotMap.setSpeedAndRotationCaps(1, 0.35);
+        // Speed and Rotation caps are reset to their fast versions upon both Autonomous and TeleOp Init
+        RobotMap.setSpeedAndRotationCaps(1, 0.35); // CHECK THIS OUT
 
         /**
          * Turns isHoldingPivotUp, cargoIsIn, & armIsOut booleans to false and flapIsUp
@@ -288,7 +290,6 @@ public class Robot extends TimedRobot {
          * TeleOp Initialization.
          */
         RobotMap.isFastMode = false;
-        RobotMap.setSpeedAndRotationCaps(1, 0.35);
 
         /**
          * Turns isHoldingPivotUp, cargoIsIn, & armIsOut booleans to false and flapIsUp
