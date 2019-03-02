@@ -67,12 +67,12 @@ public class IdealFinder extends Command {
             SmartDashboard.putNumber("X-distanceFar", compute_x_inches(lineX0.getDouble(-404), computeYExpiremental(lineY0.getDouble(-404))));
             ydistance = computeYExpiremental(lineY0.getDouble(-404)) - computeYExpiremental(lineY1.getDouble(-404));
         }
-        //xdistance = lineOffset1 - lineOffset2;
-        if(lineOffset1 > lineOffset2) {
-            xdistance = lineOffset1 - lineOffset2;                        
-        } else {
-            xdistance = lineOffset2 - lineOffset1;
-        }
+        xdistance = lineOffset1 - lineOffset2;
+        // if(lineOffset1 > lineOffset2) {
+        //     xdistance = lineOffset1 - lineOffset2;                        
+        // } else {
+        //     xdistance = lineOffset2 - lineOffset1;
+        // }
         
         RobotMap.setTurnDirection((compute_x_inches(lineX1.getDouble(-404), computeYExpiremental(lineY1.getDouble(-404))) + compute_x_inches(lineX0.getDouble(-404), computeYExpiremental(lineY0.getDouble(-404)))) / 2);
         
