@@ -147,8 +147,6 @@ public class Robot extends TimedRobot {
          */
         
         RobotMap.isFastMode = false;
-        // Speed and Rotation caps are reset to their fast versions upon both Autonomous and TeleOp Init
-        RobotMap.setSpeedAndRotationCaps(1, 0.35); // CHECK THIS OUT
 
         /**
          * Turns isHoldingPivotUp, cargoIsIn, & armIsOut booleans to false and flapIsUp
