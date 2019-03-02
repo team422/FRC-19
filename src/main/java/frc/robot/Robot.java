@@ -122,7 +122,7 @@ public class Robot extends TimedRobot {
 
     public void autonomousInit() {
         System.out.println("Autonomous Initalized");
-        ParallelTurnBetter.start();
+        // ParallelTurnBetter.start();
         //DriveStraight.start();
 
         /**
@@ -130,11 +130,146 @@ public class Robot extends TimedRobot {
          * Autonomous Initialization.
          */
         Scheduler.getInstance().removeAll();
+        /**
+         * Start TeleOpInit Code in Auto
+         */
+        /**
+         * This makes sure that all of the motors are set to 0% upon TeleOp
+         * Initialization.
+         */
+        Subsystems.cargo.stopPivot();
+        Subsystems.cargo.stopIntakeMotors();
+        Subsystems.cargo.stopEscalatorMotors();
+
+        /**
+         * This makes sure that the bot is set to normal speed and rotation caps upon
+         * TeleOp Initialization.
+         */
+        RobotMap.isFastMode = true;
+        RobotMap.setSpeedAndRotationCaps(1, 0.35);
+
+        /**
+         * Turns isHoldingPivotUp, cargoIsIn, & armIsOut booleans to false and flapIsUp
+         * is true at TeleOp Initialization.
+         */
+        RobotMap.isHoldingPivotUp = false;
+        RobotMap.cargoIsIn = false;
+        RobotMap.armIsOut = false;
+        RobotMap.flapIsUp = true;
+        RobotMap.highPivotCurrent = false;
+
+        /**
+         * This makes sure that any old commands/command groups are stopped upon TeleOp
+         * Initialization.
+         */
+        Scheduler.getInstance().removeAll();
+        Subsystems.hatch.hatchClamp();
+        /**
+         * End TeleopInit Code in Auto
+         */
+
     }
 
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
         printDataToSmartDashboard();
+
+        /**
+         * Start TeleOpPeriodic Code in Auto
+         */
+
+        /**
+         * Hatch Buttons
+         */
+        if (UserInterface.operatorController.RB.get()) {
+            Subsystems.hatch.hatchClamp();
+        }
+        if (UserInterface.operatorController.LB.get()) {
+            Subsystems.hatch.hatchRelease();
+        }
+        if (UserInterface.operatorController.A.get()) {
+            Subsystems.hatch.armIn();
+            RobotMap.armIsOut = false;
+        }
+        if (UserInterface.operatorController.X.get()) {
+            Subsystems.hatch.armOut();
+            RobotMap.armIsOut = true;
+        }
+
+        /**
+         * Cargo Buttons
+         */
+        if (UserInterface.operatorController.B.get()) {
+            Subsystems.cargo.setFlapDown();
+            RobotMap.flapIsUp = false;
+        }
+        if (UserInterface.operatorController.Y.get()) {
+            Subsystems.cargo.setFlapUp();
+            RobotMap.flapIsUp = true;
+        }
+        if (!RobotMap.highPivotCurrent) {
+            RobotMap.highPivotCurrent = Subsystems.cargo.isPivotCurrentTooHigh();
+        }
+        if (UserInterface.operatorController.getPOVAngle() == 0) {
+            RobotMap.isHoldingPivotUp = true;
+        }
+        if (RobotMap.isHoldingPivotUp) {
+            /** 
+             * Potential use for highPivotCurrent to hold pivot at a lesser speed
+             */
+            // if (!RobotMap.highPivotCurrent) {
+            //     Subsystems.cargo.pivotIntake(0.5, Direction.Up);
+            // } else {
+            //     Subsystems.cargo.holdPivotIntakeUp();
+            // }
+            Subsystems.cargo.holdPivotIntakeUp();
+        }
+        if (!RobotMap.cargoIsIn) {
+            RobotMap.cargoIsIn = Subsystems.cargo.getIntakeBeamBroken();
+        } else {
+            RobotMap.cargoIsIn = false;
+        }
+        if (UserInterface.operatorController.getLeftTrigger() > 0.1) {
+            Subsystems.cargo.setEscalatorMotors(-1);
+            RobotMap.cargoIsIn = false;
+        }
+        if (UserInterface.operatorController.getRightTrigger() > 0.1) {
+            if (!Subsystems.cargo.getEscalatorBeamBroken()) {
+                Subsystems.cargo.setEscalatorMotors(-1);
+                Subsystems.cargo.setIntakeMotors(-0.75);
+                if (RobotMap.cargoIsIn) {
+                    Subsystems.cargo.stopIntakeMotors();
+                } else {
+                    Subsystems.cargo.setIntakeMotors(-0.75);
+                }
+            } else {
+                Subsystems.cargo.stopIntakeMotors();
+                Subsystems.cargo.stopEscalatorMotors();
+                RobotMap.cargoIsIn = false;
+            }
+        }
+        if (!(UserInterface.operatorController.getLeftTrigger() > 0.1)
+                && !(UserInterface.operatorController.getRightTrigger() > 0.1)) {
+            Subsystems.cargo.stopIntakeMotors();
+            Subsystems.cargo.stopEscalatorMotors();
+        }
+        if (UserInterface.operatorController.getLeftJoystickY() < -0.1) {
+            // pivots down
+            Subsystems.cargo.pivotIntake(Math.abs(UserInterface.operatorController.getLeftJoystickY()) * 0.2, Direction.Down);
+            RobotMap.isHoldingPivotUp = false;
+            RobotMap.highPivotCurrent = false;
+        } else if (UserInterface.operatorController.getLeftJoystickY() > 0.1) {
+            // pivots up
+            Subsystems.cargo.pivotIntake(Math.abs(UserInterface.operatorController.getLeftJoystickY()) * 0.4, Direction.Up);
+            RobotMap.isHoldingPivotUp = false;
+            RobotMap.highPivotCurrent = false;
+        } else {
+            Subsystems.cargo.stopPivot();
+        }
+        /**
+         * End TeleopPeriodic Code in Auto
+         */
+
     }
 
     public void teleopInit() {
@@ -212,12 +347,6 @@ public class Robot extends TimedRobot {
 
         // } else {
         // }
-
-        //Camera switch
-
-        if (UserInterface.driverController.LB.get()) {
-
-        }
 
 
         /**
