@@ -21,9 +21,9 @@ public class DriveStraightIdeal extends Command {
   protected void initialize() {
     ticks = convertToTicks(RobotMap.getDriveOffset());
     if (RobotMap.getDriveOffset() >= 0) {
-      forward = true;//BACKWARDS FIX AT SOME POINT
-    } else {
       forward = false;
+    } else {
+      forward = true;
     }   
     Subsystems.driveBase.zeroEncoderPosition();
     Subsystems.driveBase.zeroGyroAngle();

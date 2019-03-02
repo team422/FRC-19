@@ -24,15 +24,15 @@ public class Hatch extends Subsystem {
     public void hatchRelease() {
         // leftGrabber.setAngle(30);
         // rightGrabber.setAngle(145);
-        leftGrabber.setAngle(50);
-        rightGrabber.setAngle(135);
+        leftGrabber.setAngle(30);
+        rightGrabber.setAngle(147);
     }
 
     public void hatchClamp() {
         // leftGrabber.setAngle(150);
         // rightGrabber.setAngle(15);
-        leftGrabber.setAngle(155);
-        rightGrabber.setAngle(20);
+        leftGrabber.setAngle(158);
+        rightGrabber.setAngle(22);
     }
 
     public void armOut() {
