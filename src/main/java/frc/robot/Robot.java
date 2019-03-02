@@ -45,7 +45,7 @@ public class Robot extends TimedRobot {
      */
     public static UsbCamera camera1;
     public static UsbCamera camera2;
-    //public NetworkTable camera;
+    // public NetworkTable camera;
     public static VideoSink server;
 
     public Robot() {
@@ -88,7 +88,7 @@ public class Robot extends TimedRobot {
         RobotMap.isFastMode = false;
         RobotMap.setSpeedAndRotationCaps(1, 0.35);
         UserInterface.driverController.RB.whenPressed(new ToggleSpeed());
-        UserInterface.driverController.LB.whenPressed(new ToggleCamera());
+        // UserInterface.driverController.LB.whenPressed(new ToggleCamera());
 
         /**
          * Turns isHoldingPivotUp, cargoIsIn, & armIsOut booleans to false and flapIsUp
@@ -190,6 +190,7 @@ public class Robot extends TimedRobot {
         if (UserInterface.operatorController.A.get()) {
             Subsystems.hatch.armIn();
             RobotMap.armIsOut = false;
+            Subsystems.hatch.hatchClamp();
         }
         if (UserInterface.operatorController.X.get()) {
             Subsystems.hatch.armOut();
