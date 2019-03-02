@@ -23,8 +23,8 @@ public class RobotMap {
     public static double turnDirection = 0;
     public static boolean isCamera1 = true;
     public static boolean isFastMode = true;
-    public static double speedCap = 1;
-    public static double rotationCap = 0.35;
+    public static double speedCap = 0.2;
+    public static double rotationCap = 0.2;
     public static String botName = (isCompBot) ? "Meridian" : "Hot Take";
     public static boolean isHoldingPivotUp = false;
     public static boolean cargoIsIn = false;
