@@ -362,6 +362,7 @@ public class Robot extends TimedRobot {
         if (UserInterface.operatorController.A.get()) {
             Subsystems.hatch.armIn();
             RobotMap.armIsOut = false;
+            Subsystems.hatch.hatchClamp();
         }
         if (UserInterface.operatorController.X.get()) {
             Subsystems.hatch.armOut();
