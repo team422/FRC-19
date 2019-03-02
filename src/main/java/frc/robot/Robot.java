@@ -55,17 +55,17 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         System.out.println("Initializing " + RobotMap.botName + "\n");
 
-        //camera = CameraServer.getInstance().startAutomaticCapture();
+        camera = CameraServer.getInstance().startAutomaticCapture();
         /**
          * Camera Toggling initialization
          */
-        RobotMap.setCamera(true);
-        camera1 = CameraServer.getInstance().startAutomaticCapture(0);//may be 1,2
-        camera2 = CameraServer.getInstance().startAutomaticCapture(1);
-        server = CameraServer.getInstance().getServer();
-        server.setSource(camera1);
-        camera1.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen);
-        camera2.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen);
+        // RobotMap.setCamera(true);
+        // camera1 = CameraServer.getInstance().startAutomaticCapture(0);//may be 1,2
+        // camera2 = CameraServer.getInstance().startAutomaticCapture(1);
+        // server = CameraServer.getInstance().getServer();
+        // server.setSource(camera1);
+        // camera1.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen);
+        // camera2.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen);
 
         NetworkTableInstance inst = NetworkTableInstance.getDefault();
         NetworkTable pixy = inst.getTable("pixy");
@@ -85,7 +85,7 @@ public class Robot extends TimedRobot {
          * Sets Drivebase speed to fast as default and sets RB on driverController to
          * toggle the speed when pressed
          */
-        RobotMap.isFastMode = true;
+        RobotMap.isFastMode = false;
         RobotMap.setSpeedAndRotationCaps(1, 0.35);
         UserInterface.driverController.RB.whenPressed(new ToggleSpeed());
         UserInterface.driverController.LB.whenPressed(new ToggleCamera());
@@ -145,7 +145,7 @@ public class Robot extends TimedRobot {
          * This makes sure that the bot is set to normal speed and rotation caps upon
          * TeleOp Initialization.
          */
-        RobotMap.isFastMode = true;
+        RobotMap.isFastMode = false;
         RobotMap.setSpeedAndRotationCaps(1, 0.35);
 
         /**
@@ -286,7 +286,7 @@ public class Robot extends TimedRobot {
          * This makes sure that the bot is set to normal speed and rotation caps upon
          * TeleOp Initialization.
          */
-        RobotMap.isFastMode = true;
+        RobotMap.isFastMode = false;
         RobotMap.setSpeedAndRotationCaps(1, 0.35);
 
         /**
