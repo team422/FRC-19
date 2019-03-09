@@ -52,15 +52,19 @@ public class RobotMap {
     public static final int cargoIntakePivot = (isCompBot) ? 13 : 32;
     public static final int extraMotorController = (isCompBot) ? 10 : 25;
     
-    // Servo Ports
-    public static final int hatchLeftGrabber = 8;
-    public static final int hatchRightGrabber = 9;
-    
-    // Double Solenoid Values
+    // Double Solenoid Values (PCM 0)
     public static final int cargoFlapUp = 7;
     public static final int cargoFlapDown = 0;
     public static final int hatchArmOut = 6;
     public static final int hatchArmIn = 1;
+
+    // Double Solenoid Values (PCM 1)
+    public static final int frontUp = 0;
+    public static final int frontDown = 1;
+    public static final int backUp = 2;
+    public static final int backDown = 3;
+    public static final int hatchClamp = 4;
+    public static final int hatchRelease = 5;
 
     // Digital IO Ports
     public static final int cargoPivotUltrasonic = 8;

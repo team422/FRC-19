@@ -1,49 +1,40 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import frc.robot.RobotMap;
 
 public class Hatch extends Subsystem {
 
-    private Servo leftGrabber;
-    private Servo rightGrabber;
     private DoubleSolenoid arm;
+    private DoubleSolenoid hatch;
 
     public Hatch() {
         super("Hatch");
-        this.leftGrabber = new Servo(RobotMap.hatchLeftGrabber);
-        this.rightGrabber = new Servo (RobotMap.hatchRightGrabber);
-        this.arm = new DoubleSolenoid(RobotMap.hatchArmOut, RobotMap.hatchArmIn);
+        this.arm = new DoubleSolenoid(0, RobotMap.hatchArmOut, RobotMap.hatchArmIn);
+        this.hatch = new DoubleSolenoid(1, RobotMap.hatchClamp, RobotMap.hatchRelease);
     }
 
     @Override
     public void initDefaultCommand() {}
-
+    
     public void hatchRelease() {
-        leftGrabber.setAngle(37);
-        rightGrabber.setAngle(139);
+        hatch.set(DoubleSolenoid.Value.kReverse);
     }
 
     public void hatchClamp() {
-        leftGrabber.setAngle(168);
-        rightGrabber.setAngle(23);
+        hatch.set(DoubleSolenoid.Value.kForward);
     }
 
     public void armOut() {
-      arm.set(DoubleSolenoid.Value.kForward);
+        arm.set(DoubleSolenoid.Value.kForward);
     }
 
     public void armIn() {
         arm.set(DoubleSolenoid.Value.kReverse);
-      }
-    
-    public double getLeftPosition() {
-        return leftGrabber.get();
     }
 
-    public double getRightPosition() {
-        return rightGrabber.get();
+    public boolean isHatchClamped() {
+        return (hatch.get() == DoubleSolenoid.Value.kForward);
     }
 }

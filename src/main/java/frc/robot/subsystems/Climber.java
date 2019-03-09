@@ -1,82 +1,50 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.DigitalInput;
+//import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 public class Climber extends Subsystem {
     
-    private SpeedControllerGroup backClimb;
-    private SpeedControllerGroup frontClimb;
-    private WPI_TalonSRX leftFrontClimb;
-    private WPI_TalonSRX leftBackClimb;
-    private WPI_TalonSRX rightFrontClimb;
-    private WPI_TalonSRX rightBackClimb;
-    public DigitalInput climberUltrasonic;
+    // public DigitalInput climberBeamBreak;
+    private DoubleSolenoid frontClimb;
+    private DoubleSolenoid backClimb;
 
     public Climber() {
-        super("Climber"); 
-        this.leftFrontClimb = new WPI_TalonSRX(RobotMap.leftFrontClimb);
-        this.leftBackClimb = new WPI_TalonSRX(RobotMap.leftBackClimb);
-        this.rightFrontClimb = new WPI_TalonSRX(RobotMap.rightFrontClimb);
-        this.rightBackClimb = new WPI_TalonSRX(RobotMap.rightBackClimb);
-        // this.backClimb = new SpeedControllerGroup(leftBackClimb, rightBackClimb);
-        // this.frontClimb = new SpeedControllerGroup(leftFrontClimb, rightFrontClimb);
-        this.frontClimb = new SpeedControllerGroup(rightFrontClimb);
-        this.backClimb = new SpeedControllerGroup(leftFrontClimb);
-        this.climberUltrasonic = new DigitalInput(RobotMap.climberUltrasonic);
+        super("Climber");
+        this.frontClimb = new DoubleSolenoid(1, RobotMap.frontUp, RobotMap.frontDown);
+        this.backClimb = new DoubleSolenoid(1, RobotMap.backUp, RobotMap.backDown);
+        // this.climberBeamBreak = new DigitalInput(RobotMap.climberBeamBreak);
     }
 
     public void initDefaultCommand() {}
 
-    public void setFrontClimbMotors(double speed) {
-        frontClimb.set(speed);
+    public void frontClimbExtend() {
+        frontClimb.set(DoubleSolenoid.Value.kForward);
     }
 
-    public void stopFrontClimbMotors() {
-        frontClimb.set(0);   
+    public void frontClimbRetract() {
+        frontClimb.set(DoubleSolenoid.Value.kReverse);
     }
 
-    public void setBackClimbMotors(double speed) {
-        backClimb.set(speed);
+    public void backClimbExtend() {
+        backClimb.set(DoubleSolenoid.Value.kForward);
     }
 
-    public void stopBackClimbMotors() {
-        backClimb.set(0);
+    public void backClimbRetract() {
+        backClimb.set(DoubleSolenoid.Value.kReverse);
     }
 
-    // public void setFrontRightMotors(double speed) {
-    //     rightFrontClimb.set(ControlMode.PercentOutput, speed);
-    // }
-
-    // public void setFrontLeftMotors(double speed) {
-    //     leftFrontClimb.set(ControlMode.PercentOutput, speed);
-    // }
-
-    public boolean getUltrasonic() {
-        return climberUltrasonic.get();
+    public boolean isFrontExtended() {
+        return (frontClimb.get() == DoubleSolenoid.Value.kForward);
     }
 
-    public void zeroFrontClimbEncoders() {
-        leftFrontClimb.setSelectedSensorPosition(0,0,10);
-        rightFrontClimb.setSelectedSensorPosition(0,0,10);        
+    public boolean isBackExtended() {
+        return (backClimb.get() == DoubleSolenoid.Value.kReverse);
     }
-
-    public void zeroBackClimbEncoders() {
-        leftBackClimb.setSelectedSensorPosition(0,0,10);
-        rightBackClimb.setSelectedSensorPosition(0,0,10);
-    }
-
-    public int getFrontClimbMotors() {
-        return leftFrontClimb.getSelectedSensorPosition(0);
-    }
-
-    public int getBackClimbMotors() {
-        return rightBackClimb.getSelectedSensorPosition(0);
-    }
-
-
+    
+    // public boolean getBeamBreak() {
+    //    return climberBeamBreak.get();
+    //}
 }

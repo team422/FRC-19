@@ -10,8 +10,6 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.cargo.*;
-import frc.robot.commands.climber.*;
 import frc.robot.commands.hatch.*;
 import frc.robot.commands.other.*;
 import frc.robot.commandgroups.*;
@@ -28,7 +26,7 @@ public class Robot extends TimedRobot {
     // private NetworkTableEntry blockW;
     // private NetworkTableEntry blockH;
     // private NetworkTableEntry blockArea;
-    private CommandGroup ParallelTurnBetter;
+    private CommandGroup GaffTapeTrack;
     private NetworkTableEntry lineX0;
     private NetworkTableEntry lineX1;
     private NetworkTableEntry lineY0;
@@ -41,12 +39,18 @@ public class Robot extends TimedRobot {
     private Command DriveStraight;
 
     /**
-     * Camera Toggling Variables (Dont work yet)
+     * Camera Toggling Variables (Dont work yet)p
      */
     public static UsbCamera camera1;
     public static UsbCamera camera2;
     // public NetworkTable camera;
     public static VideoSink server;
+
+    boolean toggleFrontOn = false;
+    boolean toggleFrontPressed = false;
+
+    boolean toggleBackOn = false;
+    boolean toggleBackPressed = false;
 
     public Robot() {
         super(0.08);
@@ -100,8 +104,11 @@ public class Robot extends TimedRobot {
         RobotMap.armIsOut = false;
         RobotMap.highPivotCurrent = false;
 
-        ParallelTurnBetter = new ParallelTurnBetter();
+        GaffTapeTrack = new GaffTapeTrack();
         //DriveStraight = new DriveStraight(10,0.3,10000);
+
+        Subsystems.climber.frontClimbRetract();
+        Subsystems.climber.backClimbRetract();
     }
 
     public void disabledInit() {
@@ -440,6 +447,36 @@ public class Robot extends TimedRobot {
             Subsystems.cargo.stopPivot();
         }
 
+        if(toggleFrontOn){
+            Subsystems.climber.frontClimbExtend();
+        } else {
+            Subsystems.climber.frontClimbRetract();
+        }
+        if(toggleBackOn){
+            Subsystems.climber.backClimbExtend();
+        } else {
+            Subsystems.climber.backClimbRetract();
+        }
+
+    }
+
+    public void updateToggle() {
+        if(UserInterface.driverController.getPOVAngle() == 0) {
+            if(!toggleFrontPressed){
+                toggleFrontOn = !toggleFrontOn;
+                toggleFrontPressed = true;
+            }
+        } else {
+            toggleFrontPressed = false;
+        }
+        if(UserInterface.driverController.getPOVAngle() == 180) {
+            if(!toggleBackPressed){
+                toggleBackOn = !toggleBackOn;
+                toggleBackPressed = true;
+            }
+        } else {
+            toggleBackPressed = false;
+        }
     }
 
     private void printDataToSmartDashboard() {
@@ -450,8 +487,6 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Right Drive Position", Subsystems.driveBase.getRightPosition());
         SmartDashboard.putNumber("Left Drive Position", Subsystems.driveBase.getLeftPosition());
         SmartDashboard.putNumber("Gyro angle", Subsystems.driveBase.getGyroAngle());
-        SmartDashboard.putNumber("Hatch Left Angle", Subsystems.hatch.getLeftPosition());
-        SmartDashboard.putNumber("Hatch Right Angle", Subsystems.hatch.getRightPosition());
         SmartDashboard.putNumber("POV Angle", UserInterface.operatorController.getPOVAngle());
         SmartDashboard.putBoolean("Left Throttle", RobotMap.isLeftThrottle);
         SmartDashboard.putBoolean("Fast Mode", RobotMap.isFastMode);
@@ -461,6 +496,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putBoolean("Flap Up", RobotMap.flapIsUp);
         SmartDashboard.putBoolean("Hatch Arm Out", RobotMap.armIsOut);
         SmartDashboard.putBoolean("isPivotCurrentTooHigh", Subsystems.cargo.isPivotCurrentTooHigh());
+        SmartDashboard.putBoolean("Hatch Clamp", Subsystems.hatch.isHatchClamped());
         SmartDashboard.putNumber("Pivot Current", Subsystems.cargo.pivotCurrent());
         SmartDashboard.putNumber("Speed Cap", RobotMap.speedCap);
         SmartDashboard.putNumber("Rotation Cap", RobotMap.rotationCap);
