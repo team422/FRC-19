@@ -19,20 +19,9 @@ public class LineDataStream extends Command {
     private double distance_to_align;
     private static final double camera_to_robot_center = 14.5; //inches
     
-    // private static double camera_pitch = 54.0;
-    // private static double fov_h = 60;
-    // private static double fov_v = 40;
-    // private static double camera_left = 0; //x coordinate of the left side of the camera field of view
-    // private static double camera_right = 78; //x coodinate of the rightside of the camera field of view
-    // private static double camera_far = 0; //y coordinate of the far sige of the camera field of view
-    // private static double camera_near = 51; //y coordinate of the near side of the camera field of view
-    // private static double camera_height = 12;
-    // private static double centroid_x = 11.375;
-    // private static double centroid_y = 14.5;
     private double idealAngle;
     private double xdistance;
     private double ydistance;
-    private double camera_to_y_pixel_distance;
 
     public LineDataStream() {
         super("LineDataStream");
@@ -81,7 +70,7 @@ public class LineDataStream extends Command {
             distance_to_align = Math.sin(Math.toRadians(90-idealAngle)) * (camera_to_robot_center + computeYExpiremental(lineY1.getDouble(-404)));
         }
 
-        SmartDashboard.putNumber("Drive Offset", idealAngle);
+        SmartDashboard.putNumber("Drive Offset", Math.abs(distance_to_align));
     }
 
     @Override
