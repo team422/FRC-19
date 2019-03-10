@@ -104,11 +104,11 @@ public class Robot extends TimedRobot {
         RobotMap.armIsOut = false;
         RobotMap.highPivotCurrent = false;
 
-        GaffTapeTrack = new GaffTapeTrack();
+        // GaffTapeTrack = new GaffTapeTrack();
         //DriveStraight = new DriveStraight(10,0.3,10000);
 
-        Subsystems.climber.frontClimbRetract();
-        Subsystems.climber.backClimbRetract();
+        // Subsystems.climber.frontClimbRetract();
+        // Subsystems.climber.backClimbRetract();
     }
 
     public void disabledInit() {
@@ -447,16 +447,16 @@ public class Robot extends TimedRobot {
             Subsystems.cargo.stopPivot();
         }
 
-        if(toggleFrontOn){
-            Subsystems.climber.frontClimbExtend();
-        } else {
-            Subsystems.climber.frontClimbRetract();
-        }
-        if(toggleBackOn){
-            Subsystems.climber.backClimbExtend();
-        } else {
-            Subsystems.climber.backClimbRetract();
-        }
+        // if(toggleFrontOn){
+        //     Subsystems.climber.frontClimbExtend();
+        // } else {
+        //     Subsystems.climber.frontClimbRetract();
+        // }
+        // if(toggleBackOn){
+        //     Subsystems.climber.backClimbExtend();
+        // } else {
+        //     Subsystems.climber.backClimbRetract();
+        // }
 
     }
 

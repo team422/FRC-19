@@ -12,7 +12,7 @@ public class Hatch extends Subsystem {
     public Hatch() {
         super("Hatch");
         this.arm = new DoubleSolenoid(0, RobotMap.hatchArmOut, RobotMap.hatchArmIn);
-        this.hatch = new DoubleSolenoid(1, RobotMap.hatchClamp, RobotMap.hatchRelease);
+        this.hatch = new DoubleSolenoid(0, RobotMap.hatchClamp, RobotMap.hatchRelease);
     }
 
     @Override
