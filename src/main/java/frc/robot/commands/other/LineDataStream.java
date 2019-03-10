@@ -16,6 +16,8 @@ public class LineDataStream extends Command {
     private NetworkTableEntry lineY1;
     private double lineOffset1;
     private double lineOffset2;
+    private double distance_to_align;
+    private static final double camera_to_robot_center = 14.5; //inches
     
     // private static double camera_pitch = 54.0;
     // private static double fov_h = 60;
@@ -68,10 +70,18 @@ public class LineDataStream extends Command {
             SmartDashboard.putNumber("X-distanceFar", compute_x_inches(lineX0.getDouble(-404), computeYExpiremental(lineY0.getDouble(-404))));
             ydistance = computeYExpiremental(lineY0.getDouble(-404)) - computeYExpiremental(lineY1.getDouble(-404));
         }
-        xdistance = lineOffset2 - lineOffset1;
+        xdistance = lineOffset1 - lineOffset2;
         
         idealAngle = Math.atan2(xdistance,ydistance) * (180 / Math.PI);
-        SmartDashboard.putNumber("Ideal Angle", idealAngle);
+        SmartDashboard.putNumber("Ideal Angle", (90 - Math.abs(idealAngle)) * (idealAngle/Math.abs(idealAngle)));
+
+        if (lineY0.getDouble(-404) > lineY1.getDouble(-404)) {
+            distance_to_align = Math.sin(Math.toRadians(90-idealAngle)) * (camera_to_robot_center + computeYExpiremental(lineY0.getDouble(-404)));
+        } else {
+            distance_to_align = Math.sin(Math.toRadians(90-idealAngle)) * (camera_to_robot_center + computeYExpiremental(lineY1.getDouble(-404)));
+        }
+
+        SmartDashboard.putNumber("Drive Offset", idealAngle);
     }
 
     @Override

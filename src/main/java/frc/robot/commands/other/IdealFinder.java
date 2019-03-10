@@ -56,7 +56,7 @@ public class IdealFinder extends Command {
             SmartDashboard.putNumber("X-distanceFar", compute_x_inches(lineX0.getDouble(-404), computeYExpiremental(lineY0.getDouble(-404))));
             ydistance = computeYExpiremental(lineY0.getDouble(-404)) - computeYExpiremental(lineY1.getDouble(-404));
         }
-        xdistance = lineOffset2 - lineOffset1;
+        xdistance = lineOffset1 - lineOffset2;
         // if(lineOffset1 > lineOffset2) {
         //     xdistance = lineOffset1 - lineOffset2;                        
         // } else {
@@ -67,9 +67,9 @@ public class IdealFinder extends Command {
         
         
         idealAngle =  Math.atan2(xdistance,ydistance) * (180 / Math.PI);
-        SmartDashboard.putNumber("Ideal Angle", idealAngle);
+        SmartDashboard.putNumber("Ideal Angle", (90 - Math.abs(idealAngle)) * (idealAngle/Math.abs(idealAngle)));
         System.out.println("Setting ideal angle to " + idealAngle);
-        RobotMap.setIdealAngle(90 - idealAngle); 
+        RobotMap.setIdealAngle((90 - Math.abs(idealAngle)) * (idealAngle/Math.abs(idealAngle))); 
         
         if (lineY0.getDouble(-404) > lineY1.getDouble(-404)) {
             distance_to_align = Math.sin(Math.toRadians(idealAngle)) * (camera_to_robot_center + computeYExpiremental(lineY0.getDouble(-404)));
