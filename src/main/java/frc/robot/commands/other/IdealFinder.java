@@ -77,7 +77,7 @@ public class IdealFinder extends Command {
             distance_to_align = Math.sin(Math.toRadians(idealAngle)) * (camera_to_robot_center + computeYExpiremental(lineY1.getDouble(-404)));
         }
 
-        RobotMap.setDriveOffset(Math.abs(distance_to_align));
+        RobotMap.setDriveOffset(Math.abs(distance_to_align)*0.75);
     }
     
     @Override

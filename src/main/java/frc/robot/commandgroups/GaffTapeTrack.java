@@ -13,13 +13,7 @@ public class GaffTapeTrack extends CommandGroup {
     addSequential(new TurnIdeal(0.25, 100000));
     addSequential(new DriveStraightIdeal(0.2, 100000000));
     //addSequential(new TurnUntilLine(0.3,1000000));
-    if(RobotMap.getIdealAngle() >= 0) {
-      addSequential(new Turn(-90, 0.3, 100000));
-      //addSequential(new TurnUntilLine());
-    } else {
-      addSequential(new Turn(90, 0.3, 100000));
-      //addSequential(new TurnUntilLine());
-    }
+    addSequential(new Turn90(0.3, 100000));
     //addSequential(new DriveStraight(5, 0.2, 20));
   }
 }

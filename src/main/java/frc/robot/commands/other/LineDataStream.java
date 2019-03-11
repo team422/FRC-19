@@ -70,7 +70,7 @@ public class LineDataStream extends Command {
             distance_to_align = Math.sin(Math.toRadians(90-idealAngle)) * (camera_to_robot_center + computeYExpiremental(lineY1.getDouble(-404)));
         }
 
-        SmartDashboard.putNumber("Drive Offset", Math.abs(distance_to_align));
+        SmartDashboard.putNumber("Drive Offset", Math.abs(distance_to_align)*0.75);
     }
 
     @Override
