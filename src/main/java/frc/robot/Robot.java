@@ -39,7 +39,7 @@ public class Robot extends TimedRobot {
     private Command DriveStraight;
 
     /**
-     * Camera Toggling Variables (Dont work yet)p
+     * Camera Toggling Variables (Dont work yet)
      */
     public static UsbCamera camera1;
     public static UsbCamera camera2;
@@ -107,8 +107,8 @@ public class Robot extends TimedRobot {
         // GaffTapeTrack = new GaffTapeTrack();
         //DriveStraight = new DriveStraight(10,0.3,10000);
 
-        // Subsystems.climber.frontClimbRetract();
-        // Subsystems.climber.backClimbRetract();
+        Subsystems.climber.frontClimbRetract();
+        Subsystems.climber.backClimbRetract();
     }
 
     public void disabledInit() {
@@ -147,6 +147,9 @@ public class Robot extends TimedRobot {
         Subsystems.cargo.stopPivot();
         Subsystems.cargo.stopIntakeMotors();
         Subsystems.cargo.stopEscalatorMotors();
+        
+        Subsystems.climber.frontClimbRetract();
+        Subsystems.climber.backClimbRetract();
 
         /**
          * This makes sure that the bot is set to normal speed and rotation caps upon
@@ -282,6 +285,9 @@ public class Robot extends TimedRobot {
 
     public void teleopInit() {
         System.out.println("TeleOp Initalized");
+
+        Scheduler.getInstance().removeAll();
+
         /**
          * This makes sure that all of the motors are set to 0% upon TeleOp
          * Initialization.
@@ -289,12 +295,14 @@ public class Robot extends TimedRobot {
         Subsystems.cargo.stopPivot();
         Subsystems.cargo.stopIntakeMotors();
         Subsystems.cargo.stopEscalatorMotors();
+        Subsystems.climber.frontClimbRetract();
+        Subsystems.climber.backClimbRetract();
 
         /**
          * This makes sure that the bot is set to normal speed and rotation caps upon
          * TeleOp Initialization.
          */
-        RobotMap.isFastMode = false;
+        // RobotMap.isFastMode = false;
 
         /**
          * Turns isHoldingPivotUp, cargoIsIn, & armIsOut booleans to false and flapIsUp
@@ -310,7 +318,6 @@ public class Robot extends TimedRobot {
          * This makes sure that any old commands/command groups are stopped upon TeleOp
          * Initialization.
          */
-        Scheduler.getInstance().removeAll();
         Subsystems.hatch.hatchClamp();
     }
 
@@ -322,6 +329,8 @@ public class Robot extends TimedRobot {
 
         printDataToSmartDashboard();
 
+
+        updateToggle();
         /**
          * Unused Buttons
          */
@@ -447,21 +456,25 @@ public class Robot extends TimedRobot {
             Subsystems.cargo.stopPivot();
         }
 
-        // if(toggleFrontOn){
-        //     Subsystems.climber.frontClimbExtend();
-        // } else {
-        //     Subsystems.climber.frontClimbRetract();
-        // }
-        // if(toggleBackOn){
-        //     Subsystems.climber.backClimbExtend();
-        // } else {
-        //     Subsystems.climber.backClimbRetract();
-        // }
+        if(toggleFrontOn){
+            Subsystems.climber.frontClimbExtend();
+        } else {
+            Subsystems.climber.frontClimbRetract();
+        }
+        if(toggleBackOn){
+            Subsystems.climber.backClimbExtend();
+            Subsystems.climber.frontClimbRetract();
+            toggleFrontPressed = false;
+            toggleFrontOn = false;
+        } else {
+            Subsystems.climber.backClimbRetract();
+        }
 
     }
 
     public void updateToggle() {
-        if(UserInterface.driverController.getPOVAngle() == 0) {
+        // Cargo Intake side is the close climber side
+        if(UserInterface.driverController.getPOVAngle() == 180) {
             if(!toggleFrontPressed){
                 toggleFrontOn = !toggleFrontOn;
                 toggleFrontPressed = true;
@@ -469,7 +482,8 @@ public class Robot extends TimedRobot {
         } else {
             toggleFrontPressed = false;
         }
-        if(UserInterface.driverController.getPOVAngle() == 180) {
+        // Hatch side is the far climber side
+        if(UserInterface.driverController.getPOVAngle() == 0) {
             if(!toggleBackPressed){
                 toggleBackOn = !toggleBackOn;
                 toggleBackPressed = true;
@@ -504,5 +518,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Drive Offset", RobotMap.driveOffset);
         SmartDashboard.putBoolean("isCamera1", RobotMap.isCamera1);
         SmartDashboard.putBoolean("Escalator Occupied", Subsystems.cargo.getEscalatorBeamBroken());
+        SmartDashboard.putBoolean("FrontClimbUp", Subsystems.climber.isFrontExtended());
+        SmartDashboard.putBoolean("BackClimbUp", Subsystems.climber.isBackExtended());
     }
 }
