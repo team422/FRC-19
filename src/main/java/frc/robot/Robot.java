@@ -73,11 +73,6 @@ public class Robot extends TimedRobot {
 
         NetworkTableInstance inst = NetworkTableInstance.getDefault();
         NetworkTable pixy = inst.getTable("pixy");
-        // blockX = pixy.getEntry("blockX");
-        // blockY = pixy.getEntry("blockY");
-        // blockW = pixy.getEntry("blockW");
-        // blockH = pixy.getEntry("blockH");
-        // blockArea = pixy.getEntry("blockArea");
         lineX0 = pixy.getEntry("lineX0");
         lineX1 = pixy.getEntry("lineX1");
         lineY0 = pixy.getEntry("lineY0");
@@ -107,8 +102,8 @@ public class Robot extends TimedRobot {
         // GaffTapeTrack = new GaffTapeTrack();
         //DriveStraight = new DriveStraight(10,0.3,10000);
 
-        // Subsystems.climber.frontClimbRetract();
-        // Subsystems.climber.backClimbRetract();
+        Subsystems.climber.frontClimbRetract();
+        Subsystems.climber.backClimbRetract();
     }
 
     public void disabledInit() {
@@ -447,16 +442,16 @@ public class Robot extends TimedRobot {
             Subsystems.cargo.stopPivot();
         }
 
-        // if(toggleFrontOn){
-        //     Subsystems.climber.frontClimbExtend();
-        // } else {
-        //     Subsystems.climber.frontClimbRetract();
-        // }
-        // if(toggleBackOn){
-        //     Subsystems.climber.backClimbExtend();
-        // } else {
-        //     Subsystems.climber.backClimbRetract();
-        // }
+        if(toggleFrontOn){
+            Subsystems.climber.frontClimbExtend();
+        } else {
+            Subsystems.climber.frontClimbRetract();
+        }
+        if(toggleBackOn){
+            Subsystems.climber.backClimbExtend();
+        } else {
+            Subsystems.climber.backClimbRetract();
+        }
 
     }
 
