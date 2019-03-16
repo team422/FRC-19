@@ -8,43 +8,47 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 public class Climber extends Subsystem {
     
     // public DigitalInput climberBeamBreak;
-    private DoubleSolenoid frontClimb;
-    private DoubleSolenoid backClimb;
+    private DoubleSolenoid closeClimb;
+    private DoubleSolenoid farClimb;
 
     public Climber() {
         super("Climber");
-        // this.frontClimb = new DoubleSolenoid(1, RobotMap.frontUp, RobotMap.frontDown);
-        // this.backClimb = new DoubleSolenoid(1, RobotMap.backUp, RobotMap.backDown);
+        /**
+         * closeClimb refers to the cargo intake side, which is the first to climb, and therefor closer
+         * to the driver. farClimb refers to the hatch intake side.
+         */
+        this.closeClimb = new DoubleSolenoid(1, RobotMap.closeClimberExtend, RobotMap.closeClimberRetract);
+        this.farClimb = new DoubleSolenoid(1, RobotMap.farClimberExtend, RobotMap.farClimberRetract);
         // this.climberBeamBreak = new DigitalInput(RobotMap.climberBeamBreak);
     }
 
     public void initDefaultCommand() {}
 
-    // public void frontClimbExtend() {
-    //     frontClimb.set(DoubleSolenoid.Value.kForward);
-    // }
+    public void closeClimbExtend() {
+        closeClimb.set(DoubleSolenoid.Value.kForward);
+    }
 
-    // public void frontClimbRetract() {
-    //     frontClimb.set(DoubleSolenoid.Value.kReverse);
-    // }
+    public void closeClimbRetract() {
+        closeClimb.set(DoubleSolenoid.Value.kReverse);
+    }
 
-    // public void backClimbExtend() {
-    //     backClimb.set(DoubleSolenoid.Value.kForward);
-    // }
+    public void farClimbExtend() {
+        farClimb.set(DoubleSolenoid.Value.kForward);
+    }
 
-    // public void backClimbRetract() {
-    //     backClimb.set(DoubleSolenoid.Value.kReverse);
-    // }
+    public void farClimbRetract() {
+        farClimb.set(DoubleSolenoid.Value.kReverse);
+    }
 
-    // public boolean isFrontExtended() {
-    //     return (frontClimb.get() == DoubleSolenoid.Value.kForward);
-    // }
+    public boolean isCloseExtended() {
+        return (closeClimb.get() == DoubleSolenoid.Value.kForward);
+    }
 
-    // public boolean isBackExtended() {
-    //     return (backClimb.get() == DoubleSolenoid.Value.kReverse);
-    // }
+    public boolean isFarExtended() {
+        return (farClimb.get() == DoubleSolenoid.Value.kReverse);
+    }
     
     // public boolean getBeamBreak() {
     //    return climberBeamBreak.get();
-    //}
+    // }
 }

@@ -6,7 +6,7 @@ public class RobotMap {
      * will change all ports accordingly. MAKE SURE YOU GO THROUGH DRIVEBASE
      * AND CARGO SUBSYSTEMS AND CHANGE VICTOR/TALON CLASSES ACCORDINGLY.
      */
-    public static final boolean isCompBot = false;
+    public static final boolean isCompBot = true;
     
     /**
      * Sets which joystick of the driverXboxController that
@@ -53,18 +53,18 @@ public class RobotMap {
     public static final int extraMotorController = (isCompBot) ? 10 : 26;
     
     // Double Solenoid Values (PCM 0)
-    public static final int cargoFlapUp = (isCompBot) ? 7 : 7;
-    public static final int cargoFlapDown = (isCompBot) ? 0 : 6;
-    public static final int hatchArmOut = (isCompBot) ? 6 : 5;
-    public static final int hatchArmIn = (isCompBot) ? 1 : 2;
-    public static final int hatchClamp = (isCompBot) ? 4 : 1;
-    public static final int hatchRelease = (isCompBot) ? 5 : 0;
+    public static final int cargoFlapUp = (isCompBot) ? 5 : 7;
+    public static final int cargoFlapDown = (isCompBot) ? 2 : 6;
+    public static final int hatchArmOut = (isCompBot) ? 4 : 5;
+    public static final int hatchArmIn = (isCompBot) ? 3 : 2;
+    public static final int hatchClamp = (isCompBot) ? 6 : 1;
+    public static final int hatchRelease = (isCompBot) ? 1 : 0;
 
     // Double Solenoid Values (PCM 1)
-    public static final int frontClimberUp = 0;
-    public static final int frontClimberDown = 1;
-    public static final int backClimberUp = 2;
-    public static final int backClimberDown = 3;
+    public static final int closeClimberExtend = 4;
+    public static final int closeClimberRetract = 3;
+    public static final int farClimberExtend = 5;
+    public static final int farClimberRetract = 2;
 
 
     // Digital IO Ports

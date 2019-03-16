@@ -14,11 +14,11 @@ public class Cargo extends Subsystem {
 
     private WPI_TalonSRX intakePivot;
 
-    // private WPI_VictorSPX intakeWheels;
-    // private WPI_VictorSPX escalator; 
+    private WPI_VictorSPX intakeWheels;
+    private WPI_VictorSPX escalator; 
     
-    private WPI_TalonSRX intakeWheels;
-    private WPI_TalonSRX escalator; 
+    // private WPI_TalonSRX intakeWheels;
+    // private WPI_TalonSRX escalator; 
 
     private DigitalInput cargoPivotUltrasonic;
     private DigitalInput cargoEscalatorUltrasonic;
@@ -29,11 +29,11 @@ public class Cargo extends Subsystem {
         super("Cargo");
         this.intakePivot = new WPI_TalonSRX(RobotMap.cargoIntakePivot);
         
-        // this.intakeWheels = new WPI_VictorSPX(RobotMap.cargoIntakeWheels);
-        // this.escalator = new WPI_VictorSPX(RobotMap.cargoEscalatorWheels);
+        this.intakeWheels = new WPI_VictorSPX(RobotMap.cargoIntakeWheels);
+        this.escalator = new WPI_VictorSPX(RobotMap.cargoEscalatorWheels);
         
-        this.intakeWheels = new WPI_TalonSRX(RobotMap.cargoIntakeWheels);
-        this.escalator = new WPI_TalonSRX(RobotMap.cargoEscalatorWheels);
+        // this.intakeWheels = new WPI_TalonSRX(RobotMap.cargoIntakeWheels);
+        // this.escalator = new WPI_TalonSRX(RobotMap.cargoEscalatorWheels);
         
         this.cargoPivotUltrasonic = new DigitalInput(RobotMap.cargoPivotUltrasonic);
         this.cargoEscalatorUltrasonic = new DigitalInput(RobotMap.cargoEscalatorUltrasonic);
@@ -57,7 +57,7 @@ public class Cargo extends Subsystem {
     }
     
     public void setEscalatorMotors(double power) {
-        escalator.set(ControlMode.PercentOutput, -power);
+        escalator.set(ControlMode.PercentOutput, power);
     }
 
     public void stopEscalatorMotors() {
