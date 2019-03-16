@@ -73,11 +73,6 @@ public class Robot extends TimedRobot {
 
         NetworkTableInstance inst = NetworkTableInstance.getDefault();
         NetworkTable pixy = inst.getTable("pixy");
-        // blockX = pixy.getEntry("blockX");
-        // blockY = pixy.getEntry("blockY");
-        // blockW = pixy.getEntry("blockW");
-        // blockH = pixy.getEntry("blockH");
-        // blockArea = pixy.getEntry("blockArea");
         lineX0 = pixy.getEntry("lineX0");
         lineX1 = pixy.getEntry("lineX1");
         lineY0 = pixy.getEntry("lineY0");

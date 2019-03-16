@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.SPI;
+import frc.robot.DifferentialDriveCorrection;
 
 
 public class DriveBase extends Subsystem {
@@ -30,6 +31,7 @@ public class DriveBase extends Subsystem {
     private SpeedControllerGroup leftSide;
     private SpeedControllerGroup rightSide;
     public DifferentialDrive cheesyDrive; 
+    //public DifferentialDriveCorrection cheesyDrive; 
     private static final SPI.Port kGyroPort = SPI.Port.kOnboardCS0;
 
     public DriveBase() {
@@ -55,6 +57,7 @@ public class DriveBase extends Subsystem {
         this.leftSide = new SpeedControllerGroup(leftMiddleMaster, leftFrontFollower, leftRearFollower);
         this.rightSide = new SpeedControllerGroup(rightMiddleMaster, rightFrontFollower, rightRearFollower);        
         this.cheesyDrive = new DifferentialDrive(leftSide, rightSide);
+        //this.cheesyDrive = new DifferentialDriveCorrection(leftSide, rightSide);
     }
 
     public void initDefaultCommand() {this.setDefaultCommand(new TankDrive());}

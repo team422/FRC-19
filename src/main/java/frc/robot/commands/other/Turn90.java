@@ -3,18 +3,19 @@ package frc.robot.commands.other;
 import edu.wpi.first.wpilibj.command.Command;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Subsystems;
+import frc.robot.RobotMap;
 
-public class Turn extends Command {
+public class Turn90 extends Command {
 
     private double degrees;
     private double speed;
     private boolean isCorrecting = false;
 
 
-    public Turn(double Degrees, double Speed, double Timeout) {
-        super("Turn");
+    public Turn90(double Speed, double Timeout) {
+        super("Turn90");
         requires(Subsystems.driveBase);
-        degrees = Degrees;
+        degrees = 90;
         speed = Speed;
         setTimeout(Timeout);
     }
@@ -22,6 +23,11 @@ public class Turn extends Command {
     public void initialize() {
         Subsystems.driveBase.zeroGyroAngle();
         Subsystems.driveBase.zeroEncoderPosition();
+        if(RobotMap.getIdealAngle() >= 0) {
+            degrees = -90;
+          } else {
+            degrees = 90;
+        }
     }
 
     public void execute() {
