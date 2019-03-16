@@ -61,10 +61,10 @@ public class RobotMap {
     public static final int hatchRelease = (isCompBot) ? 1 : 0;
 
     // Double Solenoid Values (PCM 1)
-    public static final int frontClimberExtend = 4;
-    public static final int frontClimberRetract = 3;
-    public static final int backClimberExtend = 5;
-    public static final int backClimberRetract = 2;
+    public static final int closeClimberExtend = 4;
+    public static final int closeClimberRetract = 3;
+    public static final int farClimberExtend = 5;
+    public static final int farClimberRetract = 2;
 
 
     // Digital IO Ports

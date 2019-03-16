@@ -46,11 +46,11 @@ public class Robot extends TimedRobot {
     // public NetworkTable camera;
     public static VideoSink server;
 
-    boolean toggleFrontOn = false;
-    boolean toggleFrontPressed = false;
+    boolean toggleCloseOn = false;
+    boolean toggleClosePressed = false;
 
-    boolean toggleBackOn = false;
-    boolean toggleBackPressed = false;
+    boolean toggleFarOn = false;
+    boolean toggleFarPressed = false;
 
     public Robot() {
         super(0.08);
@@ -102,8 +102,8 @@ public class Robot extends TimedRobot {
         // GaffTapeTrack = new GaffTapeTrack();
         //DriveStraight = new DriveStraight(10,0.3,10000);
 
-        Subsystems.climber.frontClimbRetract();
-        Subsystems.climber.backClimbRetract();
+        Subsystems.climber.closeClimbRetract();
+        Subsystems.climber.farClimbRetract();
     }
 
     public void disabledInit() {
@@ -143,8 +143,8 @@ public class Robot extends TimedRobot {
         Subsystems.cargo.stopIntakeMotors();
         Subsystems.cargo.stopEscalatorMotors();
         
-        Subsystems.climber.frontClimbRetract();
-        Subsystems.climber.backClimbRetract();
+        Subsystems.climber.closeClimbRetract();
+        Subsystems.climber.farClimbRetract();
 
         /**
          * This makes sure that the bot is set to normal speed and rotation caps upon
@@ -290,8 +290,8 @@ public class Robot extends TimedRobot {
         Subsystems.cargo.stopPivot();
         Subsystems.cargo.stopIntakeMotors();
         Subsystems.cargo.stopEscalatorMotors();
-        Subsystems.climber.frontClimbRetract();
-        Subsystems.climber.backClimbRetract();
+        Subsystems.climber.closeClimbRetract();
+        Subsystems.climber.farClimbRetract();
 
         /**
          * This makes sure that the bot is set to normal speed and rotation caps upon
@@ -451,40 +451,40 @@ public class Robot extends TimedRobot {
             Subsystems.cargo.stopPivot();
         }
 
-        if(toggleFrontOn){
-            Subsystems.climber.frontClimbExtend();
+        if(toggleCloseOn){
+            Subsystems.climber.closeClimbExtend();
         } else {
-            Subsystems.climber.frontClimbRetract();
+            Subsystems.climber.closeClimbRetract();
         }
-        if(toggleBackOn){
-            Subsystems.climber.backClimbExtend();
-            Subsystems.climber.frontClimbRetract();
-            toggleFrontPressed = false;
-            toggleFrontOn = false;
+        if(toggleFarOn){
+            Subsystems.climber.farClimbExtend();
+            Subsystems.climber.closeClimbRetract();
+            toggleClosePressed = false;
+            toggleCloseOn = false;
         } else {
-            Subsystems.climber.backClimbRetract();
+            Subsystems.climber.farClimbRetract();
         }
 
     }
 
     public void updateToggle() {
-        // Cargo Intake side is the close climber side
+        // Cargo Intake side is the close climber side, which is the "front"
         if(UserInterface.driverController.getPOVAngle() == 180) {
-            if(!toggleFrontPressed){
-                toggleFrontOn = !toggleFrontOn;
-                toggleFrontPressed = true;
+            if(!toggleClosePressed){
+                toggleCloseOn = !toggleCloseOn;
+                toggleClosePressed = true;
             }
         } else {
-            toggleFrontPressed = false;
+            toggleClosePressed = false;
         }
-        // Hatch side is the far climber side
+        // Hatch side is the far climber side, which is the "back"
         if(UserInterface.driverController.getPOVAngle() == 0) {
-            if(!toggleBackPressed){
-                toggleBackOn = !toggleBackOn;
-                toggleBackPressed = true;
+            if(!toggleFarPressed){
+                toggleFarOn = !toggleFarOn;
+                toggleFarPressed = true;
             }
         } else {
-            toggleBackPressed = false;
+            toggleFarPressed = false;
         }
     }
 
@@ -513,7 +513,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Drive Offset", RobotMap.driveOffset);
         SmartDashboard.putBoolean("isCamera1", RobotMap.isCamera1);
         SmartDashboard.putBoolean("Escalator Occupied", Subsystems.cargo.getEscalatorBeamBroken());
-        SmartDashboard.putBoolean("FrontClimbUp", Subsystems.climber.isFrontExtended());
-        SmartDashboard.putBoolean("BackClimbUp", Subsystems.climber.isBackExtended());
+        SmartDashboard.putBoolean("CloseClimbUp", Subsystems.climber.isCloseExtended());
+        SmartDashboard.putBoolean("FarClimbUp", Subsystems.climber.isFarExtended());
     }
 }
