@@ -6,7 +6,7 @@ public class RobotMap {
      * will change all ports accordingly. MAKE SURE YOU GO THROUGH DRIVEBASE
      * AND CARGO SUBSYSTEMS AND CHANGE VICTOR/TALON CLASSES ACCORDINGLY.
      */
-    public static final boolean isCompBot = true;
+    public static final boolean isCompBot = false;
     
     /**
      * Sets which joystick of the driverXboxController that
@@ -53,8 +53,8 @@ public class RobotMap {
     public static final int extraMotorController = (isCompBot) ? 10 : 26;
     
     // Double Solenoid Values (PCM 0)
-    public static final int cargoFlapUp = (isCompBot) ? 5 : 7;
-    public static final int cargoFlapDown = (isCompBot) ? 2 : 6;
+    public static final int cargoFlapUp = (isCompBot) ? 5 : 6;
+    public static final int cargoFlapDown = (isCompBot) ? 2 : 7;
     public static final int hatchArmOut = (isCompBot) ? 4 : 5;
     public static final int hatchArmIn = (isCompBot) ? 3 : 2;
     public static final int hatchClamp = (isCompBot) ? 6 : 1;
