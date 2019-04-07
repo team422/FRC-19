@@ -217,8 +217,8 @@ public class DifferentialDriveCorrection extends RobotDriveBase {
     }
 
     m_leftMotor.set(limit(leftMotorOutput) * m_maxOutput);
-    m_rightMotor.set(0.862 * limit(rightMotorOutput) * m_maxOutput * m_rightSideInvertMultiplier);
-
+    m_rightMotor.set(limit(rightMotorOutput) * m_maxOutput * m_rightSideInvertMultiplier);
+//THIS IS ARCADE OOF
     feed();
   }
 
@@ -301,8 +301,8 @@ public class DifferentialDriveCorrection extends RobotDriveBase {
     }
 
     m_leftMotor.set(leftMotorOutput * m_maxOutput);
-    m_rightMotor.set(0.862 * rightMotorOutput * m_maxOutput * m_rightSideInvertMultiplier);
-
+    m_rightMotor.set(0.9*rightMotorOutput * m_maxOutput * m_rightSideInvertMultiplier);
+//USE THIS THIS CURVY
     feed();
   }
 
@@ -349,7 +349,7 @@ public class DifferentialDriveCorrection extends RobotDriveBase {
     }
 
     m_leftMotor.set(leftSpeed * m_maxOutput);
-    m_rightMotor.set(0.862 * rightSpeed * m_maxOutput * m_rightSideInvertMultiplier);
+    m_rightMotor.set(rightSpeed * m_maxOutput * m_rightSideInvertMultiplier);
 
     feed();
   }
