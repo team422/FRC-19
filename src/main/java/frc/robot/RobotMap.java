@@ -22,7 +22,7 @@ public class RobotMap {
     public static double driveOffset = 0;
     public static double turnDirection = 0;
     public static boolean isCamera1 = true;
-    public static boolean isFastMode = false;
+    public static boolean isFastMode = true;
     public static double speedCap = 0.2;
     public static double rotationCap = 0.2;
     public static String botName = (isCompBot) ? "Meridian" : "Hot Take";

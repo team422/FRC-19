@@ -84,8 +84,8 @@ public class Robot extends TimedRobot {
          * Sets Drivebase speed to fast as default and sets RB on driverController to
          * toggle the speed when pressed
          */
-        RobotMap.isFastMode = false;
-        RobotMap.setSpeedAndRotationCaps(0.2, 0.2);
+        RobotMap.isFastMode = true;
+        RobotMap.setSpeedAndRotationCaps(1, 0.35);
         UserInterface.driverController.RB.whenPressed(new ToggleSpeed());
         // UserInterface.driverController.LB.whenPressed(new ToggleCamera());
 
@@ -151,7 +151,7 @@ public class Robot extends TimedRobot {
          * TeleOp Initialization.
          */
         
-        RobotMap.isFastMode = false;
+        RobotMap.isFastMode = true;
 
         /**
          * Turns isHoldingPivotUp, cargoIsIn, & armIsOut booleans to false and flapIsUp
