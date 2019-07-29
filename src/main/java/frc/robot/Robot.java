@@ -36,6 +36,7 @@ public class Robot extends TimedRobot {
     private UsbCamera camera;
 
     private Command DriveStraight;
+    private Command TrackObject;
 
     /**
      * Camera Toggling Variables (Dont work yet)
@@ -76,6 +77,8 @@ public class Robot extends TimedRobot {
         blockY = pixy.getEntry("blockY");
         blockW = pixy.getEntry("blockW");
         blockH = pixy.getEntry("blockH");
+
+        TrackObject = new TrackObject();
 
         Subsystems.driveBase.cheesyDrive.setSafetyEnabled(false);
 
@@ -124,6 +127,7 @@ public class Robot extends TimedRobot {
         System.out.println("Autonomous Initalized");
         // ParallelTurnBetter.start();
         //DriveStraight.start();
+        TrackObject.start();
 
         /**
          * This makes sure that any old commands/command groups are stopped upon
