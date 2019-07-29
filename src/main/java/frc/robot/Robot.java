@@ -21,16 +21,15 @@ import frc.robot.userinterface.UserInterface;
 
 public class Robot extends TimedRobot {
 
-    // private NetworkTableEntry blockX;
-    // private NetworkTableEntry blockY;
-    // private NetworkTableEntry blockW;
-    // private NetworkTableEntry blockH;
-    // private NetworkTableEntry blockArea;
-    private CommandGroup GaffTapeTrack;
-    private NetworkTableEntry lineX0;
-    private NetworkTableEntry lineX1;
-    private NetworkTableEntry lineY0;
-    private NetworkTableEntry lineY1;
+    private NetworkTableEntry blockX;
+    private NetworkTableEntry blockY;
+    private NetworkTableEntry blockW;
+    private NetworkTableEntry blockH;
+    private NetworkTableEntry blockArea;
+    // private NetworkTableEntry lineX0;
+    // private NetworkTableEntry lineX1;
+    // private NetworkTableEntry lineY0;
+    // private NetworkTableEntry lineY1;
 
     private Command wait = new WaitCommand(2);
 
@@ -73,10 +72,10 @@ public class Robot extends TimedRobot {
 
         NetworkTableInstance inst = NetworkTableInstance.getDefault();
         NetworkTable pixy = inst.getTable("pixy");
-        lineX0 = pixy.getEntry("lineX0");
-        lineX1 = pixy.getEntry("lineX1");
-        lineY0 = pixy.getEntry("lineY0");
-        lineY1 = pixy.getEntry("lineY1");
+        blockX = pixy.getEntry("blockX");
+        blockY = pixy.getEntry("blockY");
+        blockW = pixy.getEntry("blockW");
+        blockH = pixy.getEntry("blockH");
 
         Subsystems.driveBase.cheesyDrive.setSafetyEnabled(false);
 
@@ -99,7 +98,6 @@ public class Robot extends TimedRobot {
         RobotMap.armIsOut = false;
         RobotMap.highPivotCurrent = false;
 
-        // GaffTapeTrack = new GaffTapeTrack();
         //DriveStraight = new DriveStraight(10,0.3,10000);
 
         Subsystems.climber.closeClimbRetract();
@@ -489,10 +487,10 @@ public class Robot extends TimedRobot {
     }
 
     private void printDataToSmartDashboard() {
-        SmartDashboard.putNumber("lineX0", lineX0.getDouble(-404));
-        SmartDashboard.putNumber("lineX1", lineX1.getDouble(-404));
-        SmartDashboard.putNumber("lineY0", lineY0.getDouble(-404));
-        SmartDashboard.putNumber("lineY1", lineY1.getDouble(-404));
+        SmartDashboard.putNumber("blockX", blockX.getDouble(-404));
+        SmartDashboard.putNumber("blockY", blockY.getDouble(-404));
+        SmartDashboard.putNumber("blockW", blockW.getDouble(-404));
+        SmartDashboard.putNumber("blockH", blockH.getDouble(-404));
         SmartDashboard.putNumber("Right Drive Position", Subsystems.driveBase.getRightPosition());
         SmartDashboard.putNumber("Left Drive Position", Subsystems.driveBase.getLeftPosition());
         SmartDashboard.putNumber("Gyro angle", Subsystems.driveBase.getGyroAngle());
