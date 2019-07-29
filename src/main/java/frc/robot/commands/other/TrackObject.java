@@ -38,14 +38,18 @@ public class TrackObject extends Command {
 
         System.out.println(correction);
         if (Math.abs(correction) > 0.2) {
-            Subsystems.driveBase.setMotors(0.25*correction, -0.25*correction);
+            if (Math.abs(correction)*0.25 + 0.1 <= 1) {
+                Subsystems.driveBase.setMotors(0.25*correction + 0.1, -0.25*correction + 0.1);
+            } else {
+                Subsystems.driveBase.setMotors(0.25*correction, -0.25*correction);
+            }
         } 
         else {
             if (Subsystems.cargo.getIntakeBeamBroken()) {
                 Subsystems.cargo.stopIntakeMotors();
                 Subsystems.driveBase.setMotors(0, 0);
             } else {
-                Subsystems.driveBase.setMotors(0.2, 0.2);
+                Subsystems.driveBase.setMotors(0.25, 0.25);
             }
 
             if (Subsystems.cargo.getEscalatorBeamBroken()) {
