@@ -28,6 +28,7 @@ public class TrackObject extends Command {
         blockY = pixy.getEntry("blockY");
         Subsystems.driveBase.zeroEncoderPosition();
         Subsystems.driveBase.zeroGyroAngle();
+        //this.setInterruptible(true);
     }
 
     @Override

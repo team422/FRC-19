@@ -105,8 +105,12 @@ public class Robot extends TimedRobot {
 
         Subsystems.climber.closeClimbRetract();
         Subsystems.climber.farClimbRetract();
+    
+        UserInterface.driverController.Y.whileHeld(new TrackObject());
+
     }
 
+    
     public void disabledInit() {
         System.out.println("Disabled Initialized");
         Scheduler.getInstance().removeAll();
@@ -386,73 +390,75 @@ public class Robot extends TimedRobot {
         /**
          * Cargo Buttons
          */
-        if (UserInterface.operatorController.B.get()) {
-            Subsystems.cargo.setFlapDown();
-            RobotMap.flapIsUp = false;
-        }
-        if (UserInterface.operatorController.Y.get()) {
-            Subsystems.cargo.setFlapUp();
-            RobotMap.flapIsUp = true;
-        }
-        if (!RobotMap.highPivotCurrent) {
-            RobotMap.highPivotCurrent = Subsystems.cargo.isPivotCurrentTooHigh();
-        }
-        if (UserInterface.operatorController.getPOVAngle() == 0) {
-            RobotMap.isHoldingPivotUp = true;
-        }
-        if (RobotMap.isHoldingPivotUp) {
-            /** 
-             * Potential use for highPivotCurrent to hold pivot at a lesser speed
-             */
-            // if (!RobotMap.highPivotCurrent) {
-            //     Subsystems.cargo.pivotIntake(0.5, Direction.Up);
-            // } else {
-            //     Subsystems.cargo.holdPivotIntakeUp();
-            // }
-            Subsystems.cargo.holdPivotIntakeUp();
-        }
-        if (!RobotMap.cargoIsIn) {
-            RobotMap.cargoIsIn = Subsystems.cargo.getIntakeBeamBroken();
-        } else {
-            wait.start();
-            RobotMap.cargoIsIn = false;
-        }
-        if (UserInterface.operatorController.getLeftTrigger() > 0.1) {
-            Subsystems.cargo.setEscalatorMotors(-1);
-            RobotMap.cargoIsIn = false;
-        }
-        if (UserInterface.operatorController.getRightTrigger() > 0.1) {
-            if (!Subsystems.cargo.getEscalatorBeamBroken()) {
-                Subsystems.cargo.setEscalatorMotors(-1);
-                Subsystems.cargo.setIntakeMotors(-0.75);
-                if (RobotMap.cargoIsIn) {
-                    Subsystems.cargo.stopIntakeMotors();
-                } else {
-                    Subsystems.cargo.setIntakeMotors(-0.75);
-                }
+        if (!UserInterface.driverController.Y.get()) {
+            if (UserInterface.operatorController.B.get()) {
+                Subsystems.cargo.setFlapDown();
+                RobotMap.flapIsUp = false;
+            }
+            if (UserInterface.operatorController.Y.get()) {
+                Subsystems.cargo.setFlapUp();
+                RobotMap.flapIsUp = true;
+            }
+            if (!RobotMap.highPivotCurrent) {
+                RobotMap.highPivotCurrent = Subsystems.cargo.isPivotCurrentTooHigh();
+            }
+            if (UserInterface.operatorController.getPOVAngle() == 0) {
+                RobotMap.isHoldingPivotUp = true;
+            }
+            if (RobotMap.isHoldingPivotUp) {
+                /** 
+                 * Potential use for highPivotCurrent to hold pivot at a lesser speed
+                 */
+                // if (!RobotMap.highPivotCurrent) {
+                //     Subsystems.cargo.pivotIntake(0.5, Direction.Up);
+                // } else {
+                //     Subsystems.cargo.holdPivotIntakeUp();
+                // }
+                Subsystems.cargo.holdPivotIntakeUp();
+            }
+            if (!RobotMap.cargoIsIn) {
+                RobotMap.cargoIsIn = Subsystems.cargo.getIntakeBeamBroken();
             } else {
-                Subsystems.cargo.stopIntakeMotors();
-                Subsystems.cargo.stopEscalatorMotors();
+                wait.start();
                 RobotMap.cargoIsIn = false;
             }
-        }
-        if (!(UserInterface.operatorController.getLeftTrigger() > 0.1)
-                && !(UserInterface.operatorController.getRightTrigger() > 0.1)) {
-            Subsystems.cargo.stopIntakeMotors();
-            Subsystems.cargo.stopEscalatorMotors();
-        }
-        if (UserInterface.operatorController.getLeftJoystickY() < -0.1) {
-            // pivots down
-            Subsystems.cargo.pivotIntake(Math.abs(UserInterface.operatorController.getLeftJoystickY()) * 0.2, Direction.Down);
-            RobotMap.isHoldingPivotUp = false;
-            RobotMap.highPivotCurrent = false;
-        } else if (UserInterface.operatorController.getLeftJoystickY() > 0.1) {
-            // pivots up
-            Subsystems.cargo.pivotIntake(Math.abs(UserInterface.operatorController.getLeftJoystickY()) * 0.4, Direction.Up);
-            RobotMap.isHoldingPivotUp = false;
-            RobotMap.highPivotCurrent = false;
-        } else {
-            Subsystems.cargo.stopPivot();
+            if (UserInterface.operatorController.getLeftTrigger() > 0.1) {
+                Subsystems.cargo.setEscalatorMotors(-1);
+                RobotMap.cargoIsIn = false;
+            }
+            if (UserInterface.operatorController.getRightTrigger() > 0.1) {
+                if (!Subsystems.cargo.getEscalatorBeamBroken()) {
+                    Subsystems.cargo.setEscalatorMotors(-1);
+                    Subsystems.cargo.setIntakeMotors(-0.75);
+                    if (RobotMap.cargoIsIn) {
+                        Subsystems.cargo.stopIntakeMotors();
+                    } else {
+                        Subsystems.cargo.setIntakeMotors(-0.75);
+                    }
+                } else {
+                    Subsystems.cargo.stopIntakeMotors();
+                    Subsystems.cargo.stopEscalatorMotors();
+                    RobotMap.cargoIsIn = false;
+                }
+            }
+            if (!(UserInterface.operatorController.getLeftTrigger() > 0.1)
+                    && !(UserInterface.operatorController.getRightTrigger() > 0.1)) {
+                Subsystems.cargo.stopIntakeMotors();
+                Subsystems.cargo.stopEscalatorMotors();
+            }
+            if (UserInterface.operatorController.getLeftJoystickY() < -0.1) {
+                // pivots down
+                Subsystems.cargo.pivotIntake(Math.abs(UserInterface.operatorController.getLeftJoystickY()) * 0.2, Direction.Down);
+                RobotMap.isHoldingPivotUp = false;
+                RobotMap.highPivotCurrent = false;
+            } else if (UserInterface.operatorController.getLeftJoystickY() > 0.1) {
+                // pivots up
+                Subsystems.cargo.pivotIntake(Math.abs(UserInterface.operatorController.getLeftJoystickY()) * 0.4, Direction.Up);
+                RobotMap.isHoldingPivotUp = false;
+                RobotMap.highPivotCurrent = false;
+            } else {
+                Subsystems.cargo.stopPivot();
+            }
         }
 
         if(toggleCloseOn){
