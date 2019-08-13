@@ -2,6 +2,7 @@ package frc.robot.commands.other;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.subsystems.Subsystems;
+import frc.robot.userinterface.UserInterface;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTable;

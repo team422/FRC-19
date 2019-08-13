@@ -21,6 +21,8 @@ import frc.robot.userinterface.UserInterface;
 
 public class Robot extends TimedRobot {
 
+
+    private double[] oldWidth = {0,0,0,0,0,0,0,0,0,0};
     private NetworkTableEntry blockX;
     private NetworkTableEntry blockY;
     private NetworkTableEntry blockW;
@@ -77,6 +79,7 @@ public class Robot extends TimedRobot {
         blockY = pixy.getEntry("blockY");
         blockW = pixy.getEntry("blockW");
         blockH = pixy.getEntry("blockH");
+        blockArea = pixy.getEntry("blockArea");
 
         TrackObject = new TrackObject();
 
@@ -120,6 +123,8 @@ public class Robot extends TimedRobot {
         Subsystems.cargo.stopPivot();
         Subsystems.cargo.stopIntakeMotors();
         Subsystems.cargo.stopEscalatorMotors();
+        UserInterface.driverController.setRumble(0);
+        UserInterface.operatorController.setRumble(0);
     }
 
     public void disabledPeriodic() {
@@ -332,6 +337,39 @@ public class Robot extends TimedRobot {
 
         printDataToSmartDashboard();
 
+        // Rumble to vision
+        
+        double blockWidth = blockW.getDouble(-404);
+        double rumbleNumber=0;
+        
+
+
+    if (!(oldWidth[0] == blockWidth&&oldWidth[1]==oldWidth[0]&&oldWidth[2]==oldWidth[0]&&oldWidth[3]==oldWidth[0]&&oldWidth[4]==oldWidth[0]&&oldWidth[5]==oldWidth[0]&&oldWidth[6]==oldWidth[0]&&oldWidth[7]==oldWidth[0]&&oldWidth[8]==oldWidth[0]&&oldWidth[9]==oldWidth[0])){
+        if (blockWidth>=200){
+            rumbleNumber = .7;
+        }
+        else if (blockWidth>=150){
+            rumbleNumber = .5;
+        }
+        else if (blockWidth>=100){
+            rumbleNumber = .3;
+        }
+        else if (blockWidth>=50){
+            rumbleNumber = .1;
+        }
+    }
+        oldWidth[9] = oldWidth[8];
+        oldWidth[8] = oldWidth[7];
+        oldWidth[7] = oldWidth[6];
+        oldWidth[6] = oldWidth[5];
+        oldWidth[5] = oldWidth[4];
+        oldWidth[4] = oldWidth[3];
+        oldWidth[3] = oldWidth[2];
+        oldWidth[2] = oldWidth[1];
+        oldWidth[1] = oldWidth[0];
+        oldWidth[0] = blockWidth;
+        
+        UserInterface.driverController.setRumble(rumbleNumber);
 
         updateToggle();
         /**
@@ -391,6 +429,7 @@ public class Robot extends TimedRobot {
          * Cargo Buttons
          */
         if (!UserInterface.driverController.Y.get()) {
+            UserInterface.operatorController.setRumble(0);
             if (UserInterface.operatorController.B.get()) {
                 Subsystems.cargo.setFlapDown();
                 RobotMap.flapIsUp = false;
@@ -459,6 +498,9 @@ public class Robot extends TimedRobot {
             } else {
                 Subsystems.cargo.stopPivot();
             }
+        } else {
+            UserInterface.operatorController.setRumble(0.15);
+
         }
 
         if(toggleCloseOn){
