@@ -13,7 +13,7 @@ public class DriveStraight extends Command {
     super("DriveStraight");
     requires(Subsystems.driveBase);
     ticks = convertToTicks(Inches);
-    speed = Speed;
+    speed = 0.3; // DO NOT USE AS USUAL
     setTimeout(Timeout);
     if (Inches >= 0) {
       forward = true;//CHANGE BC THIS IS BACKWARD BUT I NEED STUFF TO WORK NOW
