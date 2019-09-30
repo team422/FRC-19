@@ -39,7 +39,7 @@ public class Robot extends TimedRobot {
 
     private Command DriveStraight;
     private Command TrackObject;
-    private Command Rotations;
+    //private Command Rotations;
 
     /**
      * Camera Toggling Variables (Dont work yet)
@@ -83,7 +83,7 @@ public class Robot extends TimedRobot {
         blockArea = pixy.getEntry("blockArea");
 
         TrackObject = new TrackObject();
-        Rotations = new Rotations();
+        //Rotations = new Rotations();
 
         Subsystems.driveBase.cheesyDrive.setSafetyEnabled(false);
 
@@ -91,7 +91,7 @@ public class Robot extends TimedRobot {
          * Sets Drivebase speed to fast as default and sets RB on driverController to
          * toggle the speed when pressed
          */
-        RobotMap.isFastMode = true;
+        RobotMap.isFastMode = false; //SET TO SLOW FOR FALL FEST
         RobotMap.setSpeedAndRotationCaps(1, 0.35);
         UserInterface.driverController.RB.whenPressed(new ToggleSpeed());
         // UserInterface.driverController.LB.whenPressed(new ToggleCamera());
@@ -138,7 +138,7 @@ public class Robot extends TimedRobot {
         System.out.println("Autonomous Initalized");
         // ParallelTurnBetter.start();
         //DriveStraight.start();
-        Rotations.start();
+        TrackObject.start();
 
         /**
          * This makes sure that any old commands/command groups are stopped upon
@@ -505,12 +505,12 @@ public class Robot extends TimedRobot {
 
         }
 
-        if(toggleCloseOn){
+        if(toggleCloseOn) {
             Subsystems.climber.closeClimbExtend();
         } else {
             Subsystems.climber.closeClimbRetract();
         }
-        if(toggleFarOn){
+        if(toggleFarOn) {
             Subsystems.climber.farClimbExtend();
             Subsystems.climber.closeClimbRetract();
             toggleClosePressed = false;
